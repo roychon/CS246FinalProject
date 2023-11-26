@@ -11,14 +11,17 @@ class Player {
     int data; // # data player downloads
     int viruses; // # viruses player downloads
     int numAbilitiesLeft; // # abilities player can use
+    int playerID;
 
 public:
-    Player();
+    Player(vector<Link *> links, vector<Ability *> abilities);
     ~Player();
-
-    void activeDisplay();
-    void nonActiveDisplay();
-    void updateScore();
+    void changeDataCount(); // increment data by 1
+    void changeVirusCount(); // increment virus by 1
+    void printPlayerDisplay(bool isActive);
+    int getplayerID();
+    bool HasLinkAt(int x, int y);
+    // void updateScore();
 
     // add any more fields as necessary
 };

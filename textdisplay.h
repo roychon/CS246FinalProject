@@ -5,7 +5,7 @@
 using namespace std;
 
 class TextDisplay : public Observer {
-    vector<vector<Cell>> grid;
+    vector<vector<char>> grid;
     const int gridSize;
 
 public:

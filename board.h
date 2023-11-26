@@ -10,8 +10,9 @@ class Board {
     // GraphicsDisplay *gd;
 
 public:
+    Board(vector<vector<Cell>> grid, TextDisplay *td);
     bool isInvalidMove(Link &link, int x, int y, Player &player);
-    bool isOccupiedByOpponent(Link &link, int x, int y);
+    bool isOccupiedByOpponent(Player *NonActivePlayer, int x, int y);
     void battle(Link &link1, Link &link2);
     void move(Link &link, int x, int y);
 

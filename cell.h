@@ -7,12 +7,13 @@
 class Cell {
     vector<Observer *> observers;
     bool isFirewall; // check if cell is a Firewall or not
+    bool isServerPort; // check if cell is a server port or not
     Link *link; // ptr to specific link
 
 public:
     void notifyObservers();
     void attach(Observer *o);
-    bool isFirewall();
+    bool GetIsFirewall();
 
     // add any more fields as necessary
 };
