@@ -14,6 +14,10 @@ public:
     void notifyObservers();
     void attach(Observer *o);
     bool GetIsFirewall();
+    bool GetIsServerPort();
+    void SetLinkNull();
+    Link* GetLink();
+    void SetLink(Link *link);
 
     // add any more fields as necessary
 };

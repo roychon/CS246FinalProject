@@ -50,3 +50,7 @@ int Link::getMoveFactor() {
 bool Link::getIsRevealed() {
     return isRevealed;
 }
+
+void Link::RevealLink() {
+    isRevealed = true;
+}
