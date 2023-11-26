@@ -38,3 +38,16 @@ void Player::printPlayerDisplay(bool isActive) {
         }
     }
 }
+
+int Player::getplayerID() {
+    return playerID;
+}
+
+bool Player::HasLinkAt(int x, int y) {
+    for (auto link : links) {
+        if (x == link->getX() && y == link->getY()) {
+            return true;
+        }
+    }
+    return false;
+}
