@@ -13,9 +13,9 @@ public:
     Board(vector<vector<Cell>> grid, TextDisplay *td);
     bool isInvalidMove(Link &link, int x, int y, Player &player);
     bool isOccupiedByOpponent(Player *NonActivePlayer, int x, int y);
-    void battle(Link &link1, Link &link2);
-    void move(Link &link, int x, int y);
-     
+    void battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink);
+    void move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y);
+
     // add any more fields as necessary
 };
 

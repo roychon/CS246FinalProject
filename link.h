@@ -4,6 +4,8 @@
 #include "player.h"
 using namespace std;
 
+class Player;
+
 class Link {
     int strength; // strength of link
     string type; // D: data, V : virus
@@ -27,6 +29,7 @@ public:
     void setStrength(int strength);
     void setType(string type);
     bool getIsRevealed();
+    void RevealLink();
 
     // add any more fields as necessary
 };
