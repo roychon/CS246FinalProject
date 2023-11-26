@@ -13,12 +13,12 @@ class Player {
     int numAbilitiesLeft; // # abilities player can use
 
 public:
-    Player();
+    Player(vector<Link *> links, vector<Ability *> abilities);
     ~Player();
-
-    void activeDisplay();
-    void nonActiveDisplay();
-    void updateScore();
+    void changeDataCount(); // increment data by 1
+    void changeVirusCount(); // increment virus by 1
+    void printPlayerDisplay(bool isActive);
+    // void updateScore();
 
     // add any more fields as necessary
 };
