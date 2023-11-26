@@ -2,6 +2,7 @@
 using namespace std;
 
 int main() {
-    cout << "Testing pull request" << endl;
-    cout << "New line" << endl;
+    cout << "Hello" << endl;
+    cout << "James added this line" << endl;
+    cout << "Roy added for testing pull requests" << endl;
 }
