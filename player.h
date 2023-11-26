@@ -4,6 +4,8 @@
 #include "ability.h"
 #include "link.h"
 
+class Link;
+
 using namespace std;
 class Player {
     vector<Link *> links; // player's links
@@ -21,6 +23,7 @@ public:
     void printPlayerDisplay(bool isActive);
     int getplayerID();
     bool HasLinkAt(int x, int y);
+    void RemoveLinkAt(int x, int y);
     // void updateScore();
 
     // add any more fields as necessary

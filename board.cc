@@ -57,4 +57,58 @@ bool Board::isOccupiedByOpponent(Player *NonActivePlayer, int x, int y) {
     }
 }
 
-void Board::battle(Link &link1, Link &link2) {}
+void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink) {
+    if (ActivePlayerLink.getStrength() >= NonActivePlayerLink.getStrength()) {
+        if (NonActivePlayerLink.getType() == "D") {
+            ActivePlayer.changeDataCount();
+        }
+        else {
+            ActivePlayer.changeVirusCount();
+        }
+        NonActivePlayerLink.setX(-1);
+        NonActivePlayerLink.setY(-1);
+        NonActivePlayerLink.RevealLink();
+        ActivePlayerLink.RevealLink();
+        grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].SetLinkNull();
+        td->notify(grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()]);
+    }
+
+    else {
+        if (ActivePlayerLink.getType() == "D") {
+            NonActivePlayer.changeDataCount();
+        }
+        else {
+            NonActivePlayer.changeVirusCount();
+        }
+        ActivePlayerLink.setX(-1);
+        ActivePlayerLink.setY(-1);
+        NonActivePlayerLink.RevealLink();
+        ActivePlayerLink.RevealLink();
+        grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].SetLinkNull();
+        td->notify(grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()]);
+    }
+}
+
+    void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y) {
+        int linkxcoord = link.getX();
+        int linkycoord = link.getY();
+
+        if (grid[linkycoord + y][linkxcoord + x].GetIsServerPort()) {
+            if (link.getType() == "D") {
+                NonActivePlayer->changeDataCount();
+            }
+            else {
+                NonActivePlayer->changeVirusCount();
+            }
+            link.setX(-1);
+            link.setY(-1);
+            link.RevealLink();
+            grid[linkycoord + y][linkxcoord + x].SetLinkNull();
+            td->notify(grid[linkycoord + y][linkxcoord + x]);
+        }
+
+        else {
+            grid[linkycoord + y][linkxcoord + x].SetLink(&link);
+            grid[linkycoord][linkxcoord].SetLinkNull();
+        }
+    }
