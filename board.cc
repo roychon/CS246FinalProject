@@ -2,7 +2,6 @@
 #include "cell.h"
 using namespace std;
 
-// TODO: Nicholas will make init function for board + randomization logic
 Board::Board(vector<vector<Cell>> grid, TextDisplay *td) : size{8}, grid{grid}, td{td} {}
 
 // Handle board orientation of commands in the main function
@@ -12,7 +11,7 @@ Board::Board(vector<vector<Cell>> grid, TextDisplay *td) : size{8}, grid{grid}, 
 bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
     int linkxcoord = link.getX();
     int linkycoord = link.getY();
-
+    
     if (player.getplayerID() == 2) {
         // JAMES' previous logic, where x + y where 'amount to move by'
         // if (x + linkxcoord > 7 || x + linkxcoord < 0 || y + linkycoord > 7) {
@@ -77,7 +76,7 @@ bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
 }
 }
 
-// x and y here are the actual coordinates here
+// CHANGED: xCord, yCord are actual coordinates it moves into now
 bool Board::isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord) {
     if (NonActivePlayer->hasLinkAt(xCord, yCord)) {
         return true;
@@ -88,7 +87,6 @@ bool Board::isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord) 
 }
 
 
-// TODO: change variable capitalization
 void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink) {
     if (ActivePlayerLink.getStrength() >= NonActivePlayerLink.getStrength()) {
         if (NonActivePlayerLink.getType() == "D") {
@@ -102,8 +100,8 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         NonActivePlayerLink.revealLink();
         ActivePlayerLink.revealLink();
         grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].setLinkNull();
-        // TODO: call cell's notifyobservers
-        td->notify(grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()]);
+        // td->notify(grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()]);
+        grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].notifyObservers();
     }
 
     else {
@@ -118,8 +116,8 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         NonActivePlayerLink.revealLink();
         ActivePlayerLink.revealLink();
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].setLinkNull();
-        // TODO: call cell's notifyobservers
-        td->notify(grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()]);
+        // td->notify(grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()]);
+        grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
     }
 }
 

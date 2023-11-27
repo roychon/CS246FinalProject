@@ -54,10 +54,7 @@ void Game::display() {
     }
 }
 
-// false : invalid move, true : valid move
-// this allows us to do a loop in main to repeatedly ask user for input until a valid mvoe is entered
-
-// x and y here are amount to move by (NOT coordinates)
+// false (invalid move), true (valid move). Loop through 
 bool Game::move(Link *link, int x, int y) {
     int xCord, yCord;
 
@@ -84,4 +81,5 @@ bool Game::move(Link *link, int x, int y) {
         // activePlayer moves link to empty cell or server port
         board->move(activePlayer, nonActivePlayer, *link, x, y);
     }
+    return true;
 }
