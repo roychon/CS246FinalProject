@@ -1,5 +1,9 @@
 #include "link.h"
 
+char Link::getId() {
+    return id;
+}
+
 string Link::getType() {
     return type;
 }
