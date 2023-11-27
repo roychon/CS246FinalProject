@@ -11,7 +11,7 @@ class Board {
     // GraphicsDisplay *gd;
 
 public:
-    Board(vector<vector<Cell>> grid, TextDisplay *td);
+    Board(vector<vector<Cell>> grid);
     bool isInvalidMove(Link &link, int x, int y, Player &player);
     bool isOccupiedByOpponent(Player *NonActivePlayer, int x, int y);
     void battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink);
