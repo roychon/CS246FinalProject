@@ -31,7 +31,7 @@ public:
     void setStrength(int strength);
     void setType(string type);
     bool getIsRevealed();
-    void RevealLink();
+    void revealLink();
 
     // add any more fields as necessary
 };

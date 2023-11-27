@@ -14,10 +14,10 @@ TextDisplay::TextDisplay() : gridSize{8} {
 void TextDisplay::notify(Cell &c) {
     // nullptr means no link is present
     // will need to check for firewall later (within nullptr if statement)
-    if (c.GetLink() == nullptr) {
+    if (c.getLink() == nullptr) {
         grid[c.getRow()][c.getCol()] = '.';
     }
-    else grid[c.getRow()][c.getCol()] = c.getLink()->getID();
+    else grid[c.getRow()][c.getCol()] = c.getLink()->getId();
 }
 
 TextDisplay::~TextDisplay() {}

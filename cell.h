@@ -17,11 +17,11 @@ public:
     int getCol();
     void notifyObservers();
     void attach(Observer *o);
-    bool GetIsFirewall();
-    bool GetIsServerPort();
-    void SetLinkNull();
-    Link* GetLink();
-    void SetLink(Link *link);
+    bool getIsFirewall();
+    bool getIsServerPort();
+    void setLinkNull();
+    Link* getLink();
+    void setLink(Link *link);
 
     // add any more fields as necessary
 };
