@@ -2,11 +2,15 @@
 #include "cell.h"
 using namespace std;
 
+// TODO: Nicholas will make init function for board + randomization logic
 Board::Board(vector<vector<Cell>> grid, TextDisplay *td) : size{8}, grid{grid}, td{td} {}
 
 // Handle board orientation of commands in the main function
 // Therefore a positive y value means moving upwards on the board display
 // And a positive x value means moving to the right on the board display
+
+// TODO: check when moving into your own server port 
+    // - instead make server ports a link and have every player owning their two server ports
 bool Board::isInvalidMove(Link &link, int x, int y, Player &player) {
     int linkxcoord = link.getX();
     int linkycoord = link.getY();
@@ -57,6 +61,8 @@ bool Board::isOccupiedByOpponent(Player *NonActivePlayer, int x, int y) {
     }
 }
 
+// TODO: call notify on original cell and new cell, so textdisplay is accurate + check Nicholas' discord message regarding server ports being links
+// TODO: chagne variable capitalization
 void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink) {
     if (ActivePlayerLink.getStrength() >= NonActivePlayerLink.getStrength()) {
         if (NonActivePlayerLink.getType() == "D") {
@@ -89,26 +95,26 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
     }
 }
 
-    void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y) {
-        int linkxcoord = link.getX();
-        int linkycoord = link.getY();
+void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y) {
+    int linkxcoord = link.getX();
+    int linkycoord = link.getY();
 
-        if (grid[linkycoord + y][linkxcoord + x].GetIsServerPort()) {
-            if (link.getType() == "D") {
-                NonActivePlayer->changeDataCount();
-            }
-            else {
-                NonActivePlayer->changeVirusCount();
-            }
-            link.setX(-1);
-            link.setY(-1);
-            link.revealLink();
-            grid[linkycoord + y][linkxcoord + x].setLinkNull();
-            td->notify(grid[linkycoord + y][linkxcoord + x]);
+    if (grid[linkycoord + y][linkxcoord + x].getIsServerPort()) {
+        if (link.getType() == "D") {
+            NonActivePlayer->changeDataCount();
         }
-
         else {
-            grid[linkycoord + y][linkxcoord + x].setLink(&link);
-            grid[linkycoord][linkxcoord].setLinkNull();
+            NonActivePlayer->changeVirusCount();
         }
+        link.setX(-1);
+        link.setY(-1);
+        link.revealLink();
+        grid[linkycoord + y][linkxcoord + x].setLinkNull();
+        td->notify(grid[linkycoord + y][linkxcoord + x]);
     }
+
+    else {
+        grid[linkycoord + y][linkxcoord + x].setLink(&link);
+        grid[linkycoord][linkxcoord].setLinkNull();
+    }
+}
