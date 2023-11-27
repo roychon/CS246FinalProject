@@ -93,7 +93,7 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         int linkxcoord = link.getX();
         int linkycoord = link.getY();
 
-        if (grid[linkycoord + y][linkxcoord + x].GetIsServerPort()) {
+        if (grid[linkycoord + y][linkxcoord + x].getIsServerPort()) {
             if (link.getType() == "D") {
                 NonActivePlayer->changeDataCount();
             }
