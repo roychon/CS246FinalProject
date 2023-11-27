@@ -14,7 +14,7 @@ class Game {
 public:
     bool checkWin();
     void display();
-    void move(Link *link, int x, int y);
+    bool move(Link *link, int x, int y);
 //    void useAbility(int id); // id is 'id' of ability we want to use
     void init(); // initialize the Game
 
