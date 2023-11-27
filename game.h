@@ -4,6 +4,7 @@
 #include "board.h"
 #include "player.h"
 #include "link.h"
+using namespace std;
 
 class Game {
     Board *board;

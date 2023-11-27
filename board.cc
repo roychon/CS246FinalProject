@@ -1,8 +1,7 @@
 #include "board.h"
-#include "cell.h"
 using namespace std;
 
-Board::Board(vector<vector<Cell>> grid, TextDisplay *td) : size{8}, grid{grid}, td{td} {}
+Board::Board() : size{8}, td{nullptr} {}
 
 // Handle board orientation of commands in the main function
 // Therefore a positive y value means moving upwards on the board display
@@ -151,3 +150,31 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
 void Board::printTextDisplay() {
     cout << *td;
 }
+
+    // ===================== Board Setup =======================
+
+    // sets the observers and coords for every cell.
+    void setCellObservers() {
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < size; ++j) {
+                Cell &current = grid[i][j];
+                current.setCoords(i, j);
+                current.attach(td.get()); // get and pass raw ptr
+            }
+        }   
+    }
+
+    void Board::setup() {
+        // create cells
+        for (int i = 0; i < size; ++i) {
+            grid.emplace_back();
+            for (int j = 0; j < size; ++j) {
+                grid[i].emplace_back();
+            }
+        }
+        // unique ptr to text display
+        td = make_unique<TextDisplay>();
+
+        // set cell observers
+        setCellObservers();
+    }

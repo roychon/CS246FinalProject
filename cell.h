@@ -16,6 +16,7 @@ public:
     Cell(int row, int col, bool isFirewall, bool isServerPort, Link *link);
     int getRow();
     int getCol();
+    void setCoords(int r, int c);
     void notifyObservers();
     void attach(Observer *o);
     bool getIsFirewall();

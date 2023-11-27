@@ -83,3 +83,10 @@ bool Game::move(Link *link, int x, int y) {
     }
     return true;
 }
+
+void Game::init() {
+    // call board setup, creating cells & displays
+    board.setup();
+    
+}
+
