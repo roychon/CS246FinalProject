@@ -7,6 +7,7 @@ using namespace std;
 class Player;
 
 class Link {
+    char id; // board display id, from a to z or A to Z depending on player
     int strength; // strength of link
     string type; // D: data, V : virus
     bool isRevealed;
@@ -18,6 +19,7 @@ class Link {
 public:
     void move(int x, int y);
     int getMoveFactor();
+    char getId();
     string getType();
     int getStrength();
     // void download(int n); // n: 'id' of the link
@@ -29,7 +31,7 @@ public:
     void setStrength(int strength);
     void setType(string type);
     bool getIsRevealed();
-    void RevealLink();
+    void revealLink();
 
     // add any more fields as necessary
 };

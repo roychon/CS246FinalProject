@@ -1,5 +1,9 @@
 #include "link.h"
 
+char Link::getId() {
+    return id;
+}
+
 string Link::getType() {
     return type;
 }
@@ -51,6 +55,6 @@ bool Link::getIsRevealed() {
     return isRevealed;
 }
 
-void Link::RevealLink() {
+void Link::revealLink() {
     isRevealed = true;
 }

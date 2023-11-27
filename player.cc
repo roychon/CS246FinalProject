@@ -43,7 +43,7 @@ int Player::getplayerID() {
     return playerID;
 }
 
-bool Player::HasLinkAt(int x, int y) {
+bool Player::hasLinkAt(int x, int y) {
     for (auto link : links) {
         if (x == link->getX() && y == link->getY()) {
             return true;

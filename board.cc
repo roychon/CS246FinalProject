@@ -16,7 +16,7 @@ bool Board::isInvalidMove(Link &link, int x, int y, Player &player) {
             return true;
         }
 
-        else if (player.HasLinkAt(x + linkxcoord, y + linkycoord)) {
+        else if (player.hasLinkAt(x + linkxcoord, y + linkycoord)) {
             return true;
         }
 
@@ -34,7 +34,7 @@ bool Board::isInvalidMove(Link &link, int x, int y, Player &player) {
             return true;
         }
 
-        else if (player.HasLinkAt(x + linkxcoord, y + linkycoord)) {
+        else if (player.hasLinkAt(x + linkxcoord, y + linkycoord)) {
             return true;
         }
 
@@ -49,7 +49,7 @@ bool Board::isInvalidMove(Link &link, int x, int y, Player &player) {
 }
 
 bool Board::isOccupiedByOpponent(Player *NonActivePlayer, int x, int y) {
-    if (NonActivePlayer->HasLinkAt(x, y)) {
+    if (NonActivePlayer->hasLinkAt(x, y)) {
         return true;
     }
     else {
@@ -67,9 +67,9 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         }
         NonActivePlayerLink.setX(-1);
         NonActivePlayerLink.setY(-1);
-        NonActivePlayerLink.RevealLink();
-        ActivePlayerLink.RevealLink();
-        grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].SetLinkNull();
+        NonActivePlayerLink.revealLink();
+        ActivePlayerLink.revealLink();
+        grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].setLinkNull();
         td->notify(grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()]);
     }
 
@@ -82,9 +82,9 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         }
         ActivePlayerLink.setX(-1);
         ActivePlayerLink.setY(-1);
-        NonActivePlayerLink.RevealLink();
-        ActivePlayerLink.RevealLink();
-        grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].SetLinkNull();
+        NonActivePlayerLink.revealLink();
+        ActivePlayerLink.revealLink();
+        grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].setLinkNull();
         td->notify(grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()]);
     }
 }
@@ -102,13 +102,13 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
             }
             link.setX(-1);
             link.setY(-1);
-            link.RevealLink();
-            grid[linkycoord + y][linkxcoord + x].SetLinkNull();
+            link.revealLink();
+            grid[linkycoord + y][linkxcoord + x].setLinkNull();
             td->notify(grid[linkycoord + y][linkxcoord + x]);
         }
 
         else {
-            grid[linkycoord + y][linkxcoord + x].SetLink(&link);
-            grid[linkycoord][linkxcoord].SetLinkNull();
+            grid[linkycoord + y][linkxcoord + x].setLink(&link);
+            grid[linkycoord][linkxcoord].setLinkNull();
         }
     }
