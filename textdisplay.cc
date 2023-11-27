@@ -23,11 +23,13 @@ void TextDisplay::notify(Cell &c) {
 TextDisplay::~TextDisplay() {}
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
+  cout << "========" << endl;
   for (const auto &inner: td.grid) {
       for (const char cell : inner) {
         out << cell;
       }
       out << endl;
   }
+  cout << "========" << endl;
   return out;
 }

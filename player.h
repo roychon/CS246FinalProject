@@ -24,6 +24,8 @@ public:
     int getplayerID();
     bool hasLinkAt(int x, int y);
     void removeLinkAt(int x, int y);
+    int getDataCount();
+    int getVirusCount();
     // void updateScore();
 
     // add any more fields as necessary

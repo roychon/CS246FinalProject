@@ -51,3 +51,11 @@ bool Player::hasLinkAt(int x, int y) {
     }
     return false;
 }
+
+int Player::getDataCount() {
+    return data;
+}
+
+int Player::getVirusCount() {
+    return viruses;
+}

@@ -112,3 +112,7 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
             grid[linkycoord][linkxcoord].setLinkNull();
         }
     }
+
+void Board::printTextDisplay() {
+    cout << *td;
+}
