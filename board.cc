@@ -99,22 +99,26 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
     int linkxcoord = link.getX();
     int linkycoord = link.getY();
 
-    if (grid[linkycoord + y][linkxcoord + x].getIsServerPort()) {
-        if (link.getType() == "D") {
-            NonActivePlayer->changeDataCount();
+        if (grid[linkycoord + y][linkxcoord + x].getIsServerPort()) {
+            if (link.getType() == "D") {
+                NonActivePlayer->changeDataCount();
+            }
+            else {
+                NonActivePlayer->changeVirusCount();
+            }
+            link.setX(-1);
+            link.setY(-1);
+            link.revealLink();
+            grid[linkycoord + y][linkxcoord + x].setLinkNull();
+            td->notify(grid[linkycoord + y][linkxcoord + x]);
         }
+
         else {
-            NonActivePlayer->changeVirusCount();
+            grid[linkycoord + y][linkxcoord + x].setLink(&link);
+            grid[linkycoord][linkxcoord].setLinkNull();
         }
-        link.setX(-1);
-        link.setY(-1);
-        link.revealLink();
-        grid[linkycoord + y][linkxcoord + x].setLinkNull();
-        td->notify(grid[linkycoord + y][linkxcoord + x]);
     }
 
-    else {
-        grid[linkycoord + y][linkxcoord + x].setLink(&link);
-        grid[linkycoord][linkxcoord].setLinkNull();
-    }
+void Board::printTextDisplay() {
+    cout << *td;
 }
