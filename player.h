@@ -22,8 +22,8 @@ public:
     void changeVirusCount(); // increment virus by 1
     void printPlayerDisplay(bool isActive);
     int getplayerID();
-    bool HasLinkAt(int x, int y);
-    void RemoveLinkAt(int x, int y);
+    bool hasLinkAt(int x, int y);
+    void removeLinkAt(int x, int y);
     // void updateScore();
 
     // add any more fields as necessary
