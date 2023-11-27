@@ -1,6 +1,7 @@
 #ifndef __TEXTDISPLAY_H__
 #define __TEXTDISPLAY_H__
 #include "observer.h"
+#include <iostream>
 #include <vector>
 using namespace std;
 class Cell;

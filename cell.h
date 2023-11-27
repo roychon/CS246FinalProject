@@ -13,6 +13,7 @@ class Cell {
     Link *link; // ptr to specific link
 
 public:
+    Cell(int row, int col, bool isFirewall, bool isServerPort, Link *link);
     int getRow();
     int getCol();
     void notifyObservers();
@@ -21,7 +22,7 @@ public:
     bool getIsServerPort();
     void setLinkNull();
     Link* getLink();
-    void setLink(Link *link);
+    void setLink(Link *newlink);
 
     // add any more fields as necessary
 };
