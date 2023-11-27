@@ -9,8 +9,6 @@ Board::Board(vector<vector<Cell>> grid, TextDisplay *td) : size{8}, grid{grid}, 
 // Therefore a positive y value means moving upwards on the board display
 // And a positive x value means moving to the right on the board display
 
-// TODO: check when moving into your own server port 
-    // - instead make server ports a link and have every player owning their two server ports
 bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
     int linkxcoord = link.getX();
     int linkycoord = link.getY();
@@ -126,7 +124,6 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
 }
 
 
-// TODO: call notify on original cell and new cell, so textdisplay is accurate + check Nicholas' discord message regarding server ports being links
 void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y) {
     int linkxcoord = link.getX();
     int linkycoord = link.getY();

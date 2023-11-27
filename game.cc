@@ -77,7 +77,6 @@ bool Game::move(Link *link, int x, int y) {
     // at this point, activePlayer's move is valid.
     // check if cell is occupied by opponent, find opponent(nonActivePlayer)
     Player *nonActivePlayer = (players[0]->getplayerID() == activePlayer->getplayerID()) ? players[1] : players[0];
-    // TODO: try and change logic if occupied by server port, change server port to be a link!
     if (board->isOccupiedByOpponent(nonActivePlayer, xCord, yCord)) {
         // start battle
         board->battle(*activePlayer, *nonActivePlayer, *link, *(nonActivePlayer->findLinkAt(xCord, yCord)));
