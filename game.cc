@@ -23,18 +23,33 @@ bool Game::checkWin() {
 }
 
 void Game::display() {
-    int activeID = activePlayer->getplayerID();
-    
-    int nonActiveID = -1;
+    Player *p1 = nullptr;
+    Player *p2 = nullptr;
+
     for (auto player : players) {
-        if (player != activePlayer) {
-            nonActiveID = player->getplayerID();
+        if (player->getplayerID() == 1) {
+            p1 = player;
+        }
+        else {
+            p2 = player;
         }
     }
 
-    cout << "Player " << activeID << ":" << endl;
-    activePlayer->printPlayerDisplay(true);
+    cout << "Player 1:" << endl;
+    if (p1 == activePlayer) {
+        p1->printPlayerDisplay(true);
+    }
+    else {
+        p1->printPlayerDisplay(false);
+    }
+
     board->printTextDisplay();
-    cout << "Player " << nonActiveID << ":" << endl;
-    players[nonActiveID]->printPlayerDisplay(false);
+
+    cout << "Player 2:" << endl;
+    if (p2 == activePlayer) {
+        p2->printPlayerDisplay(true);
+    }
+    else {
+        p2->printPlayerDisplay(false);
+    }
 }

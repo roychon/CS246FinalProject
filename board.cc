@@ -114,5 +114,5 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
     }
 
 void Board::printTextDisplay() {
-    cout << td;
+    cout << *td;
 }
