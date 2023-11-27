@@ -1,14 +1,18 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
+#include <vector>
+#include <memory>
 #include "cell.h"
 #include "textdisplay.h"
 #include "link.h"
+using namespace std;
 
 class Board {
     int size;
     vector<vector<Cell>> grid;
-    std::unique_ptr<TextDisplay> td;
+    unique_ptr<TextDisplay> td;
     // GraphicsDisplay *gd;
+    void setCellObservers();
 
 public:
     Board();
@@ -18,6 +22,7 @@ public:
     void move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y);
     void printTextDisplay();
     void setup();
+    void setupLinks(Player &player);
 
     // add any more fields as necessary
 };

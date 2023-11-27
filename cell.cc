@@ -3,8 +3,12 @@ using namespace std;
 
 Cell::Cell(int row, int col, bool isFirewall, bool isServerPort, Link *link) : row{row}, col{col}, 
 isFirewall{isFirewall}, isServerPort{isServerPort}, link{link} {
+    // note from Nicholas - don't think we need this cause board will attach the observers for each cell
+    /*
     vector<Observer *> newobs;
     observers = newobs;
+    */
+    
 }
 
 int Cell::getRow() {

@@ -172,7 +172,14 @@ void Board::printTextDisplay() {
                 grid[i].emplace_back();
             }
         }
-
         // set cell observers
         setCellObservers();
+    }
+
+    void setupLinks(Player &player) {
+        vector<Links*> playerLinks = player.getLinks();
+        for (size_t i = 0; i < playerLinks.size(); ++i) {
+            // set coords
+            // set cell
+        }
     }

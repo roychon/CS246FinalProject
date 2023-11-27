@@ -1,13 +1,15 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 #include <vector>
+#include <memory>
 #include "board.h"
 #include "player.h"
 #include "link.h"
+using namespace std;
 
 class Game {
-    std::unique_ptr<Board> board;
-    std::vector<std::unique_ptr<Player>> players;
+    unique_ptr<Board> board;
+    vector<unique_ptr<Player>> players;
     Player *activePlayer;
     Player *winningPlayer;
 
