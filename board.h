@@ -15,6 +15,7 @@ public:
     bool isOccupiedByOpponent(Player *NonActivePlayer, int x, int y);
     void battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink);
     void move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y);
+    void printTextDisplay();
 
     // add any more fields as necessary
 };
