@@ -4,15 +4,15 @@
 #include "board.h"
 #include "player.h"
 #include "link.h"
-using namespace std;
 
 class Game {
-    Board *board;
-    vector<Player *> players;
+    std::unique_ptr<Board> board;
+    std::vector<std::unique_ptr<Player>> players;
     Player *activePlayer;
     Player *winningPlayer;
 
 public:
+    Game();
     bool checkWin();
     void display();
     bool move(Link *link, int x, int y);

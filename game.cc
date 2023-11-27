@@ -1,6 +1,20 @@
 #include "game.h"
 using namespace std;
 
+Game::Game(): board{board = make_unique<Board>()}, players(2), 
+    activePlayer{nullptr}, winningPlayer{nullptr}{
+        for (int i = 0; i < 2; ++i) {
+            players[i] = make_unique<Player>();
+        }
+    }
+
+void Game::init() {
+    // call board setup, creating cells & displays
+    board.setup();
+    // create link shells and place them
+    
+}
+
 // also sets the other player to winning player
 bool Game::checkWin() {
     for (auto player : players) {
@@ -83,10 +97,3 @@ bool Game::move(Link *link, int x, int y) {
     }
     return true;
 }
-
-void Game::init() {
-    // call board setup, creating cells & displays
-    board.setup();
-    
-}
-

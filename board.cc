@@ -1,7 +1,7 @@
 #include "board.h"
 using namespace std;
 
-Board::Board() : size{8}, td{nullptr} {}
+Board::Board() : size{8}, td{make_unique<TextDisplay>()} {}
 
 // Handle board orientation of commands in the main function
 // Therefore a positive y value means moving upwards on the board display
@@ -172,8 +172,6 @@ void Board::printTextDisplay() {
                 grid[i].emplace_back();
             }
         }
-        // unique ptr to text display
-        td = make_unique<TextDisplay>();
 
         // set cell observers
         setCellObservers();
