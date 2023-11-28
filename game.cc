@@ -18,7 +18,7 @@ void Game::init() {
         players[i]->initLinks();
         board->placeLinks(players[i]);
     }
-    
+    // right now, initializing empty, need to initialize from file or randomize
 }
 
 // also sets the other player to winning player
