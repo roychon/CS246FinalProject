@@ -1,7 +1,7 @@
 #include "game.h"
 using namespace std;
 
-Game::Game(): board{board = make_unique<Board>()}, players(2), 
+Game::Game(): board{make_unique<Board>()}, players(2), 
     activePlayer{nullptr}, winningPlayer{nullptr}{
         for (int i = 0; i < 2; ++i) {
             players[i] = make_unique<Player>();
@@ -23,18 +23,18 @@ void Game::init() {
 
 // also sets the other player to winning player
 bool Game::checkWin() {
-    for (auto player : players) {
+    for (auto &player : players) {
         if (player->getDataCount() == 4) {
-            winningPlayer = player;
+            winningPlayer = player.get();
             return true;
         }
         else if (player->getVirusCount() == 4) {
             if (player->getplayerID() == 1) {
-                winningPlayer = players[1];
+                winningPlayer = players[1].get();
                 return true;
             }
             else {
-                winningPlayer = players[0];
+                winningPlayer = players[0].get();
                 return true;
             }
         }
@@ -46,12 +46,12 @@ void Game::display() {
     Player *p1 = nullptr;
     Player *p2 = nullptr;
 
-    for (auto player : players) {
+    for (auto &player : players) {
         if (player->getplayerID() == 1) {
-            p1 = player;
+            p1 = player.get();
         }
         else {
-            p2 = player;
+            p2 = player.get();
         }
     }
 
@@ -93,7 +93,7 @@ bool Game::move(Link *link, int x, int y) {
 
     // at this point, activePlayer's move is valid.
     // check if cell is occupied by opponent, find opponent(nonActivePlayer)
-    Player *nonActivePlayer = (players[0]->getplayerID() == activePlayer->getplayerID()) ? players[1] : players[0];
+    Player *nonActivePlayer = (players[0]->getplayerID() == activePlayer->getplayerID()) ? players[1].get() : players[0].get();
     if (board->isOccupiedByOpponent(nonActivePlayer, xCord, yCord)) {
         // start battle
         board->battle(*activePlayer, *nonActivePlayer, *link, *(nonActivePlayer->findLinkAt(xCord, yCord)));

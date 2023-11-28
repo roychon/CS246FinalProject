@@ -1,10 +1,12 @@
 #ifndef __ABILITY_H__
 #define __ABILITY_H__
+#include "link.h"
 class Ability {
-    int abilityType;
+    int id;
     bool isUsed;
 public:
-    virtual void useAbility() = 0;
+    Ability(int abilityType);
+    virtual void apply(Link &link) = 0;
 };
 
 #endif

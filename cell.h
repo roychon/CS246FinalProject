@@ -25,6 +25,7 @@ public:
     void setCoords(int r, int c);
     void setLink(Link *newlink);
     void setIsServerPortTrue();
+    void setFirewall();
 
     // add any more fields as necessary
 };

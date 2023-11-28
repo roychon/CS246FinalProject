@@ -6,6 +6,8 @@ using namespace std;
 
 class Player;
 
+// TODO: think about making Link abstract for lower coupling
+// -> link will have to have a download function then
 class Link {
     char id; // board display id, from a to z or A to Z depending on player
     int strength; // strength of link
@@ -17,9 +19,9 @@ class Link {
     int moveFactor; // controls distance of movement for link on game board
 
 public:
-    Link(int playerID, int index);
+    Link();
     void move(int x, int y);
-    int getMoveFactor();
+    int &getMoveFactor();
     char getId();
     string getType();
     int getStrength();

@@ -52,3 +52,7 @@ void Cell::setCoords(int r, int c) {
     row = r;
     col = c;
 }
+
+void Cell::setFirewall() {
+    isFirewall = true;
+}
