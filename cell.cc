@@ -1,7 +1,7 @@
 #include "cell.h"
 using namespace std;
 
-Cell:Cell(): isFirewall{false}, isServerPort{false}, link{nullptr}{}
+Cell::Cell(): isFirewall{false}, isServerPort{false}, link{nullptr}{}
 
 int Cell::getRow() {
     return row;

@@ -125,7 +125,7 @@ void Board::printTextDisplay() {
 // ===================== Board Setup =======================
 
 // sets the observers and coords for every cell.
-void setCellObservers() {
+void Board::setCellObservers() {
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
             Cell &current = grid[i][j];
@@ -148,14 +148,14 @@ void Board::setup() {
 }
 
 void Board::setupLinks(Player &player) {
-    vector<Links*> playerLinks = player.getLinks();
+    vector<Link*> playerLinks = player.getLinks();
     int frontRow = 1;
     int backRow = 0;
-    if (player.playerID == 2) {
+    if (player.getplayerID() == 2) {
         frontRow = 6;
         backRow = 7;
     }
-    for (int i = 0; i < gridSize; ++i) {
+    for (int i = 0; i < size; ++i) {
         // server port row:
         if (i == 3 || i == 4) {
             grid[backRow][i].setIsServerPortTrue();
