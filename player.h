@@ -26,6 +26,7 @@ public:
     void removeLinkAt(int x, int y);
     int getDataCount();
     int getVirusCount();
+    Link *findLinkAt(int xCord, int yCord);
     // void updateScore();
 
     // add any more fields as necessary

@@ -59,3 +59,9 @@ int Player::getDataCount() {
 int Player::getVirusCount() {
     return viruses;
 }
+
+Link *Player::findLinkAt(int xCord, int yCord) {
+    for (auto link : links) {
+        if (link->getX() == xCord && link->getY() == yCord) return link;
+    }
+}

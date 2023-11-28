@@ -53,3 +53,33 @@ void Game::display() {
         p2->printPlayerDisplay(false);
     }
 }
+
+// false (invalid move), true (valid move). Loop through 
+bool Game::move(Link *link, int x, int y) {
+    int xCord, yCord;
+
+    // right: x = 1, left : x = -1, up : y = 1, down : y = -1
+    // Player 1: top of the board
+    if (activePlayer->getplayerID() == 1) {
+        xCord = link->getX() - x;
+        yCord = link->getY() + y;
+    } else {
+    // Player 2: bottom of the board
+        xCord = link->getX() + x;
+        yCord = link->getY() - y;
+    }
+
+    if (board->isInvalidMove(*link, xCord, yCord, *activePlayer)) return false;
+
+    // at this point, activePlayer's move is valid.
+    // check if cell is occupied by opponent, find opponent(nonActivePlayer)
+    Player *nonActivePlayer = (players[0]->getplayerID() == activePlayer->getplayerID()) ? players[1] : players[0];
+    if (board->isOccupiedByOpponent(nonActivePlayer, xCord, yCord)) {
+        // start battle
+        board->battle(*activePlayer, *nonActivePlayer, *link, *(nonActivePlayer->findLinkAt(xCord, yCord)));
+    } else {
+        // activePlayer moves link to empty cell or server port
+        board->move(activePlayer, nonActivePlayer, *link, x, y);
+    }
+    return true;
+}
