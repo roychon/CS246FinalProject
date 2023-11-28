@@ -1,5 +1,6 @@
 #include "player.h"
 #include <iostream>
+#include <map>
 using namespace std;
 
 // note, when init is fully setup likely have to pass abilities as a parameter
@@ -12,7 +13,7 @@ Player::Player(const int playerID) : links(8), data{0}, viruses{0}, numAbilities
 
 // Assigns the player's link a character ID for their display on the board.
 char Player::linkIDLookUp(const int playerID, const int index) {
-    map<int, char> linkIDMap;
+    std::map<int, char> linkIDMap;
     char baseChar = 'a';
     if (playerID == 2) baseChar -= 32;
     for (int i = 0; i < 8; ++i) {
@@ -41,7 +42,7 @@ void Player::printPlayerDisplay(bool isActive) {
     cout << "Abilities: " << numAbilitiesLeft << endl;
     if (isActive) {
         char start = 'a';
-        for (auto link : links) {
+        for (auto &link : links) {
             cout << start << ": " << link->getType() << link->getStrength();
             if (start == 'd' || start == 'h') cout << endl;
             else cout << " ";
@@ -50,7 +51,7 @@ void Player::printPlayerDisplay(bool isActive) {
     }
     else {
         char start = 'A';
-        for (auto link : links) {
+        for (auto &link : links) {
             cout << start << ": ";
             if (link->getIsRevealed()) {
                 cout << link->getType() << link->getStrength();
@@ -68,7 +69,7 @@ int Player::getplayerID() {
     return playerID;
 }
 
-vector<Link*> getLinks() {
+vector<Link*> Player::getLinks() {
     vector<Link*> rawLinks(links.size());
     for (size_t i = 0; i < links.size(); ++i) {
         rawLinks[i] = links[i].get();
@@ -77,7 +78,7 @@ vector<Link*> getLinks() {
 }
 
 bool Player::hasLinkAt(int x, int y) {
-    for (auto link : links) {
+    for (auto &link : links) {
         if (x == link->getX() && y == link->getY()) {
             return true;
         }
@@ -94,7 +95,7 @@ int Player::getVirusCount() {
 }
 
 Link *Player::findLinkAt(int xCord, int yCord) {
-    for (auto link : links) {
-        if (link->getX() == xCord && link->getY() == yCord) return link;
+    for (auto &link : links) {
+        if (link->getX() == xCord && link->getY() == yCord) return link.get();
     }
 }
