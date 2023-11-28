@@ -8,6 +8,7 @@
 class Link;
 
 using namespace std;
+// TODO: make player class abstract and have player1, player2 class inherit to lower coupling
 class Player {
     vector<unique_ptr<Link>> links; // player's links
     vector<unique_ptr<Ability>> abilities; // player's abilities

@@ -1,6 +1,6 @@
 #include "link.h"
 
-Link(): strength{0}, isRevealed{false}, x{-1}, y{-1}, player{nullptr}, moveFactor{1} {}
+Link::Link(): strength{0}, isRevealed{false}, x{-1}, y{-1}, player{nullptr}, moveFactor{1} {}
 
 char Link::getId() {
     return id;
@@ -26,7 +26,7 @@ Player &Link::getPlayer() {
     return *player;
 }
 
-int Link::getMoveFactor() {
+int &Link::getMoveFactor() {
     return moveFactor;
 }
 
