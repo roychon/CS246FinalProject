@@ -1,11 +1,7 @@
 #include "cell.h"
 using namespace std;
 
-Cell::Cell(int row, int col, bool isFirewall, bool isServerPort, Link *link) : row{row}, col{col}, 
-isFirewall{isFirewall}, isServerPort{isServerPort}, link{link} {
-    vector<Observer *> newobs;
-    observers = newobs;
-}
+Cell:Cell(): isFirewall{false}, isServerPort{false}, link{nullptr}{}
 
 int Cell::getRow() {
     return row;
@@ -46,4 +42,13 @@ Link* Cell::getLink() {
 
 void Cell::setLink(Link *newlink) {
     link = newlink;
+}
+
+void Cell::setIsServerPortTrue() {
+    isServerPort = true;
+}
+
+void Cell::setCoords(int r, int c) {
+    row = r;
+    col = c;
 }
