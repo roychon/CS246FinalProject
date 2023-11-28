@@ -16,7 +16,7 @@ void Game::init() {
     // create link shells and place them
     for (size_t i = 0; i < players.size(); ++i) {
         players[i]->initLinks();
-        board->placeLinks(players[i]);
+        board->setupLinks(players[i]);
     }
     // right now, initializing empty, need to initialize from file or randomize
 }
