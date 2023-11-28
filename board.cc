@@ -11,19 +11,8 @@ Board::Board(vector<vector<Cell>> grid, TextDisplay *td) : size{8}, grid{grid}, 
 bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
     int linkxcoord = link.getX();
     int linkycoord = link.getY();
-    
-    if (player.getplayerID() == 2) {
-        // JAMES' previous logic, where x + y where 'amount to move by'
-        // if (x + linkxcoord > 7 || x + linkxcoord < 0 || y + linkycoord > 7) {
-        //     return true;
-        // }
-        // else if (player.hasLinkAt(x + linkxcoord, y + linkycoord)) {
-        //     return true;
-        // }
-        // else if ((x + linkxcoord == 3 && y + linkycoord == 7) || (x + linkxcoord == 4 && y + linkycoord == 7)) {
-        //     return true;
-        // }
 
+    if (player.getplayerID() == 2) {
         // check out of bounds
         if (xCord > 7 || xCord < 0 || yCord > 7) {
             return true;
@@ -43,30 +32,14 @@ bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
     }
 
     else {
-        // JAMES' prev. log
-        // if (x + linkxcoord > 7 || x + linkxcoord < 0 || y + linkycoord < 0) {
-        //     return true;
-        // }
-
-        // else if (player.hasLinkAt(x + linkxcoord, y + linkycoord)) {
-        //     return true;
-        // }
-
-        // else if ((x + linkxcoord == 3 && y + linkycoord == 0) || (x + linkxcoord == 4 && y + linkycoord == 0)) {
-        //     return true;
-        // }
-
 
         // Player 1 : top of the board
-        // check out of bounds
         if (xCord > 7 || xCord < 0 || yCord < 0) {
             return true;
         }
-        // check if trying to move onto owned link
          else if (player.hasLinkAt(xCord, yCord)) {
             return true;
         }
-        // check if trying to move onto owned server port
          else if (yCord == 0 && (xCord == 3 || xCord == 4)) {
             return true;
         }
@@ -76,7 +49,7 @@ bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
 }
 }
 
-// CHANGED: xCord, yCord are actual coordinates it moves into now
+// xCord, yCord are coordinates it needs to move into
 bool Board::isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord) {
     if (NonActivePlayer->hasLinkAt(xCord, yCord)) {
         return true;
@@ -100,7 +73,6 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         NonActivePlayerLink.revealLink();
         ActivePlayerLink.revealLink();
         grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].setLinkNull();
-        // td->notify(grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()]);
         grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].notifyObservers();
     }
 
@@ -116,7 +88,6 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         NonActivePlayerLink.revealLink();
         ActivePlayerLink.revealLink();
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].setLinkNull();
-        // td->notify(grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()]);
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
     }
 }
