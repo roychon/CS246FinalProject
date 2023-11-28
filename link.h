@@ -17,6 +17,7 @@ class Link {
     int moveFactor; // controls distance of movement for link on game board
 
 public:
+    Link(int playerID, int index);
     void move(int x, int y);
     int getMoveFactor();
     char getId();
@@ -26,11 +27,12 @@ public:
     Player &getPlayer();
     int getX();
     int getY();
+    bool getIsRevealed();
     void setX(int x);
     void setY(int y);
     void setStrength(int strength);
     void setType(string type);
-    bool getIsRevealed();
+    void setPlayer(Player *player);
     void revealLink();
 
     // add any more fields as necessary

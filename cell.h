@@ -4,7 +4,7 @@
 #include "observer.h"
 #include "link.h"
 
-class Cell {
+class Cell : public Observer {
     vector<Observer *> observers;
     int row;
     int col;
@@ -13,16 +13,18 @@ class Cell {
     Link *link; // ptr to specific link
 
 public:
-    Cell(int row, int col, bool isFirewall, bool isServerPort, Link *link);
+    Cell();
     int getRow();
     int getCol();
     void notifyObservers();
     void attach(Observer *o);
     bool getIsFirewall();
     bool getIsServerPort();
-    void setLinkNull();
     Link* getLink();
+    void setLinkNull();
+    void setCoords(int r, int c);
     void setLink(Link *newlink);
+    void setIsServerPortTrue();
 
     // add any more fields as necessary
 };

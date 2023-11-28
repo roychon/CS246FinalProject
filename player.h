@@ -1,6 +1,7 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 #include <vector>
+#include <memory>
 #include "ability.h"
 #include "link.h"
 
@@ -8,20 +9,23 @@ class Link;
 
 using namespace std;
 class Player {
-    vector<Link *> links; // player's links
-    vector<Ability *> abilities; // player's abilities
+    vector<unique_ptr<Link>> links; // player's links
+    vector<unique_ptr<Ability>> abilities; // player's abilities
     int data; // # data player downloads
     int viruses; // # viruses player downloads
     int numAbilitiesLeft; // # abilities player can use
-    int playerID;
+    const int playerID;
+    char linkIDLookUp(const int playerID, const int index);
 
 public:
-    Player(vector<Link *> links, vector<Ability *> abilities);
+    Player(const int playerID);
     ~Player();
+    void initLinks(); // Sets player pointers and characer IDs of each link.
     void changeDataCount(); // increment data by 1
     void changeVirusCount(); // increment virus by 1
     void printPlayerDisplay(bool isActive);
     int getplayerID();
+    vector<Link*> getLinks();
     bool hasLinkAt(int x, int y);
     void removeLinkAt(int x, int y);
     int getDataCount();

@@ -1,7 +1,32 @@
 #include "player.h"
 #include <iostream>
 using namespace std;
-Player::Player(vector<Link *> links, vector<Ability *> abilities) : links{links}, abilities{abilities}, data{0}, viruses{0}, numAbilitiesLeft{5} {}
+
+// note, when init is fully setup likely have to pass abilities as a parameter
+// temporarily passing "8" as # of links, if server port is coded as link, +2 so 10 links total.
+Player::Player(const int playerID) : links(8), data{0}, viruses{0}, numAbilitiesLeft{5}, playerID{playerID}{
+    for (size_t i = 0; i < links.size(); ++i) {
+        links[i] = make_unique<Link>();
+    }
+}
+
+// Assigns the player's link a character ID for their display on the board.
+char Player::linkIDLookUp(const int playerID, const int index) {
+    map<int, char> linkIDMap;
+    char baseChar = 'a';
+    if (playerID == 2) baseChar -= 32;
+    for (int i = 0; i < 8; ++i) {
+        linkIDMap[i] = baseChar + i;
+    }
+    return linkIDMap[index];
+}
+
+void Player::initLinks() {
+    for (size_t i = 0; i < links.size(); ++i) {
+        links[i]->setPlayer(this);
+        links[i]->setId(linkIDLookUp(playerID, i));
+    }
+}
 
 void Player::changeDataCount() {
     data++;
@@ -41,6 +66,14 @@ void Player::printPlayerDisplay(bool isActive) {
 
 int Player::getplayerID() {
     return playerID;
+}
+
+vector<Link*> getLinks() {
+    vector<Link*> rawLinks(links.size());
+    for (size_t i = 0; i < links.size(); ++i) {
+        rawLinks[i] = links[i].get();
+    }
+    return rawLinks;
 }
 
 bool Player::hasLinkAt(int x, int y) {
