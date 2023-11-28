@@ -29,11 +29,11 @@ void Player::initLinks() {
     }
 }
 
-void Player::changeDataCount() {
+void Player::incrementDataCount() {
     data++;
 }
 
-void Player::changeVirusCount() {
+void Player::incrementVirusCount() {
     viruses++;
 }
 

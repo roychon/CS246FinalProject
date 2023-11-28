@@ -22,8 +22,8 @@ public:
     Player(const int playerID);
     ~Player();
     void initLinks(); // Sets player pointers and characer IDs of each link.
-    void changeDataCount(); // increment data by 1
-    void changeVirusCount(); // increment virus by 1
+    void incrementDataCount(); // increment data by 1
+    void incrementVirusCount(); // increment virus by 1
     void printPlayerDisplay(bool isActive);
     int getplayerID();
     vector<Link*> getLinks();
