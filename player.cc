@@ -98,4 +98,5 @@ Link *Player::findLinkAt(int xCord, int yCord) {
     for (auto &link : links) {
         if (link->getX() == xCord && link->getY() == yCord) return link.get();
     }
+    return nullptr; // will never get to this point
 }

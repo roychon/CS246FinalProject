@@ -8,8 +8,6 @@ Board::Board() : size{8}, td{make_unique<TextDisplay>()} {}
 // And a positive x value means moving to the right on the board display
 
 bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
-    int linkxcoord = link.getX();
-    int linkycoord = link.getY();
 
     if (player.getplayerID() == 2) {
         // check out of bounds

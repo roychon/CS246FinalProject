@@ -36,7 +36,7 @@ public:
     void setType(string type);
     void setPlayer(Player *player);
     void revealLink();
-    void Link::setId(char id);
+    void setId(char id);
 
     // add any more fields as necessary
 };

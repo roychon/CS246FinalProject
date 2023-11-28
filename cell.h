@@ -4,7 +4,7 @@
 #include "observer.h"
 #include "link.h"
 
-class Cell : public Observer {
+class Cell {
     vector<Observer *> observers;
     int row;
     int col;
