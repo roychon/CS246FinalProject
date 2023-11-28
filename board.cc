@@ -8,8 +8,6 @@ Board::Board() : size{8}, td{make_unique<TextDisplay>()} {}
 // And a positive x value means moving to the right on the board display
 
 bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
-    int linkxcoord = link.getX();
-    int linkycoord = link.getY();
 
     if (player.getplayerID() == 2) {
         // check out of bounds
@@ -62,10 +60,10 @@ bool Board::isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord) 
 void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink) {
     if (ActivePlayerLink.getStrength() >= NonActivePlayerLink.getStrength()) {
         if (NonActivePlayerLink.getType() == "D") {
-            ActivePlayer.changeDataCount();
+            ActivePlayer.incrementDataCount();
         }
         else {
-            ActivePlayer.changeVirusCount();
+            ActivePlayer.incrementVirusCount();
         }
         NonActivePlayerLink.setX(-1);
         NonActivePlayerLink.setY(-1);
@@ -77,10 +75,10 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
 
     else {
         if (ActivePlayerLink.getType() == "D") {
-            NonActivePlayer.changeDataCount();
+            NonActivePlayer.incrementDataCount();
         }
         else {
-            NonActivePlayer.changeVirusCount();
+            NonActivePlayer.incrementVirusCount();
         }
         ActivePlayerLink.setX(-1);
         ActivePlayerLink.setY(-1);
@@ -96,26 +94,26 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
     int linkxcoord = link.getX();
     int linkycoord = link.getY();
 
-        if (grid[linkycoord + y][linkxcoord + x].getIsServerPort()) {
-            if (link.getType() == "D") {
-                NonActivePlayer->changeDataCount();
-            }
-            else {
-                NonActivePlayer->changeVirusCount();
-            }
-            link.setX(-1);
-            link.setY(-1);
-            link.revealLink();
-            grid[linkycoord + y][linkxcoord + x].setLinkNull();
-            grid[linkycoord + y][linkxcoord + x].notifyObservers();
+    if (grid[linkycoord + y][linkxcoord + x].getIsServerPort()) {
+        if (link.getType() == "D") {
+            NonActivePlayer->incrementDataCount();
         }
-
         else {
-            grid[linkycoord + y][linkxcoord + x].setLink(&link);
-            grid[linkycoord][linkxcoord].setLinkNull();
-            grid[linkycoord + y][linkxcoord + x].notifyObservers();
-            grid[linkycoord][linkxcoord].notifyObservers();
+            NonActivePlayer->incrementVirusCount();
         }
+        link.setX(-1);
+        link.setY(-1);
+        link.revealLink();
+        grid[linkycoord + y][linkxcoord + x].setLinkNull();
+        grid[linkycoord + y][linkxcoord + x].notifyObservers();
+    }
+
+    else {
+        grid[linkycoord + y][linkxcoord + x].setLink(&link);
+        grid[linkycoord][linkxcoord].setLinkNull();
+        grid[linkycoord + y][linkxcoord + x].notifyObservers();
+        grid[linkycoord][linkxcoord].notifyObservers();
+    }
 }
 
 void Board::printTextDisplay() {

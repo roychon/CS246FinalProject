@@ -6,6 +6,7 @@
 #include "link.h"
 
 class Link;
+class Ability;
 
 using namespace std;
 // TODO: make player class abstract and have player1, player2 class inherit to lower coupling
@@ -20,10 +21,10 @@ class Player {
 
 public:
     Player(const int playerID);
-    ~Player();
+    // ~Player();
     void initLinks(); // Sets player pointers and characer IDs of each link.
-    void changeDataCount(); // increment data by 1
-    void changeVirusCount(); // increment virus by 1
+    void incrementDataCount(); // increment data by 1
+    void incrementVirusCount(); // increment virus by 1
     void printPlayerDisplay(bool isActive);
     int getplayerID();
     vector<Link*> getLinks();

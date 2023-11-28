@@ -29,11 +29,11 @@ void Player::initLinks() {
     }
 }
 
-void Player::changeDataCount() {
+void Player::incrementDataCount() {
     data++;
 }
 
-void Player::changeVirusCount() {
+void Player::incrementVirusCount() {
     viruses++;
 }
 
@@ -98,4 +98,5 @@ Link *Player::findLinkAt(int xCord, int yCord) {
     for (auto &link : links) {
         if (link->getX() == xCord && link->getY() == yCord) return link.get();
     }
+    return nullptr; // will never get to this point
 }
