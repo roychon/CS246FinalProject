@@ -169,4 +169,14 @@ void Board::setupLinks(Player &player) {
         }
             grid[backRow][i].notifyObservers();
     }
+
+    // hardcoding stats for now
+    for (int i = 0; i < size; ++i) {
+        playerLinks[i]->setStrength = i + 1;
+        playerLinks[i]->setType = "D";
+        if (i > 3) {
+            playerLinks[i]->setStrength = i - 3;
+            playerLinks[i]->setType = "V";      
+        }
+    }
 }
