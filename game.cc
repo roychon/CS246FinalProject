@@ -99,7 +99,7 @@ bool Game::move(Link *link, int x, int y) {
         board->battle(*activePlayer, *nonActivePlayer, *link, *(nonActivePlayer->findLinkAt(xCord, yCord)));
     } else {
         // activePlayer moves link to empty cell or server port
-        board->move(activePlayer, nonActivePlayer, *link, x, y);
+        board->move(activePlayer, nonActivePlayer, *link, xCord, yCord);
     }
     return true;
 }
