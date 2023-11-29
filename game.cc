@@ -43,6 +43,16 @@ bool Game::checkWin() {
 }
 
 void Game::display() {
+    Player *inactivePlayer = nullptr;
+    for (auto &player : players) {
+        if (player.get() != activePlayer) {
+             inactivePlayer = player.get();
+        }
+    }
+    inactivePlayer->printInactivePlayer();
+    board->printTextDisplay();
+    activePlayer->printActivePlayer();
+    /*
     Player *p1 = nullptr;
     Player *p2 = nullptr;
 
@@ -72,6 +82,7 @@ void Game::display() {
     else {
         p2->printPlayerDisplay(false);
     }
+    */
 }
 
 // false (invalid move), true (valid move). Loop through 
