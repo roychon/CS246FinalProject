@@ -103,3 +103,7 @@ bool Game::move(Link *link, int x, int y) {
     }
     return true;
 }
+
+Player* Game::getActivePlayer() {
+    return activePlayer;
+}

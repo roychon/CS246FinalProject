@@ -110,6 +110,8 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
 
     else {
         grid[linkycoord + y][linkxcoord + x].setLink(&link);
+        link.setX(linkxcoord + x);
+        link.setY(linkycoord + y);
         grid[linkycoord][linkxcoord].setLinkNull();
         grid[linkycoord + y][linkxcoord + x].notifyObservers();
         grid[linkycoord][linkxcoord].notifyObservers();
@@ -158,9 +160,15 @@ void Board::setupLinks(Player &player) {
         if (i == 3 || i == 4) {
             grid[backRow][i].setIsServerPortTrue();
             grid[frontRow][i].setLink(playerLinks[i]);
+            playerLinks[i]->setX(i);
+            playerLinks[i]->setY(frontRow);
+            grid[frontRow][i].notifyObservers();
         }
-        else grid[backRow][i].setLink(playerLinks[i]);
-        playerLinks[i]->setX(i);
-        playerLinks[i]->setY(backRow);
+        else {
+            grid[backRow][i].setLink(playerLinks[i]);
+            playerLinks[i]->setX(i);
+            playerLinks[i]->setY(backRow);
+        }
+            grid[backRow][i].notifyObservers();
     }
 }
