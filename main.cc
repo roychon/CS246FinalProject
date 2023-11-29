@@ -56,6 +56,7 @@ int main(int argc, char *argv[]) {
             }
 
             game.display();
+            game.switchActivePlayer();
         }
     }
 

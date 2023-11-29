@@ -107,3 +107,20 @@ bool Game::move(Link *link, int x, int y) {
 Player* Game::getActivePlayer() {
     return activePlayer;
 }
+
+void Game::switchActivePlayer() {
+    if (activePlayer->getplayerID() == 1) {
+        for (auto &player : players) {
+            if (player.get()->getplayerID() == 2) {
+                activePlayer = player.get();
+            }
+        }
+    }
+    else {
+        for (auto &player : players) {
+            if (player.get()->getplayerID() == 1) {
+                activePlayer = player.get();
+            }
+        }
+    }
+}
