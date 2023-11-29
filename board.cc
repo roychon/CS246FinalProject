@@ -90,11 +90,9 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
 }
 
 
-void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y) {
-    int linkxcoord = link.getX();
-    int linkycoord = link.getY();
+void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int xCord, int yCord) {
 
-    if (grid[linkycoord + y][linkxcoord + x].getIsServerPort()) {
+    if (grid[yCord][xCord].getIsServerPort()) {
         if (link.getType() == "D") {
             NonActivePlayer->incrementDataCount();
         }
@@ -104,17 +102,17 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
         link.setX(-1);
         link.setY(-1);
         link.revealLink();
-        grid[linkycoord + y][linkxcoord + x].setLinkNull();
-        grid[linkycoord + y][linkxcoord + x].notifyObservers();
+        grid[yCord][xCord].setLinkNull();
+        grid[yCord][xCord].notifyObservers();
     }
 
     else {
-        grid[linkycoord + y][linkxcoord + x].setLink(&link);
-        link.setX(linkxcoord + x);
-        link.setY(linkycoord + y);
-        grid[linkycoord][linkxcoord].setLinkNull();
-        grid[linkycoord + y][linkxcoord + x].notifyObservers();
-        grid[linkycoord][linkxcoord].notifyObservers();
+        grid[yCord][xCord].setLink(&link);
+        grid[link.getY()][link.getX()].setLinkNull();
+        grid[link.getY()][link.getX()].notifyObservers();
+        link.setX(xCord);
+        link.setY(yCord);
+        grid[yCord][xCord].notifyObservers();
     }
 }
 

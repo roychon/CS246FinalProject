@@ -99,11 +99,28 @@ bool Game::move(Link *link, int x, int y) {
         board->battle(*activePlayer, *nonActivePlayer, *link, *(nonActivePlayer->findLinkAt(xCord, yCord)));
     } else {
         // activePlayer moves link to empty cell or server port
-        board->move(activePlayer, nonActivePlayer, *link, x, y);
+        board->move(activePlayer, nonActivePlayer, *link, xCord, yCord);
     }
     return true;
 }
 
 Player* Game::getActivePlayer() {
     return activePlayer;
+}
+
+void Game::switchActivePlayer() {
+    if (activePlayer->getplayerID() == 1) {
+        for (auto &player : players) {
+            if (player.get()->getplayerID() == 2) {
+                activePlayer = player.get();
+            }
+        }
+    }
+    else {
+        for (auto &player : players) {
+            if (player.get()->getplayerID() == 1) {
+                activePlayer = player.get();
+            }
+        }
+    }
 }

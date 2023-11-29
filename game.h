@@ -21,6 +21,7 @@ public:
 //    void useAbility(int id); // id is 'id' of ability we want to use
     void init(); // initialize the Game
     Player* getActivePlayer();
+    void switchActivePlayer();
 
     // add any more fields as necessary
 };
