@@ -40,12 +40,12 @@ void Link::setId(char id) {
 
 // TODO: check if x is increment factor
 void Link::setX(int x) {
-    this->x += x;
+    this->x = x;
 }
 
 // TODO: check if y is increment factor
 void Link::setY(int y) {
-    this->y += y;
+    this->y = y;
 }
 
 void Link::setStrength(int strength) {

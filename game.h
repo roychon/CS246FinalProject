@@ -20,6 +20,7 @@ public:
     bool move(Link *link, int x, int y);
 //    void useAbility(int id); // id is 'id' of ability we want to use
     void init(); // initialize the Game
+    Player* getActivePlayer();
 
     // add any more fields as necessary
 };

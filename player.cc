@@ -26,6 +26,7 @@ void Player::initLinks() {
     for (size_t i = 0; i < links.size(); ++i) {
         links[i]->setPlayer(this);
         links[i]->setId(linkIDLookUp(playerID, i));
+
     }
 }
 
@@ -61,6 +62,7 @@ void Player::printPlayerDisplay(bool isActive) {
 
             if (start == 'D' || start == 'H') cout << endl;
             else cout << " ";
+            ++start;
         }
     }
 }
