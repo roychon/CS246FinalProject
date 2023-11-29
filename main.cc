@@ -54,9 +54,8 @@ int main(int argc, char *argv[]) {
             else {
                 cout << "Incorrect input";
             }
-
-            game.display();
             game.switchActivePlayer();
+            game.display();
         }
     }
 
