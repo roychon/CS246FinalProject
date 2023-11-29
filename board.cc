@@ -9,7 +9,7 @@ Board::Board() : size{8}, td{make_unique<TextDisplay>()} {}
 
 bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
 
-    if (player.getplayerID() == 2) {
+    if (player.getPlayerID() == 2) {
         // check out of bounds
         if (xCord > 7 || xCord < 0 || yCord > 7) {
             return true;
@@ -133,6 +133,10 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
     }
 }
 
+void Board::updateDisplayPOV(Player *activePlayer) {
+    td->setActivePlayer(activePlayer);
+}
+
 void Board::printTextDisplay() {
     cout << *td;
 }
@@ -166,7 +170,7 @@ void Board::setupLinks(Player &player) {
     vector<Link*> playerLinks = player.getLinks();
     int frontRow = 1;
     int backRow = 0;
-    if (player.getplayerID() == 2) {
+    if (player.getPlayerID() == 2) {
         frontRow = 6;
         backRow = 7;
     }

@@ -25,15 +25,29 @@ void TextDisplay::notify(Cell &c) {
     else grid[c.getRow()][c.getCol()] = c.getLink()->getId();
 }
 
+void TextDisplay::setActivePlayer(Player *player) {
+    activePlayer = player;
+}
+
 TextDisplay::~TextDisplay() {}
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
   cout << "========" << endl;
-  for (const auto &inner: td.grid) {
-      for (const char cell : inner) {
-        out << cell;
-      }
-      out << endl;
+  Player *activePlayer = td.activePlayer;
+  if (activePlayer->getPlayerID() == 1) {
+    for (int i = td.gridSize - 1; i >= 0; --i) {
+        for (int j = td.gridSize - 1; j >= 0; --j) {
+            out << td.grid[i][j];
+        }
+        out << endl;
+    }
+  } else if (activePlayer->getPlayerID() == 2) {
+    for (const auto &inner: td.grid) {
+        for (const char cell : inner) {
+            out << cell;
+        }
+        out << endl;
+    }
   }
   cout << "========" << endl;
   return out;
