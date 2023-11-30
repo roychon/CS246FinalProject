@@ -10,13 +10,19 @@ Game::Game(): board{make_unique<Board>()}, players(2),
         activePlayer = players[0].get();
 }
 
-void Game::init() {
+void Game::init(string player1links, string player2links) {
     // call board setup, creating cells & displays
     board->setup();
     // create link shells and place them
     for (size_t i = 0; i < players.size(); ++i) {
         players[i]->initLinks();
-        board->setupLinks(*(players[i]).get());
+        
+        if (players[i].get()->getplayerID() == 1) {
+        board->setupLinks(*(players[i]).get(), player1links);
+        }
+        else {
+        board->setupLinks(*(players[i]).get(), player2links);    
+        }
     }
     // right now, initializing empty, need to initialize from file or randomize
 }

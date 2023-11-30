@@ -22,7 +22,7 @@ public:
     void move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y);
     void printTextDisplay();
     void setup();
-    void setupLinks(Player &player);
+    void setupLinks(Player &player, string playerlinks);
 
     // add any more fields as necessary
 };

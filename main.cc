@@ -1,13 +1,43 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <fstream>
 #include "game.h"
 using namespace std;
 
 int main(int argc, char *argv[]) {
+    string player1links = "Default";
+    string player2links = "Default";
+    // Command line arguments
+    for (int i = 1; i < argc; ++i) {
+        if (argv[i] == "-link1") {
+            ++i;
+            ifstream linkfile{argv[i]};
+            string total;
+            string word;
+            while (linkfile >> word) {
+                total = total + " " + word;
+            }
+            player1links = total;
+            ++i;
+        }
+
+        else if (argv[i] == "-link2") {
+            ++i;
+            ifstream linkfile{argv[i]};
+            string total;
+            string word;
+            while (linkfile >> word) {
+                player2links = player2links + " " + word;
+            }
+            player2links = total;
+            ++i;
+        }
+    }
+
     Game game;
     // can pass parameters into init, for command flags
-    game.init();
+    game.init(player1links, player2links);
 
     string command;
     while (cin >> command) {

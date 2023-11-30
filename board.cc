@@ -1,4 +1,5 @@
 #include "board.h"
+#include <sstream>
 using namespace std;
 
 Board::Board() : size{8}, td{make_unique<TextDisplay>()} {}
@@ -162,7 +163,7 @@ void Board::setup() {
     setCellObservers();
 }
 
-void Board::setupLinks(Player &player) {
+void Board::setupLinks(Player &player, string playerlinks) {
     vector<Link*> playerLinks = player.getLinks();
     int frontRow = 1;
     int backRow = 0;
@@ -187,13 +188,14 @@ void Board::setupLinks(Player &player) {
             grid[backRow][i].notifyObservers();
     }
 
-    // hardcoding stats for now
+    istringstream links{playerlinks};
     for (int i = 0; i < size; ++i) {
-        playerLinks[i]->setStrength(i + 1);
-        playerLinks[i]->setType("D");
-        if (i > 3) {
-            playerLinks[i]->setStrength(i - 3);
-            playerLinks[i]->setType("V");     
-        }
+        string stats;
+        links >> stats;
+        string typestring;
+        typestring[0] = stats[0];
+        int str = stats[1];
+        playerLinks[i]->setStrength(str);
+        playerLinks[i]->setType(typestring);
     }
 }
