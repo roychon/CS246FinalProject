@@ -38,6 +38,7 @@ void Player::incrementVirusCount() {
     viruses++;
 }
 
+/*
 void Player::printPlayerDisplay(bool isActive) {    
     cout << "Downloaded: " << data << "D, " << viruses << "V" << endl;
     cout << "Abilities: " << numAbilitiesLeft << endl;
@@ -66,8 +67,34 @@ void Player::printPlayerDisplay(bool isActive) {
         }
     }
 }
+*/
 
-int Player::getplayerID() {
+void Player::printActivePlayer() {
+    cout << "Player " << playerID << ":" << endl;
+    for (auto &link : links) {
+        cout << link->getId() << ": ";
+        cout << link->getType() << link->getStrength();
+        if (link->getId() == 'D' || link->getId() == 'H' || link->getId() == 'd' || link->getId() == 'h') cout << endl;
+        else cout << " ";
+    }
+}
+
+void Player::printInactivePlayer() {
+    cout << "Player " << playerID << ":" << endl;
+    for (auto &link : links) {
+        cout << link->getId() << ": ";
+        if (link->getIsRevealed()) {
+            cout << link->getType() << link->getStrength();
+        } else {
+            cout << "?";
+        }
+
+        if (link->getId() == 'D' || link->getId() == 'H' || link->getId() == 'd' || link->getId() == 'h') cout << endl;
+        else cout << " ";
+    }
+}
+
+int Player::getPlayerID() {
     return playerID;
 }
 

@@ -9,7 +9,7 @@ Board::Board() : size{8}, td{make_unique<TextDisplay>()} {}
 
 bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
 
-    if (player.getplayerID() == 2) {
+    if (player.getPlayerID() == 2) {
         // check out of bounds
         if (xCord > 7 || xCord < 0 || yCord > 7) {
             return true;
@@ -65,12 +65,16 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         else {
             ActivePlayer.incrementVirusCount();
         }
+        grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].setLink(&ActivePlayerLink);
+        grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].setLinkNull();
+        grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
+        ActivePlayerLink.setX(NonActivePlayerLink.getX());
+        ActivePlayerLink.setY(NonActivePlayerLink.getY());
+        grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
         NonActivePlayerLink.setX(-1);
         NonActivePlayerLink.setY(-1);
         NonActivePlayerLink.revealLink();
         ActivePlayerLink.revealLink();
-        grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].setLinkNull();
-        grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].notifyObservers();
     }
 
     else {
@@ -80,30 +84,43 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         else {
             NonActivePlayer.incrementVirusCount();
         }
-        ActivePlayerLink.setX(-1);
-        ActivePlayerLink.setY(-1);
-        NonActivePlayerLink.revealLink();
-        ActivePlayerLink.revealLink();
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].setLinkNull();
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
+        ActivePlayerLink.setX(-1);
+        ActivePlayerLink.setY(-1);
+        ActivePlayerLink.revealLink();
+        NonActivePlayerLink.revealLink();
     }
 }
 
 
 void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int xCord, int yCord) {
+    
+    if (yCord > 7 || yCord < 0) {
+        grid[link.getY()][link.getX()].setLinkNull();
+        grid[link.getY()][link.getX()].notifyObservers();
+        link.setX(-1);
+        link.setY(-1);
+        if (link.getType() == "D") {
+            ActivePlayer->incrementDataCount();
+        }
+        else {
+            ActivePlayer->incrementVirusCount();
+        }
+    }
 
-    if (grid[yCord][xCord].getIsServerPort()) {
+    else if (grid[yCord][xCord].getIsServerPort()) {
         if (link.getType() == "D") {
             NonActivePlayer->incrementDataCount();
         }
         else {
             NonActivePlayer->incrementVirusCount();
         }
+        grid[link.getY()][link.getX()].setLinkNull();
+        grid[link.getY()][link.getX()].notifyObservers();
         link.setX(-1);
         link.setY(-1);
         link.revealLink();
-        grid[yCord][xCord].setLinkNull();
-        grid[yCord][xCord].notifyObservers();
     }
 
     else {
@@ -114,6 +131,10 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
         link.setY(yCord);
         grid[yCord][xCord].notifyObservers();
     }
+}
+
+void Board::updateDisplayPOV(Player *activePlayer) {
+    td->setActivePlayer(activePlayer);
 }
 
 void Board::printTextDisplay() {
@@ -149,7 +170,7 @@ void Board::setupLinks(Player &player) {
     vector<Link*> playerLinks = player.getLinks();
     int frontRow = 1;
     int backRow = 0;
-    if (player.getplayerID() == 2) {
+    if (player.getPlayerID() == 2) {
         frontRow = 6;
         backRow = 7;
     }
@@ -168,5 +189,15 @@ void Board::setupLinks(Player &player) {
             playerLinks[i]->setY(backRow);
         }
             grid[backRow][i].notifyObservers();
+    }
+
+    // hardcoding stats for now
+    for (int i = 0; i < size; ++i) {
+        playerLinks[i]->setStrength(i + 1);
+        playerLinks[i]->setType("D");
+        if (i > 3) {
+            playerLinks[i]->setStrength(i - 3);
+            playerLinks[i]->setType("V");     
+        }
     }
 }
