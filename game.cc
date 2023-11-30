@@ -8,6 +8,7 @@ Game::Game(): board{make_unique<Board>()}, players(2),
         }
         // set active player to p1
         activePlayer = players[0].get();
+        board->updateDisplayPOV(activePlayer);
 }
 
 void Game::init(string player1links, string player2links) {
@@ -35,7 +36,7 @@ bool Game::checkWin() {
             return true;
         }
         else if (player->getVirusCount() == 4) {
-            if (player->getplayerID() == 1) {
+            if (player->getPlayerID() == 1) {
                 winningPlayer = players[1].get();
                 return true;
             }
@@ -63,7 +64,7 @@ void Game::display() {
     Player *p2 = nullptr;
 
     for (auto &player : players) {
-        if (player->getplayerID() == 1) {
+        if (player->getPlayerID() == 1) {
             p1 = player.get();
         }
         else {
@@ -97,7 +98,7 @@ bool Game::move(Link *link, int x, int y) {
 
     // right: x = 1, left : x = -1, up : y = 1, down : y = -1
     // Player 1: top of the board
-    if (activePlayer->getplayerID() == 1) {
+    if (activePlayer->getPlayerID() == 1) {
         xCord = link->getX() - x;
         yCord = link->getY() + y;
     } else {
@@ -110,7 +111,7 @@ bool Game::move(Link *link, int x, int y) {
 
     // at this point, activePlayer's move is valid.
     // check if cell is occupied by opponent, find opponent(nonActivePlayer)
-    Player *nonActivePlayer = (players[0]->getplayerID() == activePlayer->getplayerID()) ? players[1].get() : players[0].get();
+    Player *nonActivePlayer = (players[0]->getPlayerID() == activePlayer->getPlayerID()) ? players[1].get() : players[0].get();
     if (board->isOccupiedByOpponent(nonActivePlayer, xCord, yCord)) {
         // start battle
         board->battle(*activePlayer, *nonActivePlayer, *link, *(nonActivePlayer->findLinkAt(xCord, yCord)));
@@ -126,18 +127,19 @@ Player* Game::getActivePlayer() {
 }
 
 void Game::switchActivePlayer() {
-    if (activePlayer->getplayerID() == 1) {
+    if (activePlayer->getPlayerID() == 1) {
         for (auto &player : players) {
-            if (player.get()->getplayerID() == 2) {
+            if (player.get()->getPlayerID() == 2) {
                 activePlayer = player.get();
             }
         }
     }
     else {
         for (auto &player : players) {
-            if (player.get()->getplayerID() == 1) {
+            if (player.get()->getPlayerID() == 1) {
                 activePlayer = player.get();
             }
         }
     }
+    board->updateDisplayPOV(activePlayer);
 }

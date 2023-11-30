@@ -20,6 +20,7 @@ public:
     bool isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord);
     void battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink);
     void move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y);
+    void updateDisplayPOV(Player *activePlayer);
     void printTextDisplay();
     void setup();
     void setupLinks(Player &player, string playerlinks);
