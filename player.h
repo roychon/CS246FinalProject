@@ -34,7 +34,7 @@ public:
     int getVirusCount();
     Link *findLinkAt(int xCord, int yCord);
     // void updateScore();
-
+    void useAbility(int id);
     // add any more fields as necessary
 };
 

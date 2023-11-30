@@ -124,3 +124,13 @@ void Game::switchActivePlayer() {
         }
     }
 }
+
+
+// =========
+// CODE FOR ABILITIES
+
+void Game::activePlayerUseAbility(int id) {
+    activePlayer->useAbility(id);
+}
+
+// =========

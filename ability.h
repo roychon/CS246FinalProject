@@ -10,7 +10,9 @@ class Ability
     bool isUsed;
 public:
     Ability(int id);
+    int getId();
     virtual void apply(Link &link) = 0;
+    bool isUsed();
 };
 
 #endif

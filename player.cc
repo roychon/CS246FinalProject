@@ -102,3 +102,14 @@ Link *Player::findLinkAt(int xCord, int yCord) {
     }
     return nullptr; // will never get to this point
 }
+
+// ==========
+// ABILITY CODE
+void Player::useAbility(int id) {
+    for (auto &ability : abilities) {
+        if (ability->getId() == id && !ability->isUsed()) {
+            ability->apply()
+        }
+    }
+}
+// ==========
