@@ -26,7 +26,7 @@ public:
     // TODO: create these into one function
     void incrementDataCount(); // increment data by 1
     void incrementVirusCount(); // increment virus by 1
-    // void printPlayerDisplay(bool isActive);
+    void printPlayerDisplay(bool isActive);
     void printActivePlayer();
     void printInactivePlayer();
     int getplayerID();
