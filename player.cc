@@ -148,10 +148,10 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
     for (int i = 0; i < 5; ++i) {
         char abil = abilinit[i];
         if (abil == 'L') {
-            abilities[i] = make_unique<LinkBoost>(this, grid, i);
+            abilities[i] = make_unique<LinkBoost>(this, grid);
         }
         else if (abil == 'F') {
-            abilities[i] = make_unique<Firewall>(grid);
+            abilities[i] = make_unique<Firewall>(this, grid);
         }
         else if (abil == 'D') {
             abilities[i] = make_unique<Download>(this, grid);

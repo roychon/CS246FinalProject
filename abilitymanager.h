@@ -26,7 +26,6 @@ class AbilityManager {
     public:
         explicit AbilityManager(string abilityString);
         void readArgs(int id);
-        void initAbilities(string abilities);
 };
 
 #endif
