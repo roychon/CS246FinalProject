@@ -78,7 +78,7 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         NonActivePlayerLink.setY(-1);
         NonActivePlayerLink.revealLink();
         ActivePlayerLink.revealLink();
-    }
+    }   
 
     else {
         if (ActivePlayerLink.getType() == 'D') {

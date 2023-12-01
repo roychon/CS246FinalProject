@@ -3,6 +3,9 @@
 #include <vector>
 #include "observer.h"
 #include "link.h"
+using namespace std;
+
+class Link;
 
 class Cell {
     vector<Observer *> observers;
@@ -11,7 +14,7 @@ class Cell {
     bool isFirewall; // check if cell is a Firewall or not
     bool isServerPort; // check if cell is a server port or not
     Link *link; // ptr to specific link
-
+    
 public:
     Cell();
     int getRow();
@@ -26,7 +29,7 @@ public:
     void setLink(Link *newlink);
     void setIsServerPortTrue();
     void setFirewall();
-
+    
     // add any more fields as necessary
 };
 

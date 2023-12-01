@@ -26,7 +26,7 @@ Player &Link::getPlayer() {
     return *player;
 }
 
-int &Link::getMoveFactor() {
+int Link::getMoveFactor() {
     return moveFactor;
 }
 
@@ -67,4 +67,8 @@ void Link::move(int x, int y) {
 
 void Link::revealLink() {
     isRevealed = true;
+}
+
+void Link::incrementMoveFactor(int factor) {
+    moveFactor += factor;
 }

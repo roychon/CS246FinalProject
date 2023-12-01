@@ -1,5 +1,13 @@
 #include "polarize.h"
 
-void Polarize::apply(Link &link) {
-    link.setType(link.getType() == 'D' ? 'V' : 'D');
+Polarize::Polarize(vector<vector<Cell>> *grid): Ability{}, grid{grid} {}
+
+void Polarize::apply(int x, int y) {
+    Link *link = (*grid)[x][y].getLink();
+    if (link->getType() == 'D') {
+        link->setType('V');
+    } else link->setType('D');
+    isUsed = true;
 }
+
+bool Polarize::checkValid(int x, int y) { return false; }

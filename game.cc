@@ -143,3 +143,13 @@ void Game::switchActivePlayer() {
     }
     board->updateDisplayPOV(activePlayer);
 }
+
+
+// =========
+// CODE FOR ABILITIES
+
+void Game::activePlayerUseAbility(int id) {
+    // lookup
+    activePlayer->useAbility(id);
+}
+// =========

@@ -22,6 +22,7 @@ public:
     void init(string player1links, string player2links); // initialize the Game
     Player* getActivePlayer();
     void switchActivePlayer();
+    void activePlayerUseAbility(int id); // call activePlayer's useAbility function
 
     // add any more fields as necessary
 };
