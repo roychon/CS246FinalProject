@@ -75,6 +75,8 @@ void Player::incrementVirusCount() {
 
 void Player::printActivePlayer() {
     cout << "Player " << playerID << ":" << endl;
+    cout << "Downloaded: " << data << "D, " << viruses << "V" << endl;
+    cout << "Abilities: " << numAbilitiesLeft << endl;
     for (auto &link : links) {
         cout << link->getId() << ": ";
         cout << link->getType() << link->getStrength();
@@ -85,6 +87,8 @@ void Player::printActivePlayer() {
 
 void Player::printInactivePlayer() {
     cout << "Player " << playerID << ":" << endl;
+    cout << "Downloaded: " << data << "D, " << viruses << "V" << endl;
+    cout << "Abilities: " << numAbilitiesLeft << endl;
     for (auto &link : links) {
         cout << link->getId() << ": ";
         if (link->getIsRevealed()) {

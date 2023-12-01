@@ -98,6 +98,10 @@ int main(int argc, char *argv[]) {
             }
             game.switchActivePlayer();
             game.display();
+            if (game.checkWin() == true) {
+                cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
+                break;
+            }
         }
 
         else if (command == "enhancements") {
