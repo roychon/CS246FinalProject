@@ -11,7 +11,7 @@ class Player;
 class Link {
     char id; // board display id, from a to z or A to Z depending on player
     int strength; // strength of link
-    string type; // D: data, V : virus
+    char type; // D: data, V : virus
     bool isRevealed;
     int x; // row
     int y; // col
@@ -23,7 +23,7 @@ public:
     void move(int x, int y);
     int getMoveFactor();
     char getId();
-    string getType();
+    char getType();
     int getStrength();
     // void download(int n); // n: 'id' of the link
     Player &getPlayer(); // TODO: fix &
@@ -33,7 +33,7 @@ public:
     void setX(int x);
     void setY(int y);
     void setStrength(int strength);
-    void setType(string type);
+    void setType(char type);
     void setPlayer(Player *player);
     void revealLink();
     void setId(char id);

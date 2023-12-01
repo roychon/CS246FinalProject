@@ -94,7 +94,7 @@ void Player::printInactivePlayer() {
     }
 }
 
-int Player::getPlayerID() {
+int Player::getplayerID() {
     return playerID;
 }
 

@@ -29,7 +29,7 @@ public:
     // void printPlayerDisplay(bool isActive);
     void printActivePlayer();
     void printInactivePlayer();
-    int getPlayerID();
+    int getplayerID();
     vector<Link*> getLinks();
     bool hasLinkAt(int x, int y);
     void removeLinkAt(int x, int y);
