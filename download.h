@@ -11,6 +11,7 @@ public:
     Download(Player *activePlayer, vector<vector<Cell>> *grid);
     void apply(int x, int y) override; // passes in enemy link
     bool checkValid(int x, int y) override;
+    char getType() override;
 };
 
 #endif

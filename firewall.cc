@@ -17,3 +17,7 @@ bool Firewall::checkValid(int x, int y) {
     if (cell.getIsFirewall() || cell.getIsServerPort() || cell.getLink() != nullptr) return false;
     return true;
 }
+
+char Firewall::getType() {
+    return 'F';
+}

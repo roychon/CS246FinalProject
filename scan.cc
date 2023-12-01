@@ -17,3 +17,7 @@ bool Scan::checkValid(int x, int y) {
     if (link->getIsRevealed()) return false;
     return true;
 }
+
+char Scan::getType() {
+    return 'S';
+}

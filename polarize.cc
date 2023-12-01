@@ -11,3 +11,7 @@ void Polarize::apply(int x, int y) {
 }
 
 bool Polarize::checkValid(int x, int y) { return false; }
+
+char Polarize::getType() {
+    return 'P';
+}

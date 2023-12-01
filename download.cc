@@ -29,3 +29,7 @@ bool Download::checkValid(int x, int y) {
     
     return true;
 }
+
+char Download::getType() {
+    return 'D';
+}

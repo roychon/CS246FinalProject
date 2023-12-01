@@ -8,6 +8,8 @@ using namespace std;
 int main(int argc, char *argv[]) {
     string player1links = "Default";
     string player2links = "Default";
+    string player1abilities = "LFDSP";
+    string player2abilities = "LFDSP";
     // Command line arguments
     for (int i = 1; i < argc; ++i) {
         string cmd = argv[i];
@@ -32,11 +34,21 @@ int main(int argc, char *argv[]) {
             }
             player2links = total;
         }
+
+        else if (cmd == "-ability1") {
+            ++i;
+            player1abilities = argv[i];
+        }
+
+        else if (cmd == "-ability2") {
+            ++i;
+            player2abilities = argv[i];
+        }
     }
 
     Game game;
     // can pass parameters into init, for command flags
-    game.init(player1links, player2links);
+    game.init(player1links, player2links, player1abilities, player2abilities);
     bool enhancementsOn = 0;
 
     string command;
@@ -97,6 +109,10 @@ int main(int argc, char *argv[]) {
                 enhancementsOn = true;
                 game.toggleenhancementsOn();
             }
+        }
+
+        else if (command == "abilities") {
+            game.getActivePlayer()->printAbilities();
         }
     }
     
