@@ -143,7 +143,7 @@ void Game::switchActivePlayer() {
 // CODE FOR ABILITIES
 
 void Game::activePlayerUseAbility(int id) {
+    // lookup
     activePlayer->useAbility(id);
 }
-
 // =========

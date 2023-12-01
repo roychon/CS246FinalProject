@@ -1,5 +1,10 @@
 #include "polarize.h"
 
-void Polarize::apply(Link &link) {
-    link.setType(link.getType() == "D" ? "V" : "D");
+void Polarize::apply(int x, int y) {
+    Link *link = (*grid)[x][y].getLink();
+    if (link->getType() == 'D') {
+        link->setType('V');
+    } else link->setType('D');
 }
+
+bool checkValid(int x, int y) {}

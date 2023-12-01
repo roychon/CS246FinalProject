@@ -5,7 +5,7 @@
 
 class Scan : public Ability {
     public:
-        void apply(Link &link) override;
+        void apply(int x, int y) override;
 };
 
 #endif

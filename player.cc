@@ -133,10 +133,10 @@ Link *Player::findLinkAt(int xCord, int yCord) {
 // ==========
 // ABILITY CODE
 void Player::useAbility(int id) {
-    for (auto &ability : abilities) {
-        if (ability->getId() == id && !ability->isUsed()) {
-            ability->apply()
-        }
+    if (abilities[0]->isUsed()) {
+        cout << "ABILITY IS USED" << endl;
+    } else {
+        abilities[0]->apply(int x, int y); // apply ability
     }
 }
 // ==========

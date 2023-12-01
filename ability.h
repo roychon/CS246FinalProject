@@ -6,13 +6,15 @@ class Link;
 
 class Ability
 {
-    int id;
+    // int id;
     bool isUsed;
 public:
     Ability(int id);
     int getId();
-    virtual void apply(Link &link) = 0;
+    virtual void apply(int x, int y) = 0;
+    virtual void checkValid(int x, int y) = 0;
     bool isUsed();
+    bool playerMatch(Player *p1, Player *p2);
 };
 
 #endif

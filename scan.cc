@@ -1,5 +1,5 @@
 #include "scan.h"
 
-void Scan::apply(Link &link) {
+void Scan::apply(int x, int y) {
     link.revealLink();
 }

@@ -21,12 +21,12 @@ class Link {
 public:
     Link();
     void move(int x, int y);
-    int &getMoveFactor();
+    int getMoveFactor();
     char getId();
     string getType();
     int getStrength();
     // void download(int n); // n: 'id' of the link
-    Player &getPlayer();
+    Player &getPlayer(); // TODO: fix &
     int getX();
     int getY();
     bool getIsRevealed();
@@ -37,6 +37,7 @@ public:
     void setPlayer(Player *player);
     void revealLink();
     void setId(char id);
+    void incrementMoveFactor();
 
     // add any more fields as necessary
 };

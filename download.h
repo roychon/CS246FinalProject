@@ -5,11 +5,12 @@
 #include <vector>
 #include "link.h"
 class Download : public Ability {
-    Player *player;
+    Player *activePlayer; // player that owns the ability
+    // Player *inactivePlayer;
     vector<vector<Cell>> *grid; // pass in grid of the board
 public:
-    Download(Player *player, vector<vector<Cell>> *grid, int id);
-    void apply(Link &link) override; // passes in enemy link
+    Download(Player *activePlayer, Player *inactivePlayer, vector<vector<Cell>> *grid);
+    void apply(int x, int y) override; // passes in enemy link
 };
 
 #endif
