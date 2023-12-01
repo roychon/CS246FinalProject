@@ -12,6 +12,7 @@ class Game {
     vector<unique_ptr<Player>> players;
     Player *activePlayer;
     Player *winningPlayer;
+    bool enhancementsOn;
 
 public:
     Game();
@@ -23,6 +24,7 @@ public:
     Player* getActivePlayer();
     void switchActivePlayer();
     void activePlayerUseAbility(int id); // call activePlayer's useAbility function
+    void toggleenhancementsOn();
 
     // add any more fields as necessary
 };

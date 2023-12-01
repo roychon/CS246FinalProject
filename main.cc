@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
     Game game;
     // can pass parameters into init, for command flags
     game.init(player1links, player2links);
+    bool enhancementsOn = 0;
 
     string command;
     while (cin >> command) {
@@ -85,6 +86,17 @@ int main(int argc, char *argv[]) {
             }
             game.switchActivePlayer();
             game.display();
+        }
+
+        else if (command == "enhancements") {
+            if (enhancementsOn == true) {
+                enhancementsOn = false;
+                game.toggleenhancementsOn();
+            }
+            else {
+                enhancementsOn = true;
+                game.toggleenhancementsOn();
+            }
         }
     }
 

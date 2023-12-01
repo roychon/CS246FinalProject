@@ -2,7 +2,7 @@
 using namespace std;
 
 Game::Game(): board{make_unique<Board>()}, players(2), 
-    activePlayer{nullptr}, winningPlayer{nullptr}{
+    activePlayer{nullptr}, winningPlayer{nullptr}, enhancementsOn{false} {
         for (int i = 0; i < 2; ++i) {
             players[i] = make_unique<Player>(i + 1);
         }
@@ -153,3 +153,14 @@ void Game::activePlayerUseAbility(int id) {
     activePlayer->useAbility(id);
 }
 // =========
+
+void Game::toggleenhancementsOn() {
+    if (enhancementsOn == true) {
+        enhancementsOn = false;
+        board.get()->toggleenhancementsOn();
+    }
+    else {
+        enhancementsOn = true;
+        board.get()->toggleenhancementsOn();
+    }
+}
