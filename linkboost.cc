@@ -1,6 +1,6 @@
 #include "linkboost.h"
 
-LinkBoost::LinkBoost(Player *activePlayer, vector<vector<Cell>> *grid, int id) : Ability{}, activePlayer{activePlayer}, grid{grid} {}
+LinkBoost::LinkBoost(Player *activePlayer, vector<vector<Cell>> *grid) : Ability(Type::LinkBoost), activePlayer{activePlayer}, grid{grid} {}
 
 void LinkBoost::apply(int x, int y) {
     if (checkValid(x, y)) {

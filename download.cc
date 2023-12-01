@@ -1,6 +1,6 @@
 #include "download.h"
 
-Download::Download(Player *player, vector<vector<Cell>> *grid): Ability{}, activePlayer{player}, grid{grid} {}
+Download::Download(Player *player, vector<vector<Cell>> *grid): Ability(Type::Download), activePlayer{player}, grid{grid} {}
 
 void Download::apply(int x, int y) {
     // link.getType() == "D" ? player->incrementDataCount() : player->incrementVirusCount();

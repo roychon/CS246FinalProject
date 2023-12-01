@@ -13,6 +13,7 @@ using namespace std;
 // TODO: make player class abstract and have player1, player2 class inherit to lower coupling
 class Player {
     vector<unique_ptr<Link>> links; // player's links
+    // unique_ptr<AbilityManager> manager;
     vector<unique_ptr<Ability>> abilities; // player's abilities
     int data; // # data player downloads
     int viruses; // # viruses player downloads
