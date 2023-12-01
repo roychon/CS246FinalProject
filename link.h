@@ -37,7 +37,7 @@ public:
     void setPlayer(Player *player);
     void revealLink();
     void setId(char id);
-    void incrementMoveFactor();
+    void incrementMoveFactor(int factor);
 
     // add any more fields as necessary
 };

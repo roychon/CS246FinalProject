@@ -5,8 +5,9 @@
 class Firewall : public Ability {
     vector<vector<Cell>> *grid; // pass in grid of the board
 public:
-    Firewall(vector<vector<Cell>> *grid, int id);
-    void apply(Link &link) override; // passes in enemy link
+    Firewall(vector<vector<Cell>> *grid);
+    void apply(int x, int y) override; // passes in enemy link
+    bool checkValid(int x, int y) override;
 };
 
 #endif

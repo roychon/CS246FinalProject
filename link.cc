@@ -69,6 +69,6 @@ void Link::revealLink() {
     isRevealed = true;
 }
 
-void Link::setMoveFactor(int factor) {
+void Link::incrementMoveFactor(int factor) {
     moveFactor += factor;
 }

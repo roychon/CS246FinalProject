@@ -16,6 +16,8 @@ void TextDisplay::notify(Cell &c) {
     // will need to check for firewall later (within nullptr if statement)
     if (c.getIsServerPort()) {
         grid[c.getRow()][c.getCol()] = 'S';
+    } else if(c.getIsFirewall()) {
+        grid[c.getRow()][c.getCol()] = 'M'; // need to account for lower case too
     }
 
     else if (c.getLink() == nullptr) {

@@ -1,12 +1,10 @@
 #include "ability.h"
 using namespace std;
 
-Ability::Ability(int id) : id{id}, isUsed{false} {}
+Ability::Ability() : isUsed{false} {}
 
-int Ability::getId() { return id; }
+bool Ability::getIsUsed() { return isUsed; }
 
-bool Ability::isUsed() { return isUsed; }
-
-bool playerMatch(Player *p1, Player *p2) {
+bool Ability::playerMatch(Player *p1, Player *p2) {
     return p1 == p2;
 }
