@@ -27,6 +27,7 @@ public:
     void setupLinks(Player &player, string playerlinks);
     bool vecContains(vector<int> vec, int item);
     void toggleenhancementsOn();
+    vector<vector<Cell>>* getGrid();
 
     // add any more fields as necessary
 };

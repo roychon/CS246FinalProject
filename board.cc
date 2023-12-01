@@ -258,3 +258,7 @@ void Board::toggleenhancementsOn() {
         td.get()->toggleenhancementsOn();
     }
 }
+
+vector<vector<Cell>>* Board::getGrid() {
+    return &grid;
+}

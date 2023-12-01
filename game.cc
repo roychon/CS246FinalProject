@@ -11,7 +11,7 @@ Game::Game(): board{make_unique<Board>()}, players(2),
         board->updateDisplayPOV(activePlayer);
 }
 
-void Game::init(string player1links, string player2links) {
+void Game::init(string player1links, string player2links, string player1abilities, string player2abilities) {
     // call board setup, creating cells & displays
     board->setup();
     // create link shells and place them
@@ -20,9 +20,11 @@ void Game::init(string player1links, string player2links) {
         
         if (players[i].get()->getplayerID() == 1) {
         board->setupLinks(*(players[i]).get(), player1links);
+        players[i].get()->setAbilities(player1abilities, board.get()->getGrid());
         }
         else {
         board->setupLinks(*(players[i]).get(), player2links);    
+        players[i].get()->setAbilities(player2abilities, board.get()->getGrid());
         }
     }
     // right now, initializing empty, need to initialize from file or randomize

@@ -1,11 +1,17 @@
 #include "player.h"
 #include <iostream>
+#include "ability.h"
+#include "linkboost.h"
+#include "firewall.h"
+#include "download.h"
+#include "scan.h"
+#include "polarize.h"
 #include <map>
 using namespace std;
 
 // note, when init is fully setup likely have to pass abilities as a parameter
 // temporarily passing "8" as # of links, if server port is coded as link, +2 so 10 links total.
-Player::Player(const int playerID) : links(8), data{0}, viruses{0}, numAbilitiesLeft{5}, playerID{playerID}{
+Player::Player(const int playerID) : links(8), abilities{5}, data{0}, viruses{0}, numAbilitiesLeft{5}, playerID{playerID}{
     for (size_t i = 0; i < links.size(); ++i) {
         links[i] = make_unique<Link>();
     }
@@ -137,4 +143,54 @@ void Player::useAbility(int id) {
         abilities[id]->apply(0, 0); // TODO: find the actual x, y coords, replace the 0,0s
     }
 }
+
+void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
+    for (int i = 0; i < 5; ++i) {
+        char abil = abilinit[i];
+        if (abil == 'L') {
+            abilities[i] = make_unique<LinkBoost>(this, grid, i);
+        }
+        else if (abil == 'F') {
+            abilities[i] = make_unique<Firewall>(grid);
+        }
+        else if (abil == 'D') {
+            abilities[i] = make_unique<Download>(this, grid);
+        }
+        else if (abil == 'S') {
+            abilities[i] = make_unique<Scan>(grid);
+        }
+        else if (abil == 'P') {
+            abilities[i] = make_unique<Polarize>(grid);
+        }
+    }
+}
+
+void Player::printAbilities() {
+    for (int i = 0; i < 5; ++i) {
+        cout << "ID " << i + 1 << ": ";
+        if (abilities[i].get()->getType() == 'L') {
+            cout << "Link boost ";
+        }
+        else if (abilities[i].get()->getType() == 'D') {
+            cout << "Download ";
+        }
+        else if (abilities[i].get()->getType() == 'P') {
+            cout << "Polarize ";
+        }
+        else if (abilities[i].get()->getType() == 'F') {
+            cout << "Firewall ";
+        }
+        else if (abilities[i].get()->getType() == 'S') {
+            cout << "Scan ";
+        }
+
+        if (abilities[i].get()->getIsUsed() == 1) {
+            cout << "- Used" << endl;
+        }
+        else {
+            cout << "- Not Used" << endl;
+        }
+    }
+}
+
 // ==========

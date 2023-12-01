@@ -7,6 +7,7 @@
 
 class Link;
 class Ability;
+class Cell;
 
 using namespace std;
 // TODO: make player class abstract and have player1, player2 class inherit to lower coupling
@@ -38,6 +39,8 @@ public:
     Link *findLinkAt(int xCord, int yCord);
     // void updateScore();
     void useAbility(int id);
+    void setAbilities(string abilinit, vector<vector<Cell>> *grid);
+    void printAbilities();
     // add any more fields as necessary
 };
 
