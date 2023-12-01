@@ -3,6 +3,9 @@
 #include <vector>
 #include "observer.h"
 #include "link.h"
+using namespace std;
+
+class Link;
 
 class Cell {
     vector<Observer *> observers;
@@ -26,7 +29,7 @@ public:
     void setLink(Link *newlink);
     void setIsServerPortTrue();
     void setFirewall();
-
+    
     // add any more fields as necessary
 };
 
