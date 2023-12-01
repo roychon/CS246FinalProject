@@ -129,3 +129,14 @@ Link *Player::findLinkAt(int xCord, int yCord) {
     }
     return nullptr; // will never get to this point
 }
+
+// ==========
+// ABILITY CODE
+void Player::useAbility(int id) {
+    if (abilities[id]->getIsUsed()) {
+        cout << "ABILITY IS USED" << endl;
+    } else {
+        abilities[id]->apply(0, 0); // TODO: find the actual x, y coords, replace the 0,0s
+    }
+}
+// ==========
