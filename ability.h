@@ -10,7 +10,6 @@ class Ability
     bool isUsed;
 public:
     Ability(int id);
-    int getId();
     virtual void apply(int x, int y) = 0;
     virtual void checkValid(int x, int y) = 0;
     bool isUsed();

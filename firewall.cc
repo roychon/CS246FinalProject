@@ -1,7 +1,19 @@
 #include "firewall.h"
 
-Firewall::Firewall(vector<vector<Cell>> *grid, int id): Ability{id}, grid{grid} {}
+Firewall::Firewall(vector<vector<Cell>> *grid): Ability{id}, grid{grid} {}
 
-void Firewall::apply(Link &link) {
-    (*grid)[link.getY()][link.getX()].setFirewall();
+void Firewall::apply(int x, int y) {
+    if (checkValid(x, y)) {
+        Cell &cell = (*grid)[x][y];
+        cell.setFireWall();
+        cell.notifyObservers();
+    } else {
+        cout << "abiltiy failed" << endl;
+    }
+}
+
+bool Firewall::checkValid(int x, int y) {
+    Cell &cell = (*grid)[x][y];
+    if (cell.getIsFirewall() || cell.getIsServerPort() || cell.getLink != nullptr) return false;
+    return true;
 }
