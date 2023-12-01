@@ -1,5 +1,7 @@
 #include "board.h"
 #include <sstream>
+#include <random>
+#include <algorithm>
 using namespace std;
 
 Board::Board() : size{8}, td{make_unique<TextDisplay>()} {}
@@ -10,7 +12,7 @@ Board::Board() : size{8}, td{make_unique<TextDisplay>()} {}
 
 bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
 
-    if (player.getPlayerID() == 2) {
+    if (player.getplayerID() == 2) {
         // check out of bounds
         if (xCord > 7 || xCord < 0 || yCord > 7) {
             return true;
@@ -60,7 +62,7 @@ bool Board::isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord) 
 
 void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink) {
     if (ActivePlayerLink.getStrength() >= NonActivePlayerLink.getStrength()) {
-        if (NonActivePlayerLink.getType() == "D") {
+        if (NonActivePlayerLink.getType() == 'D') {
             ActivePlayer.incrementDataCount();
         }
         else {
@@ -79,7 +81,7 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
     }
 
     else {
-        if (ActivePlayerLink.getType() == "D") {
+        if (ActivePlayerLink.getType() == 'D') {
             NonActivePlayer.incrementDataCount();
         }
         else {
@@ -102,7 +104,7 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
         grid[link.getY()][link.getX()].notifyObservers();
         link.setX(-1);
         link.setY(-1);
-        if (link.getType() == "D") {
+        if (link.getType() == 'D') {
             ActivePlayer->incrementDataCount();
         }
         else {
@@ -111,7 +113,7 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
     }
 
     else if (grid[yCord][xCord].getIsServerPort()) {
-        if (link.getType() == "D") {
+        if (link.getType() == 'D') {
             NonActivePlayer->incrementDataCount();
         }
         else {
@@ -167,11 +169,20 @@ void Board::setup() {
     setCellObservers();
 }
 
+bool Board::vecContains(vector<int> vec, int item) {
+    for (int check : vec) {
+        if (check == item) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Board::setupLinks(Player &player, string playerlinks) {
     vector<Link*> playerLinks = player.getLinks();
     int frontRow = 1;
     int backRow = 0;
-    if (player.getPlayerID() == 2) {
+    if (player.getplayerID() == 2) {
         frontRow = 6;
         backRow = 7;
     }
@@ -192,14 +203,47 @@ void Board::setupLinks(Player &player, string playerlinks) {
             grid[backRow][i].notifyObservers();
     }
 
+    if (playerlinks != "Default") {
     istringstream links{playerlinks};
     for (int i = 0; i < size; ++i) {
-        string stats;
-        links >> stats;
-        string typestring;
-        typestring[0] = stats[0];
-        int str = stats[1];
+        char typechar;
+        links >> typechar;
+        int str;
+        links >> str;
         playerLinks[i]->setStrength(str);
-        playerLinks[i]->setType(typestring);
+        playerLinks[i]->setType(typechar);
+    }}
+
+    else {
+        vector<int> positions = {0, 1, 2, 3, 4, 5, 6, 7};
+        vector<int> strengths = {1, 2, 3, 4};
+        vector<int> used = {};
+        if (player.getplayerID() == 1) {
+        srand(time(NULL));
+        }
+        else {
+        srand(time(NULL) * 1000);
+        }
+    
+        for (int str : strengths) {
+
+        // adding the data for this strength
+        int randnum = rand() % 8;
+        while (vecContains(used, randnum)) {
+            randnum = rand() % 8;
+        }
+        playerLinks[randnum]->setStrength(str);
+        playerLinks[randnum]->setType('D');
+        used.emplace_back(randnum);
+
+        // adding the virus for this strength
+        int randnum2 = rand() % 8;
+        while (vecContains(used, randnum2)) {
+            randnum2 = rand() % 8;
+        }
+        playerLinks[randnum2]->setStrength(str);
+        playerLinks[randnum2]->setType('V');
+        used.emplace_back(randnum2);
+        }
     }
 }

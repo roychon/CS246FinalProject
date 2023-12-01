@@ -6,7 +6,7 @@ char Link::getId() {
     return id;
 }
 
-string Link::getType() {
+char Link::getType() {
     return type;
 }
 
@@ -52,7 +52,7 @@ void Link::setStrength(int strength) {
     this->strength = strength;
 }
 
-void Link::setType(string type) {
+void Link::setType(char type) {
     this->type = type;
 }
 

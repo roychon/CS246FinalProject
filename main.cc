@@ -10,28 +10,27 @@ int main(int argc, char *argv[]) {
     string player2links = "Default";
     // Command line arguments
     for (int i = 1; i < argc; ++i) {
-        if (argv[i] == "-link1") {
+        string cmd = argv[i];
+        if (cmd == "-link1") {
             ++i;
             ifstream linkfile{argv[i]};
             string total;
             string word;
             while (linkfile >> word) {
-                total = total + " " + word;
+                total = total + word;
             }
             player1links = total;
-            ++i;
         }
 
-        else if (argv[i] == "-link2") {
+        else if (cmd == "-link2") {
             ++i;
             ifstream linkfile{argv[i]};
             string total;
             string word;
             while (linkfile >> word) {
-                player2links = player2links + " " + word;
+                total = total + word;
             }
             player2links = total;
-            ++i;
         }
     }
 
