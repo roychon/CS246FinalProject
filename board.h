@@ -23,7 +23,8 @@ public:
     void updateDisplayPOV(Player *activePlayer);
     void printTextDisplay();
     void setup();
-    void setupLinks(Player &player);
+    void setupLinks(Player &player, string playerlinks);
+    bool vecContains(vector<int> vec, int item);
 
     // add any more fields as necessary
 };

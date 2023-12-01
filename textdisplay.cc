@@ -34,14 +34,14 @@ TextDisplay::~TextDisplay() {}
 ostream &operator<<(ostream &out, const TextDisplay &td) {
   cout << "========" << endl;
   Player *activePlayer = td.activePlayer;
-  if (activePlayer->getPlayerID() == 1) {
+  if (activePlayer->getplayerID() == 1) {
     for (int i = td.gridSize - 1; i >= 0; --i) {
         for (int j = td.gridSize - 1; j >= 0; --j) {
             out << td.grid[i][j];
         }
         out << endl;
     }
-  } else if (activePlayer->getPlayerID() == 2) {
+  } else if (activePlayer->getplayerID() == 2) {
     for (const auto &inner: td.grid) {
         for (const char cell : inner) {
             out << cell;
