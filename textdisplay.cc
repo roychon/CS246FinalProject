@@ -3,7 +3,7 @@
 #include "cell.h"
 using namespace std;
 
-TextDisplay::TextDisplay() : gridSize{8} {
+TextDisplay::TextDisplay() : gridSize{8}, enhancementsOn{false} {
     // currently just initializing board with "."
     // when board init feature is added, this constructor will change too.
     for (int i = 0; i < gridSize; ++i) {
@@ -36,6 +36,8 @@ TextDisplay::~TextDisplay() {}
 ostream &operator<<(ostream &out, const TextDisplay &td) {
   cout << "========" << endl;
   Player *activePlayer = td.activePlayer;
+
+  if (td.enhancementsOn == true) {
   if (activePlayer->getplayerID() == 1) {
     for (int i = td.gridSize - 1; i >= 0; --i) {
         for (int j = td.gridSize - 1; j >= 0; --j) {
@@ -50,7 +52,26 @@ ostream &operator<<(ostream &out, const TextDisplay &td) {
         }
         out << endl;
     }
+  }}
+
+  else {
+    for (const auto &inner: td.grid) {
+        for (const char cell : inner) {
+            out << cell;
+        }
+        out << endl;
+    }
   }
+
   cout << "========" << endl;
   return out;
+}
+
+void TextDisplay::toggleenhancementsOn() {
+    if (enhancementsOn == true) {
+        enhancementsOn = false;
+    }
+    else {
+        enhancementsOn = true;
+    }
 }

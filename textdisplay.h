@@ -11,12 +11,15 @@ class TextDisplay : public Observer {
     vector<vector<char>> grid;
     const int gridSize;
     Player *activePlayer;
+    protected:
+    bool enhancementsOn;
 
 public:
     TextDisplay();
     void notify(Cell &c) override;
     void setActivePlayer(Player *player);
     ~TextDisplay();
+    void toggleenhancementsOn();
 
     friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td); 
 };

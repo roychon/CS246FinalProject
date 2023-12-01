@@ -13,6 +13,7 @@ class Board {
     unique_ptr<TextDisplay> td;
     // GraphicsDisplay *gd;
     void setCellObservers();
+    bool enhancementsOn;
 
 public:
     Board();
@@ -25,6 +26,7 @@ public:
     void setup();
     void setupLinks(Player &player, string playerlinks);
     bool vecContains(vector<int> vec, int item);
+    void toggleenhancementsOn();
 
     // add any more fields as necessary
 };

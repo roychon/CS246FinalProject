@@ -4,7 +4,7 @@
 #include <algorithm>
 using namespace std;
 
-Board::Board() : size{8}, td{make_unique<TextDisplay>()} {}
+Board::Board() : size{8}, td{make_unique<TextDisplay>()}, enhancementsOn{false} {}
 
 // Handle board orientation of commands in the main function
 // Therefore a positive y value means moving upwards on the board display
@@ -245,5 +245,16 @@ void Board::setupLinks(Player &player, string playerlinks) {
         playerLinks[randnum2]->setType('V');
         used.emplace_back(randnum2);
         }
+    }
+}
+
+void Board::toggleenhancementsOn() {
+    if (enhancementsOn == true) {
+        enhancementsOn = false;
+        td.get()->toggleenhancementsOn();
+    }
+    else {
+        enhancementsOn = true;
+        td.get()->toggleenhancementsOn();
     }
 }

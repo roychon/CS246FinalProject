@@ -2,7 +2,7 @@
 using namespace std;
 
 Game::Game(): board{make_unique<Board>()}, players(2), 
-    activePlayer{nullptr}, winningPlayer{nullptr}{
+    activePlayer{nullptr}, winningPlayer{nullptr}, enhancementsOn{false} {
         for (int i = 0; i < 2; ++i) {
             players[i] = make_unique<Player>(i + 1);
         }
@@ -56,40 +56,26 @@ void Game::display() {
              inactivePlayer = player.get();
         }
     }
-    inactivePlayer->printInactivePlayer();
-    board->printTextDisplay();
-    activePlayer->printActivePlayer();
-    /*
-    Player *p1 = nullptr;
-    Player *p2 = nullptr;
-
-    for (auto &player : players) {
-        if (player->getPlayerID() == 1) {
-            p1 = player.get();
-        }
-        else {
-            p2 = player.get();
-        }
-    }
-
-    cout << "Player 1:" << endl;
-    if (p1 == activePlayer) {
-        p1->printPlayerDisplay(true);
+    if (enhancementsOn == true) {
+        inactivePlayer->printInactivePlayer();
+        board->printTextDisplay();
+        activePlayer->printActivePlayer();
     }
     else {
-        p1->printPlayerDisplay(false);
-    }
-
-    board->printTextDisplay();
-
-    cout << "Player 2:" << endl;
-    if (p2 == activePlayer) {
-        p2->printPlayerDisplay(true);
+    if (activePlayer->getplayerID() == 1) {
+        activePlayer->printActivePlayer();
     }
     else {
-        p2->printPlayerDisplay(false);
+        inactivePlayer->printInactivePlayer();
     }
-    */
+    board->printTextDisplay();
+    if (activePlayer->getplayerID() == 2) {
+        activePlayer->printActivePlayer();
+    }
+    else {
+        inactivePlayer->printInactivePlayer();
+    }
+    }
 }
 
 // false (invalid move), true (valid move). Loop through 
@@ -153,3 +139,14 @@ void Game::activePlayerUseAbility(int id) {
     activePlayer->useAbility(id);
 }
 // =========
+
+void Game::toggleenhancementsOn() {
+    if (enhancementsOn == true) {
+        enhancementsOn = false;
+        board.get()->toggleenhancementsOn();
+    }
+    else {
+        enhancementsOn = true;
+        board.get()->toggleenhancementsOn();
+    }
+}
