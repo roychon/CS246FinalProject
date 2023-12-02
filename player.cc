@@ -197,4 +197,8 @@ void Player::printAbilities() {
     }
 }
 
+int Player::getnumAbilitiesLeft() {
+    return numAbilitiesLeft;
+}
+
 // ==========

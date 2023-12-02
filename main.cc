@@ -52,9 +52,10 @@ int main(int argc, char *argv[]) {
     }
 
     Game game;
-    Xwindow xw;
+    Xwindow *xw = nullptr;
     if (graphicsOn) {
-    game = Game{xw};
+    xw = new Xwindow;
+    game = Game{*xw};
     }
     // can pass parameters into init, for command flags
     game.init(player1links, player2links, player1abilities, player2abilities);
@@ -63,10 +64,11 @@ int main(int argc, char *argv[]) {
     string command;
     while (cin >> command) {
         if (command == "board") {
-            game.display();
+            game.display(graphicsOn);
         }
 
         else if (command == "quit") {
+            delete xw;
             break;
         }
 
@@ -102,9 +104,10 @@ int main(int argc, char *argv[]) {
                 cout << "Incorrect input";
             }
             game.switchActivePlayer();
-            game.display();
+            game.display(graphicsOn);
             if (game.checkWin() == true) {
                 cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
+                delete xw;
                 break;
             }
         }

@@ -61,13 +61,16 @@ bool Game::checkWin() {
     return false;
 }
 
-void Game::display() {
+void Game::display(bool graphicsOn) {
     Player *inactivePlayer = nullptr;
     for (auto &player : players) {
         if (player.get() != activePlayer) {
              inactivePlayer = player.get();
         }
     }
+    
+    board->getGD()->playerDisplays(activePlayer, inactivePlayer);
+
     if (enhancementsOn == true) {
         inactivePlayer->printInactivePlayer();
         board->printTextDisplay();

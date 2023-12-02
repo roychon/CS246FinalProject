@@ -31,7 +31,8 @@ public:
     bool vecContains(vector<int> vec, int item);
     void toggleenhancementsOn();
     vector<vector<Cell>>* getGrid();
-
+    GraphicsDisplay* getGD();
+    
     // add any more fields as necessary
 };
 

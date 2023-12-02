@@ -18,7 +18,7 @@ public:
     Game(Xwindow &xw);
     Game();
     bool checkWin();
-    void display();
+    void display(bool graphicsOn);
     bool move(Link *link, int x, int y);
 //    void useAbility(int id); // id is 'id' of ability we want to use
     void init(string player1links, string player2links, string player1abilities, string player2abilities); // initialize the Game

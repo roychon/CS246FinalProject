@@ -267,3 +267,7 @@ void Board::toggleenhancementsOn() {
 vector<vector<Cell>>* Board::getGrid() {
     return &grid;
 }
+
+GraphicsDisplay* Board::getGD() {
+    return gd.get();
+}

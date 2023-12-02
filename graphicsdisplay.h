@@ -7,7 +7,6 @@ using namespace std;
 class GraphicsDisplay : public Observer {
     Xwindow xw;
     vector<vector<char>> grid;
-    Player *activePlayer;
     protected:
     bool enhancementsOn;
 
@@ -16,7 +15,7 @@ public:
   GraphicsDisplay(Xwindow &xw);
   void notify(Cell &c) override;
   void toggleenhancementsOn();
-  void setActivePlayer(Player *player);
+  void playerDisplays(Player *activePlayer, Player *nonActivePlayer);
 
   ~GraphicsDisplay();
 };

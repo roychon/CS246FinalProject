@@ -41,6 +41,7 @@ public:
     void useAbility(int id);
     void setAbilities(string abilinit, vector<vector<Cell>> *grid);
     void printAbilities();
+    int getnumAbilitiesLeft();
     // add any more fields as necessary
 };
 
