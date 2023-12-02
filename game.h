@@ -25,6 +25,7 @@ public:
     void switchActivePlayer();
     void activePlayerUseAbility(int id); // call activePlayer's useAbility function
     void toggleenhancementsOn();
+    Player* getWinningPlayer();
 
     // add any more fields as necessary
 };

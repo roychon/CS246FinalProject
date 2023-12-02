@@ -152,3 +152,7 @@ void Game::toggleenhancementsOn() {
         board.get()->toggleenhancementsOn();
     }
 }
+
+Player* Game::getWinningPlayer() {
+    return winningPlayer;
+}
