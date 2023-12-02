@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
     string player2links = "Default";
     string player1abilities = "LFDSP";
     string player2abilities = "LFDSP";
+    bool graphicsOn = false;
     // Command line arguments
     for (int i = 1; i < argc; ++i) {
         string cmd = argv[i];
@@ -44,10 +45,17 @@ int main(int argc, char *argv[]) {
             ++i;
             player2abilities = argv[i];
         }
+
+        else if (cmd == "-graphics") {
+            graphicsOn = true;
+        }
     }
 
+    Game game;
     Xwindow xw;
-    Game game{xw};
+    if (graphicsOn) {
+    game = Game{xw};
+    }
     // can pass parameters into init, for command flags
     game.init(player1links, player2links, player1abilities, player2abilities);
     bool enhancementsOn = 0;

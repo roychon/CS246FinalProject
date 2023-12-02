@@ -19,6 +19,7 @@ class Board {
 
 public:
     Board(Xwindow &xw);
+    Board();
     bool isInvalidMove(Link &link, int x, int y, Player &player);
     bool isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord);
     void battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink);

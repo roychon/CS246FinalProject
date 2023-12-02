@@ -16,6 +16,7 @@ class Game {
 
 public:
     Game(Xwindow &xw);
+    Game();
     bool checkWin();
     void display();
     bool move(Link *link, int x, int y);

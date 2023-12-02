@@ -11,6 +11,16 @@ Game::Game(Xwindow &xw): board{make_unique<Board>(xw)}, players(2),
         board->updateDisplayPOV(activePlayer);
 }
 
+Game::Game(): board{make_unique<Board>()}, players(2), 
+    activePlayer{nullptr}, winningPlayer{nullptr}, enhancementsOn{false} {
+        for (int i = 0; i < 2; ++i) {
+            players[i] = make_unique<Player>(i + 1);
+        }
+        // set active player to p1
+        activePlayer = players[0].get();
+        board->updateDisplayPOV(activePlayer);
+}
+
 void Game::init(string player1links, string player2links, string player1abilities, string player2abilities) {
     // call board setup, creating cells & displays
     board->setup();
