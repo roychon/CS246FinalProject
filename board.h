@@ -5,18 +5,20 @@
 #include "cell.h"
 #include "textdisplay.h"
 #include "link.h"
+#include "graphicsdisplay.h"
+#include "window.h"
 using namespace std;
 
 class Board {
     int size;
     vector<vector<Cell>> grid;
     unique_ptr<TextDisplay> td;
-    // GraphicsDisplay *gd;
+    unique_ptr<GraphicsDisplay> gd;
     void setCellObservers();
     bool enhancementsOn;
 
 public:
-    Board();
+    Board(Xwindow &xw);
     bool isInvalidMove(Link &link, int x, int y, Player &player);
     bool isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord);
     void battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink);

@@ -46,7 +46,8 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    Game game;
+    Xwindow xw;
+    Game game{xw};
     // can pass parameters into init, for command flags
     game.init(player1links, player2links, player1abilities, player2abilities);
     bool enhancementsOn = 0;
@@ -74,9 +75,7 @@ int main(int argc, char *argv[]) {
             }
             
             if (direction == "up") {
-                if (!game.move(linktomove, 0, 1)) {
-                    cout << "Invalid Move";
-                }
+                game.move(linktomove, 0, 1);
             }
 
             else if (direction == "right") {
@@ -88,9 +87,7 @@ int main(int argc, char *argv[]) {
             }
 
             else if (direction == "down") {
-                if (!game.move(linktomove, 0, -1)) {
-                    cout << "Invalid Move";
-                }
+                game.move(linktomove, 0, -1);
             }
 
             else {

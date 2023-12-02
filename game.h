@@ -15,7 +15,7 @@ class Game {
     bool enhancementsOn;
 
 public:
-    Game();
+    Game(Xwindow &xw);
     bool checkWin();
     void display();
     bool move(Link *link, int x, int y);

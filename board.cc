@@ -4,7 +4,7 @@
 #include <algorithm>
 using namespace std;
 
-Board::Board() : size{8}, td{make_unique<TextDisplay>()}, enhancementsOn{false} {}
+Board::Board(Xwindow &xw) : size{8}, td{make_unique<TextDisplay>()}, gd{make_unique<GraphicsDisplay>(xw)}, enhancementsOn{false} {}
 
 // Handle board orientation of commands in the main function
 // Therefore a positive y value means moving upwards on the board display
@@ -153,6 +153,7 @@ void Board::setCellObservers() {
             Cell &current = grid[i][j];
             current.setCoords(i, j);
             current.attach(td.get()); // get and pass raw ptr
+            current.attach(gd.get());
         }
     }   
 }
