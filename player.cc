@@ -15,6 +15,10 @@ Player::Player(const int playerID) : links(8), abilities{5}, data{0}, viruses{0}
     for (size_t i = 0; i < links.size(); ++i) {
         links[i] = make_unique<Link>();
     }
+    // === DEFAULT CONSTRUCT SERVER PORTS ===
+    for (size_t i = 0; i < 2; ++i) {
+        serverports.emplace_back(make_unique<Link>());
+    }
 }
 
 // Assigns the player's link a character ID for their display on the board.
@@ -34,15 +38,25 @@ void Player::initLinks() {
         links[i]->setId(linkIDLookUp(playerID, i));
 
     }
+
+    // === SERVER PORTS ===
+    int y = (playerID == 1 ? 0 : 7);
+    int x = 3;
+    for (size_t i = 0; i < 2; ++i) {
+        serverports[i]->setPlayer(this);
+        serverports[i]->setId('S');
+        serverports[i]->setX(x++);
+        serverports[i]->setY(y);
+    }
 }
 
-void Player::incrementDataCount() {
-    data++;
-}
+// void Player::incrementDataCount() {
+//     data++;
+// }
 
-void Player::incrementVirusCount() {
-    viruses++;
-}
+// void Player::incrementVirusCount() {
+//     viruses++;
+// }
 
 // void Player::printPlayerDisplay(bool isActive) {    
 //     cout << "Downloaded: " << data << "D, " << viruses << "V" << endl;
@@ -144,7 +158,8 @@ void Player::useAbility(int id) {
     if (abilities[id]->getIsUsed()) {
         cout << "ABILITY IS USED" << endl;
     } else {
-        abilities[id]->apply(0, 0); // TODO: find the actual x, y coords, replace the 0,0s
+        playerID == 1 ? abilities[id]->apply(0, 0) : abilities[id]->apply(0, 7); // TODO: find the actual x, y coords, replace the 3, 3s
+        numAbilitiesLeft--;
     }
 }
 
@@ -155,7 +170,7 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
             abilities[i] = make_unique<LinkBoost>(this, grid, i);
         }
         else if (abil == 'F') {
-            abilities[i] = make_unique<Firewall>(grid);
+            abilities[i] = make_unique<Firewall>(this, grid);
         }
         else if (abil == 'D') {
             abilities[i] = make_unique<Download>(this, grid);
@@ -195,6 +210,18 @@ void Player::printAbilities() {
             cout << "- Not Used" << endl;
         }
     }
+}
+
+void Player::incrementDownloads(char type) {
+    type == 'D' ? data++ : viruses++;
+}
+
+// ==== hasServerAt(xCord, yCord) ====
+bool Player::hasServerAt(int xCord, int yCord) {
+    for (auto &serverport : serverports) {
+        if (serverport->getX() == xCord && serverport->getY() == yCord) return true;
+    }
+    return false;
 }
 
 // ==========

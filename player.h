@@ -10,7 +10,6 @@ class Ability;
 class Cell;
 
 using namespace std;
-// TODO: make player class abstract and have player1, player2 class inherit to lower coupling
 class Player {
     vector<unique_ptr<Link>> links; // player's links
     vector<unique_ptr<Ability>> abilities; // player's abilities
@@ -19,14 +18,17 @@ class Player {
     int numAbilitiesLeft; // # abilities player can use
     const int playerID;
     char linkIDLookUp(const int playerID, const int index);
+    // === added: server ports ===
+    vector<unique_ptr<Link>> serverports;
 
 public:
     Player(const int playerID);
     // ~Player();
     void initLinks(); // Sets player pointers and characer IDs of each link.
     // TODO: create these into one function
-    void incrementDataCount(); // increment data by 1
-    void incrementVirusCount(); // increment virus by 1
+    // void incrementDataCount(); // increment data by 1
+    // void incrementVirusCount(); // increment virus by 1
+    void incrementDownloads(char type);
     void printPlayerDisplay(bool isActive);
     void printActivePlayer();
     void printInactivePlayer();
@@ -41,6 +43,7 @@ public:
     void useAbility(int id);
     void setAbilities(string abilinit, vector<vector<Cell>> *grid);
     void printAbilities();
+    bool hasServerAt(int xCord, int yCord);
     // add any more fields as necessary
 };
 
