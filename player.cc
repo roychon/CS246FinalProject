@@ -11,13 +11,13 @@ using namespace std;
 
 // note, when init is fully setup likely have to pass abilities as a parameter
 // temporarily passing "8" as # of links, if server port is coded as link, +2 so 10 links total.
-Player::Player(const int playerID) : links(8), abilities{5}, data{0}, viruses{0}, numAbilitiesLeft{5}, playerID{playerID}{
+Player::Player(const int playerID) : links(8), serverPorts(2), abilities(5), data{0}, viruses{0}, numAbilitiesLeft{5}, playerID{playerID}{
     for (size_t i = 0; i < links.size(); ++i) {
         links[i] = make_unique<Link>();
     }
     // === DEFAULT CONSTRUCT SERVER PORTS ===
-    for (size_t i = 0; i < 2; ++i) {
-        serverports.emplace_back(make_unique<Link>());
+    for (size_t i = 0; i < serverPorts.size(); ++i) {
+        serverPorts[i] = make_unique<Link>();
     }
 }
 
@@ -40,13 +40,10 @@ void Player::initLinks() {
     }
 
     // === SERVER PORTS ===
-    int y = (playerID == 1 ? 0 : 7);
-    int x = 3;
-    for (size_t i = 0; i < 2; ++i) {
-        serverports[i]->setPlayer(this);
-        serverports[i]->setId('S');
-        serverports[i]->setX(x++);
-        serverports[i]->setY(y);
+    for (size_t i = 0; i < serverPorts.size(); ++i) {
+        serverPorts[i]->setPlayer(this);
+        serverPorts[i]->setId('S');
+        serverPorts[i]->setType('S');
     }
 }
 
@@ -128,11 +125,21 @@ vector<Link*> Player::getLinks() {
     return rawLinks;
 }
 
+vector<Link*> Player::getServerPorts() {
+    vector<Link*> rawLinks(serverPorts.size());
+    for (size_t i = 0; i < serverPorts.size(); ++i) {
+        rawLinks[i] = serverPorts[i].get();
+    }
+    return rawLinks;
+}
+
 bool Player::hasLinkAt(int x, int y) {
     for (auto &link : links) {
-        if (x == link->getX() && y == link->getY()) {
-            return true;
-        }
+        if (x == link->getX() && y == link->getY()) return true;
+    }
+
+    for (auto &serverPort : serverPorts) {
+        if (x == serverPort->getX() && y == serverPort->getY()) return true;
     }
     return false;
 }
@@ -146,10 +153,17 @@ int Player::getVirusCount() {
 }
 
 Link *Player::findLinkAt(int xCord, int yCord) {
+    // search links
     for (auto &link : links) {
         if (link->getX() == xCord && link->getY() == yCord) return link.get();
     }
-    return nullptr; // will never get to this point
+
+    // search server ports
+    for (auto &server : serverPorts) {
+        if (server->getX() == xCord && server->getY() == yCord) return server.get();
+    }
+
+    return nullptr; // should never reach this point
 }
 
 // ==========
@@ -217,11 +231,13 @@ void Player::incrementDownloads(char type) {
 }
 
 // ==== hasServerAt(xCord, yCord) ====
+/*
 bool Player::hasServerAt(int xCord, int yCord) {
-    for (auto &serverport : serverports) {
+    for (auto &serverport : serverPorts) {
         if (serverport->getX() == xCord && serverport->getY() == yCord) return true;
     }
     return false;
 }
+*/
 
 // ==========

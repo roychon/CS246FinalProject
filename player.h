@@ -13,14 +13,14 @@ using namespace std;
 class Player {
     vector<unique_ptr<Link>> links; // player's links
     // unique_ptr<AbilityManager> manager;
+    // === added: server ports ===
+    vector<unique_ptr<Link>> serverPorts;
     vector<unique_ptr<Ability>> abilities; // player's abilities
     int data; // # data player downloads
     int viruses; // # viruses player downloads
     int numAbilitiesLeft; // # abilities player can use
     const int playerID;
     char linkIDLookUp(const int playerID, const int index);
-    // === added: server ports ===
-    vector<unique_ptr<Link>> serverports;
 
 public:
     Player(const int playerID);
@@ -35,6 +35,7 @@ public:
     void printInactivePlayer();
     int getplayerID();
     vector<Link*> getLinks();
+    vector<Link*> getServerPorts();
     bool hasLinkAt(int x, int y);
     void removeLinkAt(int x, int y);
     int getDataCount();
@@ -44,7 +45,7 @@ public:
     void useAbility(int id);
     void setAbilities(string abilinit, vector<vector<Cell>> *grid);
     void printAbilities();
-    bool hasServerAt(int xCord, int yCord);
+    // bool hasServerAt(int xCord, int yCord); merged with has hasLInkAt
     // add any more fields as necessary
 };
 
