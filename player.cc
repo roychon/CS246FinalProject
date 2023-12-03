@@ -7,6 +7,7 @@
 #include "scan.h"
 #include "polarize.h"
 #include "poweraugment.h"
+#include "heal.h"
 #include <map>
 using namespace std;
 
@@ -173,7 +174,7 @@ void Player::useAbility(int id, int x, int y) {
     if (abilities[id - 1]->getIsUsed()) {
         cout << "ABILITY IS USED" << endl;
     } else {
-        abilities[id - 1]->apply(x, y);// TODO: find the actual x, y coords, replace the 3, 3s
+        abilities[id - 1]->apply(x, y);
         numAbilitiesLeft--;
     }
 }
@@ -199,6 +200,9 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
         else if (abil == 'A') {
             abilities[i] = make_unique<PowerAugment>(this, grid);
         }
+        else if (abil == 'H') {
+            abilities[i] = make_unique<Heal>(this);
+        }
     }
 }
 
@@ -223,6 +227,9 @@ void Player::printAbilities() {
         else if (abilities[i].get()->getType() == 'A') {
             cout << "Power Augment ";
         }
+        else if (abilities[i].get()->getType() == 'H') {
+            cout << "Heal ";
+        }
 
         if (abilities[i].get()->getIsUsed() == 1) {
             cout << "- Used" << endl;
@@ -242,6 +249,10 @@ void Player::incrementDownloads(char type) {
 
 Ability* Player::getAbility(int ID) {
     return abilities[ID - 1].get();
+}
+
+void Player::decreaseVirusCount() {
+    --viruses;
 }
 
 // ==== hasServerAt(xCord, yCord) ====
