@@ -131,6 +131,7 @@ void Board::updateDisplayPOV(Player *activePlayer) {
     td->setActivePlayer(activePlayer);
 }
 
+
 void Board::printTextDisplay() {
     cout << *td;
 }
