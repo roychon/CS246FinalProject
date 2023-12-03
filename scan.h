@@ -2,12 +2,11 @@
 #define __SCAN_H__
 
 #include "ability.h"
-#include "link.h"
 using namespace std;
 
 class Scan : public Ability {
     vector<vector<Cell>> *grid;
-    Link *target;
+    Link *targetLink;
     public:
         Scan(Type type, vector<vector<Cell>> *grid);
         void apply() override;

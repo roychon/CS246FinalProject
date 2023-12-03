@@ -2,8 +2,6 @@
 #define __CELL_H__
 #include <vector>
 #include "observer.h"
-#include "link.h"
-#include "player.h"
 using namespace std;
 
 class Link;
@@ -28,7 +26,7 @@ public:
     void setLinkNull();
     void setCoords(int r, int c);
     void setLink(Link *newlink);
-    void setFirewallOwner(Player *);
+    void setFirewallOwner(Player *player);
     Player *getFirewallOwner();
 
     // add any more fields as necessary

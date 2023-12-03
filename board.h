@@ -2,10 +2,15 @@
 #define __BOARD_H__
 #include <vector>
 #include <memory>
+#include <sstream>
+#include <random>
+#include <algorithm>
 #include "cell.h"
 #include "textdisplay.h"
-#include "link.h"
 using namespace std;
+
+class Player;
+class Link;
 
 class Board {
     int size;

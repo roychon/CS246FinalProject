@@ -3,11 +3,7 @@
 #include <map>
 #include <iostream>
 #include <vector>
-
-#include "link.h"
-#include "player.h"
-#include "cell.h"
-
+#include <memory>
 #include "ability.h"
 #include "firewall.h"
 #include "linkboost.h"
@@ -17,7 +13,10 @@
 
 using namespace std;
 
+class Player;
 class Ability;
+class Cell;
+class Link;
 
 class AbilityManager {
     vector<unique_ptr<Ability>> abilities;
@@ -29,6 +28,7 @@ class AbilityManager {
     public:
         AbilityManager(Player *abilityOwner, vector<vector<Cell>> *grid, string abilityString);
         void readArgs(int index);
+        void displayAbilities();
 };
 
 #endif

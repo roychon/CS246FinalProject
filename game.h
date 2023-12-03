@@ -4,8 +4,9 @@
 #include <memory>
 #include "board.h"
 #include "player.h"
-#include "link.h"
 using namespace std;
+
+class Link;
 
 class Game {
     unique_ptr<Board> board;

@@ -1,12 +1,4 @@
 #include "player.h"
-#include <iostream>
-#include "ability.h"
-#include "linkboost.h"
-#include "firewall.h"
-#include "download.h"
-#include "scan.h"
-#include "polarize.h"
-#include <map>
 using namespace std;
 
 // note, when init is fully setup likely have to pass abilities as a parameter
@@ -176,7 +168,9 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
     abilityDeck = make_unique<AbilityManager>(this, grid, abilinit);
 }
 
+// broken, seg faulting.
 void Player::printAbilities() {
+    abilityDeck->displayAbilities();
 }
 
 // ==========

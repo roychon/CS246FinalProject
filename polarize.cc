@@ -9,7 +9,7 @@ void Polarize::apply() {
         targetLink->setType('D');
     } else {
         // need to do error checking for trying to target empty or serverport..
-        cout << "failed"
+        cout << "failed";
     }
     isUsed = true;
 }

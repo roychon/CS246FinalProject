@@ -1,13 +1,12 @@
 #ifndef __ABILITY_H__
 #define __ABILITY_H__
-#include "link.h"
-#include "player.h"
 #include <iostream>
+#include "link.h"
 #include "cell.h"
 
-class Link;
-class Player;
 class Cell;
+class Player;
+class Link;
 
 enum class Type {
     Download,
@@ -28,7 +27,7 @@ public:
     virtual char getType() = 0;
     bool getIsUsed();
     Type getAbilityType();
-    bool playerMatch(Player *p1, Player *p2);
+    // bool playerMatch(Player *p1, Player *p2);
 };
 
 #endif

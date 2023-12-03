@@ -1,12 +1,11 @@
 #ifndef __POLARIZE_H__
 #define __POLARIZE_H__
 #include "ability.h"
-#include "link.h"
 using namespace std;
 
 class Polarize : public Ability {
     vector<vector<Cell>> *grid;
-    Link *target;
+    Link *targetLink;
     public:
         Polarize(Type type, vector<vector<Cell>> *grid);
         void apply() override;

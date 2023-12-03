@@ -2,11 +2,11 @@
 #define __PLAYER_H__
 #include <vector>
 #include <memory>
-#include "abilitymanager.h"
+#include <iostream>
+#include <map>
 #include "link.h"
+#include "abilitymanager.h"
 
-class Link;
-class Ability;
 class Cell;
 
 using namespace std;

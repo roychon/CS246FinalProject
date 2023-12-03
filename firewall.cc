@@ -1,9 +1,9 @@
 #include "firewall.h"
 
-Firewall::Firewall(Player *firewallOwner, vector<vector<Cell>> *grid): Ability(Type::Firewall), grid{grid}, firewallOwner(firewallOwner) {}
+Firewall::Firewall(Type type, Player *firewallOwner, vector<vector<Cell>> *grid): Ability(type), grid{grid}, firewallOwner(firewallOwner) {}
 
 void Firewall::apply() {
-    if (checkValid(targetX, targetY)) {
+    if (checkValid()) {
         Cell &cell = (*grid)[targetY][targetX];
         cell.setFirewallOwner(firewallOwner);
         cell.notifyObservers();

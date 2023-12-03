@@ -1,7 +1,4 @@
 #include "board.h"
-#include <sstream>
-#include <random>
-#include <algorithm>
 using namespace std;
 
 Board::Board() : size{8}, td{make_unique<TextDisplay>()}, enhancementsOn{false} {}

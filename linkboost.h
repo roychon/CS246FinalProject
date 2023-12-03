@@ -1,8 +1,6 @@
 #ifndef __LINKBOOST_H__
 #define __LINKBOOST_H__
 #include "ability.h"
-#include "link.h"
-#include "cell.h"
 using namespace std;
 
 class LinkBoost : public Ability {

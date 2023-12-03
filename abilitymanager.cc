@@ -10,7 +10,8 @@ AbilityManager::AbilityManager(Player *abilityOwner, vector<vector<Cell>> *grid,
 }
 
 void AbilityManager::readArgs(int index) {
-    /*
+    // make setters, to set the fields of the resepctive abiltiies.
+    /* 
     Type type = abilities[id]->getAbilityType();
     char linkInput;
     int xInput, yInput, x, y;
@@ -53,8 +54,24 @@ void AbilityManager::constructAbility(Type type) {
     } else if (type == Type::Scan) {
         newAbility = make_unique<Scan>(Type::Scan, grid);
     }
-    if (newAbility != nullptr) abilities.emplace_back(move(newAbility));
+    if (newAbility != nullptr) {
+        abilities.emplace_back(move(newAbility)); 
+        return;
+    }
     cerr << "Failed" << endl;
+}
+
+void AbilityManager::displayAbilities() {
+    // not working.. something seg faulting
+    for (const auto &ability : abilities) {
+        string abilityType = typeToString(ability->getAbilityType());
+        cout << abilityType << endl;
+        if (ability->getIsUsed()) {
+            cout << "- Used" << endl;
+        } else {
+            cout << "- Not Used" << endl;
+        }
+    }
 }
 
 Type AbilityManager::charToType(char initial) {

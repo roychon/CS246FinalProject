@@ -2,7 +2,6 @@
 #define __FIREWALL_H__
 
 #include "ability.h"
-#include "cell.h"
 using namespace std;
 
 class Firewall : public Ability {
@@ -11,7 +10,7 @@ class Firewall : public Ability {
     int targetX;
     int targetY;
 public:
-    Firewall(Player *firewallOwner, vector<vector<Cell>> *grid);
+    Firewall(Type type, Player *firewallOwner, vector<vector<Cell>> *grid);
     void apply() override;
     bool checkValid() override;
     char getType() override;

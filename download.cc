@@ -2,17 +2,17 @@
 
 Download::Download(Type type, Player *player, vector<vector<Cell>> *grid): Ability(type), activePlayer{player}, grid{grid} {}
 
-void Download::apply(int x, int y) {
+void Download::apply() {
     // link.getType() == "D" ? player->incrementDataCount() : player->incrementVirusCount();
     // (*grid)[link.getY()][link.getX()].setLinkNull();
     // (*grid)[link.getY()][link.getX()].notifyObservers();
 
     // get link of opponent player
     if (checkValid()) {
-        Cell &cell = (*grid)[y][x];
+        Cell &cell = (*grid)[targetLink->getY()][targetLink->getX()];
         targetLink->setX(-1);
         targetLink->setY(-1);
-        activePlayer->incrementDownloads(targetLink->getType());
+        // activePlayer->incrementDownloads(targetLink->getType());
         cell.setLinkNull();
         cell.notifyObservers();
         isUsed = true;

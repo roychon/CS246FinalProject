@@ -1,9 +1,7 @@
 #ifndef __DOWNLOAD_H__
 #define __DOWNLOAD_H__
 #include "ability.h"
-#include "cell.h"
 #include <vector>
-#include "link.h"
 using namespace std;
 
 class Download : public Ability {
