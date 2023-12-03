@@ -32,7 +32,7 @@ public:
     void toggleenhancementsOn();
     vector<vector<Cell>>* getGrid();
     GraphicsDisplay* getGD();
-    
+    bool opponentHasFireWallAt(int xCord, int yCord, Player *opponent);
     // add any more fields as necessary
 };
 

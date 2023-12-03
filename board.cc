@@ -11,44 +11,28 @@ Board::Board() : size{8}, td{make_unique<TextDisplay>()}, gd{nullptr}, enhanceme
 // Handle board orientation of commands in the main function
 // Therefore a positive y value means moving upwards on the board display
 // And a positive x value means moving to the right on the board display
-
 bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
-
-    if (player.getplayerID() == 2) {
-        // check out of bounds
-        if (xCord > 7 || xCord < 0 || yCord > 7) {
-            return true;
-        }
-        // player is trying to move onto their own link
-        else if (player.hasLinkAt(xCord, yCord)) {
-            return true;
-        }
-        // player trying to move onto server port
-        else if (yCord == 7 && (xCord == 3 || xCord == 4)) {
-            return true;
-        }
-        // valid move
-        else {
-            return false;
-        }
+    if (player.getplayerID() == 1 && (xCord > 7 || xCord < 0 || yCord < 0)) return true;
+    else if (player.getplayerID() == 2 && (xCord > 7 || xCord < 0 || yCord > 7)) return true;
+    // player is trying to move onto their own link
+    if (player.hasLinkAt(xCord, yCord)) {
+        return true;
     }
-
+    // player trying to move onto their own server port (merged this logic with hasLinkAt)
+    /*
+    else if (player.hasServerAt(xCord, yCord)) {
+        return true;
+    }
+    */
+    // valid move
     else {
-
-        // Player 1 : top of the board
-        if (xCord > 7 || xCord < 0 || yCord < 0) {
-            return true;
-        }
-         else if (player.hasLinkAt(xCord, yCord)) {
-            return true;
-        }
-         else if (yCord == 0 && (xCord == 3 || xCord == 4)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return false;
+    }
 }
+
+bool Board::opponentHasFireWallAt(int xCord, int yCord, Player *opponent) {
+    if (yCord > 7 || yCord < 0) return false;
+    else return (grid[yCord][xCord].getFirewallOwner() == opponent) ? true : false;
 }
 
 // xCord, yCord are coordinates it needs to move into
@@ -61,15 +45,30 @@ bool Board::isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord) 
     }
 }
 
-
 void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink) {
-    if (ActivePlayerLink.getStrength() >= NonActivePlayerLink.getStrength()) {
-        if (NonActivePlayerLink.getType() == 'D') {
-            ActivePlayer.incrementDataCount();
+    if (opponentHasFireWallAt(NonActivePlayerLink.getX(), NonActivePlayerLink.getY(), &NonActivePlayer)) {
+        ActivePlayerLink.revealLink();
+        if (ActivePlayerLink.getType() == 'V') { 
+            ActivePlayer.incrementDownloads('V');
+            Cell &cellToBeDeleted = grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()];
+            cellToBeDeleted.setLinkNull();
+            cellToBeDeleted.notifyObservers();
+            return;
         }
-        else {
-            ActivePlayer.incrementVirusCount();
-        }
+    }
+
+    // if server port, download immediately
+    if (NonActivePlayerLink.getType() == 'S') {
+        NonActivePlayer.incrementDownloads(ActivePlayerLink.getType());
+        grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].setLinkNull();
+        grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
+        ActivePlayerLink.setX(-1);
+        ActivePlayerLink.setY(-1);
+        ActivePlayerLink.revealLink();
+    } 
+    
+    else if (ActivePlayerLink.getStrength() >= NonActivePlayerLink.getStrength()) {
+        ActivePlayer.incrementDownloads(NonActivePlayerLink.getType());
         grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].setLink(&ActivePlayerLink);
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].setLinkNull();
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
@@ -80,15 +79,8 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         NonActivePlayerLink.setY(-1);
         NonActivePlayerLink.revealLink();
         ActivePlayerLink.revealLink();
-    }   
-
-    else {
-        if (ActivePlayerLink.getType() == 'D') {
-            NonActivePlayer.incrementDataCount();
-        }
-        else {
-            NonActivePlayer.incrementVirusCount();
-        }
+    } else {
+        NonActivePlayer.incrementDownloads(ActivePlayerLink.getType());
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].setLinkNull();
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
         ActivePlayerLink.setX(-1);
@@ -100,32 +92,32 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
 
 
 void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int xCord, int yCord) {
-    
-    if (yCord > 7 || yCord < 0) {
-        grid[link.getY()][link.getX()].setLinkNull();
-        grid[link.getY()][link.getX()].notifyObservers();
-        link.setX(-1);
-        link.setY(-1);
-        if (link.getType() == 'D') {
-            ActivePlayer->incrementDataCount();
+    if (opponentHasFireWallAt(xCord, yCord, NonActivePlayer)) {
+        link.revealLink();
+        if (link.getType() == 'V') { 
+            ActivePlayer->incrementDownloads('V');
+            Cell &cellToBeDeleted = grid[link.getY()][link.getX()];
+            cellToBeDeleted.setLinkNull();
+            cellToBeDeleted.notifyObservers();
         }
-        else {
-            ActivePlayer->incrementVirusCount();
+        else
+        {
+            grid[link.getY()][link.getX()].setLinkNull();
+            grid[link.getY()][link.getX()].notifyObservers();
+            link.setX(xCord);
+            link.setY(yCord);
+            grid[yCord][xCord].setLink(&link);
+            grid[yCord][xCord].notifyObservers();
         }
     }
-
-    else if (grid[yCord][xCord].getIsServerPort()) {
-        if (link.getType() == 'D') {
-            NonActivePlayer->incrementDataCount();
-        }
-        else {
-            NonActivePlayer->incrementVirusCount();
-        }
+    
+    else if (yCord > 7 || yCord < 0) {
+        cout << "Hello" << endl;
         grid[link.getY()][link.getX()].setLinkNull();
         grid[link.getY()][link.getX()].notifyObservers();
         link.setX(-1);
         link.setY(-1);
-        link.revealLink();
+        ActivePlayer->incrementDownloads(link.getType());
     }
 
     else {
@@ -141,6 +133,7 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
 void Board::updateDisplayPOV(Player *activePlayer) {
     td->setActivePlayer(activePlayer);
 }
+
 
 void Board::printTextDisplay() {
     cout << *td;
@@ -185,6 +178,7 @@ bool Board::vecContains(vector<int> vec, int item) {
 
 void Board::setupLinks(Player &player, string playerlinks) {
     vector<Link*> playerLinks = player.getLinks();
+    vector<Link*> playerServers = player.getServerPorts();
     int frontRow = 1;
     int backRow = 0;
     if (player.getplayerID() == 2) {
@@ -194,7 +188,11 @@ void Board::setupLinks(Player &player, string playerlinks) {
     for (int i = 0; i < size; ++i) {
         // server port row:
         if (i == 3 || i == 4) {
-            grid[backRow][i].setIsServerPortTrue();
+            // set server port (this array is only length 2)
+            grid[backRow][i].setLink(playerServers[i - 3]);
+            playerServers[i - 3]->setX(i);
+            playerServers[i - 3]->setY(backRow);
+            // set link
             grid[frontRow][i].setLink(playerLinks[i]);
             playerLinks[i]->setX(i);
             playerLinks[i]->setY(frontRow);

@@ -11,9 +11,13 @@ using namespace std;
 
 // note, when init is fully setup likely have to pass abilities as a parameter
 // temporarily passing "8" as # of links, if server port is coded as link, +2 so 10 links total.
-Player::Player(const int playerID) : links(8), abilities{5}, data{0}, viruses{0}, numAbilitiesLeft{5}, playerID{playerID}{
+Player::Player(const int playerID) : links(8), serverPorts(2), abilities(5), data{0}, viruses{0}, numAbilitiesLeft{5}, playerID{playerID}{
     for (size_t i = 0; i < links.size(); ++i) {
         links[i] = make_unique<Link>();
+    }
+    // === DEFAULT CONSTRUCT SERVER PORTS ===
+    for (size_t i = 0; i < serverPorts.size(); ++i) {
+        serverPorts[i] = make_unique<Link>();
     }
 }
 
@@ -34,15 +38,22 @@ void Player::initLinks() {
         links[i]->setId(linkIDLookUp(playerID, i));
 
     }
+
+    // === SERVER PORTS ===
+    for (size_t i = 0; i < serverPorts.size(); ++i) {
+        serverPorts[i]->setPlayer(this);
+        serverPorts[i]->setId('S');
+        serverPorts[i]->setType('S');
+    }
 }
 
-void Player::incrementDataCount() {
-    data++;
-}
+// void Player::incrementDataCount() {
+//     data++;
+// }
 
-void Player::incrementVirusCount() {
-    viruses++;
-}
+// void Player::incrementVirusCount() {
+//     viruses++;
+// }
 
 // void Player::printPlayerDisplay(bool isActive) {    
 //     cout << "Downloaded: " << data << "D, " << viruses << "V" << endl;
@@ -114,11 +125,21 @@ vector<Link*> Player::getLinks() {
     return rawLinks;
 }
 
+vector<Link*> Player::getServerPorts() {
+    vector<Link*> rawLinks(serverPorts.size());
+    for (size_t i = 0; i < serverPorts.size(); ++i) {
+        rawLinks[i] = serverPorts[i].get();
+    }
+    return rawLinks;
+}
+
 bool Player::hasLinkAt(int x, int y) {
     for (auto &link : links) {
-        if (x == link->getX() && y == link->getY()) {
-            return true;
-        }
+        if (x == link->getX() && y == link->getY()) return true;
+    }
+
+    for (auto &serverPort : serverPorts) {
+        if (x == serverPort->getX() && y == serverPort->getY()) return true;
     }
     return false;
 }
@@ -132,10 +153,17 @@ int Player::getVirusCount() {
 }
 
 Link *Player::findLinkAt(int xCord, int yCord) {
+    // search links
     for (auto &link : links) {
         if (link->getX() == xCord && link->getY() == yCord) return link.get();
     }
-    return nullptr; // will never get to this point
+
+    // search server ports
+    for (auto &server : serverPorts) {
+        if (server->getX() == xCord && server->getY() == yCord) return server.get();
+    }
+
+    return nullptr; // should never reach this point
 }
 
 // ==========
@@ -144,7 +172,8 @@ void Player::useAbility(int id) {
     if (abilities[id]->getIsUsed()) {
         cout << "ABILITY IS USED" << endl;
     } else {
-        abilities[id]->apply(0, 0); // TODO: find the actual x, y coords, replace the 0,0s
+        playerID == 1 ? abilities[id]->apply(0, 0) : abilities[id]->apply(0, 7); // TODO: find the actual x, y coords, replace the 3, 3s
+        numAbilitiesLeft--;
     }
 }
 
@@ -152,10 +181,10 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
     for (int i = 0; i < 5; ++i) {
         char abil = abilinit[i];
         if (abil == 'L') {
-            abilities[i] = make_unique<LinkBoost>(this, grid, i);
+            abilities[i] = make_unique<LinkBoost>(this, grid);
         }
         else if (abil == 'F') {
-            abilities[i] = make_unique<Firewall>(grid);
+            abilities[i] = make_unique<Firewall>(this, grid);
         }
         else if (abil == 'D') {
             abilities[i] = make_unique<Download>(this, grid);
@@ -196,9 +225,22 @@ void Player::printAbilities() {
         }
     }
 }
-
 int Player::getnumAbilitiesLeft() {
     return numAbilitiesLeft;
 }
+
+void Player::incrementDownloads(char type) {
+    type == 'D' ? data++ : viruses++;
+}
+
+// ==== hasServerAt(xCord, yCord) ====
+/*
+bool Player::hasServerAt(int xCord, int yCord) {
+    for (auto &serverport : serverPorts) {
+        if (serverport->getX() == xCord && serverport->getY() == yCord) return true;
+    }
+    return false;
+}
+*/
 
 // ==========

@@ -9,17 +9,25 @@ class Link;
 class Player;
 class Cell;
 
-class Ability
-{
-    // int id;
+enum class Type {
+    Download,
+    Firewall,
+    Polarize,
+    LinkBoost,
+    Scan
+};
+
+class Ability {
+    Type type;
 protected:
     bool isUsed;
 public:
-    Ability();
+    explicit Ability(Type type);
     virtual void apply(int x, int y) = 0;
     virtual bool checkValid(int x, int y) = 0;
     virtual char getType() = 0;
     bool getIsUsed();
+    Type getAbilityType();
     bool playerMatch(Player *p1, Player *p2);
 };
 

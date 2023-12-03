@@ -95,25 +95,30 @@ void Game::display(bool graphicsOn) {
 
 // false (invalid move), true (valid move). Loop through 
 bool Game::move(Link *link, int x, int y) {
+    int moveFactor = link->getMoveFactor();
     int xCord, yCord;
+    int newX = x * moveFactor;
+    int newY = y * moveFactor;
 
     // right: x = 1, left : x = -1, up : y = 1, down : y = -1
     // Player 1: top of the board
     if (activePlayer->getplayerID() == 1) {
-        xCord = link->getX() - x;
-        yCord = link->getY() + y;
+        xCord = link->getX() - newX;
+        yCord = link->getY() + newY;
     } else {
     // Player 2: bottom of the board
-        xCord = link->getX() + x;
-        yCord = link->getY() - y;
+        xCord = link->getX() + newX;
+        yCord = link->getY() - newY;
     }
-
+    
     if (board->isInvalidMove(*link, xCord, yCord, *activePlayer)) return false;
+
 
     // at this point, activePlayer's move is valid.
     // check if cell is occupied by opponent, find opponent(nonActivePlayer)
+
     Player *nonActivePlayer = (players[0]->getplayerID() == activePlayer->getplayerID()) ? players[1].get() : players[0].get();
-    if (board->isOccupiedByOpponent(nonActivePlayer, xCord, yCord)) {
+    if (board->isOccupiedByOpponent(nonActivePlayer, xCord, yCord)) { // check if you can instantiate a battle
         // start battle
         board->battle(*activePlayer, *nonActivePlayer, *link, *(nonActivePlayer->findLinkAt(xCord, yCord)));
     } else {
