@@ -38,6 +38,7 @@ public:
     void revealLink();
     void setId(char id);
     void incrementMoveFactor(int factor);
+    void augmentpower();
 
     // add any more fields as necessary
 };
