@@ -27,7 +27,8 @@ bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
 }
 
 bool Board::opponentHasFireWallAt(int xCord, int yCord, Player *opponent) {
-    return (grid[yCord][xCord].getFirewallOwner() == opponent) ? true : false;
+    if (yCord > 7 || yCord < 0) return false;
+    else return (grid[yCord][xCord].getFirewallOwner() == opponent) ? true : false;
 }
 
 // xCord, yCord are coordinates it needs to move into
@@ -79,7 +80,6 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
 
 
 void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int xCord, int yCord) {
-    cout << "IN BOARD::MOVE" << endl;
     if (opponentHasFireWallAt(xCord, yCord, NonActivePlayer)) {
         link.revealLink();
         if (link.getType() == 'V') { 
@@ -98,8 +98,9 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
             grid[yCord][xCord].notifyObservers();
         }
     }
-
+    
     else if (yCord > 7 || yCord < 0) {
+        cout << "Hello" << endl;
         grid[link.getY()][link.getX()].setLinkNull();
         grid[link.getY()][link.getX()].notifyObservers();
         link.setX(-1);

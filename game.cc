@@ -84,18 +84,20 @@ void Game::display() {
 bool Game::move(Link *link, int x, int y) {
     int moveFactor = link->getMoveFactor();
     int xCord, yCord;
+    int newX = x * moveFactor;
+    int newY = y * moveFactor;
 
     // right: x = 1, left : x = -1, up : y = 1, down : y = -1
     // Player 1: top of the board
     if (activePlayer->getplayerID() == 1) {
-        xCord = link->getX() - x;
-        yCord = link->getY() + y;
+        xCord = link->getX() - newX;
+        yCord = link->getY() + newY;
     } else {
     // Player 2: bottom of the board
-        xCord = link->getX() + x;
-        yCord = link->getY() - y;
+        xCord = link->getX() + newX;
+        yCord = link->getY() - newY;
     }
-
+    
     if (board->isInvalidMove(*link, xCord, yCord, *activePlayer)) return false;
 
 

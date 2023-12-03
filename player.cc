@@ -158,7 +158,7 @@ void Player::useAbility(int id) {
     if (abilities[id]->getIsUsed()) {
         cout << "ABILITY IS USED" << endl;
     } else {
-        playerID == 1 ? abilities[id]->apply(0, 7) : abilities[id]->apply(2, 0); // TODO: find the actual x, y coords, replace the 3, 3s
+        playerID == 1 ? abilities[id]->apply(0, 0) : abilities[id]->apply(0, 7); // TODO: find the actual x, y coords, replace the 3, 3s
         numAbilitiesLeft--;
     }
 }

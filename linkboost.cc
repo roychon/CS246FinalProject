@@ -13,7 +13,7 @@ void LinkBoost::apply(int x, int y) {
 }
 
 bool LinkBoost::checkValid(int x, int y) {
-    return playerMatch(activePlayer, &((*grid)[x][y].getLink()->getPlayer()));
+    return playerMatch(activePlayer, &((*grid)[y][x].getLink()->getPlayer()));
 }
 
 char LinkBoost::getType() {
