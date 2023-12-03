@@ -196,6 +196,9 @@ int main(int argc, char *argv[]) {
                 }
                 game.getActivePlayer()->useAbility(id, x, y);
             }
+            else if (game.getActivePlayer()->getAbility(id)->getType() == 'H') {
+                game.getActivePlayer()->useAbility(id, -1, -1);
+            }
             game.display(graphicsOn);
         }
     }

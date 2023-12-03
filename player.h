@@ -47,6 +47,7 @@ public:
     void printAbilities();
     int getnumAbilitiesLeft();
     Ability *getAbility(int ID);
+    void decreaseVirusCount();
     // bool hasServerAt(int xCord, int yCord); merged with has hasLInkAt
     // add any more fields as necessary
 };
