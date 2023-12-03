@@ -16,10 +16,12 @@ bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
     if (player.hasLinkAt(xCord, yCord)) {
         return true;
     }
-    // player trying to move onto their own server port
+    // player trying to move onto their own server port (merged this logic with hasLinkAt)
+    /*
     else if (player.hasServerAt(xCord, yCord)) {
         return true;
     }
+    */
     // valid move
     else {
         return false;
@@ -41,7 +43,6 @@ bool Board::isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord) 
     }
 }
 
-
 void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink) {
     if (opponentHasFireWallAt(NonActivePlayerLink.getX(), NonActivePlayerLink.getY(), &NonActivePlayer)) {
         ActivePlayerLink.revealLink();
@@ -54,8 +55,17 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         }
     }
 
-
-    if (ActivePlayerLink.getStrength() >= NonActivePlayerLink.getStrength()) {
+    // if server port, download immediately
+    if (NonActivePlayerLink.getType() == 'S') {
+        NonActivePlayer.incrementDownloads(ActivePlayerLink.getType());
+        grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].setLinkNull();
+        grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
+        ActivePlayerLink.setX(-1);
+        ActivePlayerLink.setY(-1);
+        ActivePlayerLink.revealLink();
+    } 
+    
+    else if (ActivePlayerLink.getStrength() >= NonActivePlayerLink.getStrength()) {
         ActivePlayer.incrementDownloads(NonActivePlayerLink.getType());
         grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].setLink(&ActivePlayerLink);
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].setLinkNull();
@@ -106,15 +116,6 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
         link.setX(-1);
         link.setY(-1);
         ActivePlayer->incrementDownloads(link.getType());
-    }
-
-    else if (grid[yCord][xCord].getIsServerPort()) {
-        NonActivePlayer->incrementDownloads(link.getType());
-        grid[link.getY()][link.getX()].setLinkNull();
-        grid[link.getY()][link.getX()].notifyObservers();
-        link.setX(-1);
-        link.setY(-1);
-        link.revealLink();
     }
 
     else {
@@ -172,6 +173,7 @@ bool Board::vecContains(vector<int> vec, int item) {
 
 void Board::setupLinks(Player &player, string playerlinks) {
     vector<Link*> playerLinks = player.getLinks();
+    vector<Link*> playerServers = player.getServerPorts();
     int frontRow = 1;
     int backRow = 0;
     if (player.getplayerID() == 2) {
@@ -181,7 +183,11 @@ void Board::setupLinks(Player &player, string playerlinks) {
     for (int i = 0; i < size; ++i) {
         // server port row:
         if (i == 3 || i == 4) {
-            grid[backRow][i].setIsServerPortTrue();
+            // set server port (this array is only length 2)
+            grid[backRow][i].setLink(playerServers[i - 3]);
+            playerServers[i - 3]->setX(i);
+            playerServers[i - 3]->setY(backRow);
+            // set link
             grid[frontRow][i].setLink(playerLinks[i]);
             playerLinks[i]->setX(i);
             playerLinks[i]->setY(frontRow);
