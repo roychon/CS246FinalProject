@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
     string player2links = "Default";
     string player1abilities = "LFDSP";
     string player2abilities = "LFDSP";
+    bool graphicsOn = false;
     // Command line arguments
     for (int i = 1; i < argc; ++i) {
         string cmd = argv[i];
@@ -44,9 +45,18 @@ int main(int argc, char *argv[]) {
             ++i;
             player2abilities = argv[i];
         }
+
+        else if (cmd == "-graphics") {
+            graphicsOn = true;
+        }
     }
 
     Game game;
+    Xwindow *xw = nullptr;
+    if (graphicsOn) {
+    xw = new Xwindow;
+    game = Game{*xw};
+    }
     // can pass parameters into init, for command flags
     game.init(player1links, player2links, player1abilities, player2abilities);
     bool enhancementsOn = 0;
@@ -54,10 +64,11 @@ int main(int argc, char *argv[]) {
     string command;
     while (cin >> command) {
         if (command == "board") {
-            game.display();
+            game.display(graphicsOn);
         }
 
         else if (command == "quit") {
+            delete xw;
             break;
         }
 
@@ -74,9 +85,7 @@ int main(int argc, char *argv[]) {
             }
             
             if (direction == "up") {
-                if (!game.move(linktomove, 0, 1)) {
-                    cout << "Invalid Move";
-                }
+                game.move(linktomove, 0, 1);
             }
 
             else if (direction == "right") {
@@ -88,18 +97,17 @@ int main(int argc, char *argv[]) {
             }
 
             else if (direction == "down") {
-                if (!game.move(linktomove, 0, -1)) {
-                    cout << "Invalid Move";
-                }
+                game.move(linktomove, 0, -1);
             }
             
             else {
                 cout << "Incorrect input";
             }
             game.switchActivePlayer();
-            game.display();
+            game.display(graphicsOn);
             if (game.checkWin() == true) {
                 cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
+                delete xw;
                 break;
             }
         }

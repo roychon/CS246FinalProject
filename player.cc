@@ -225,6 +225,9 @@ void Player::printAbilities() {
         }
     }
 }
+int Player::getnumAbilitiesLeft() {
+    return numAbilitiesLeft;
+}
 
 void Player::incrementDownloads(char type) {
     type == 'D' ? data++ : viruses++;
