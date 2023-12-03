@@ -28,6 +28,7 @@ public:
     bool vecContains(vector<int> vec, int item);
     void toggleenhancementsOn();
     vector<vector<Cell>>* getGrid();
+    bool opponentHasFireWallAt(int xCord, int yCord, Player *opponent);
 
     // add any more fields as necessary
 };

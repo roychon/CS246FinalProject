@@ -3,7 +3,7 @@
 Polarize::Polarize(vector<vector<Cell>> *grid): Ability{}, grid{grid} {}
 
 void Polarize::apply(int x, int y) {
-    Link *link = (*grid)[x][y].getLink();
+    Link *link = (*grid)[y][x].getLink();
     if (link->getType() == 'D') {
         link->setType('V');
     } else link->setType('D');

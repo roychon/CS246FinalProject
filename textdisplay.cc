@@ -14,17 +14,30 @@ TextDisplay::TextDisplay() : gridSize{8}, enhancementsOn{false} {
 void TextDisplay::notify(Cell &c) {
     // nullptr means no link is present
     // will need to check for firewall later (within nullptr if statement)
+    // if (c.getIsServerPort()) {
+    //     grid[c.getRow()][c.getCol()] = 'S';
+    // } else if(c.getIsFirewall()) {
+    //     grid[c.getRow()][c.getCol()] = 'M'; // need to account for lower case too
+    // }
+
+    // else if (c.getLink() == nullptr) {
+    //     grid[c.getRow()][c.getCol()] = '.';
+    // }
+
+    // else grid[c.getRow()][c.getCol()] = c.getLink()->getId();
+
     if (c.getIsServerPort()) {
         grid[c.getRow()][c.getCol()] = 'S';
-    } else if(c.getIsFirewall()) {
-        grid[c.getRow()][c.getCol()] = 'M'; // need to account for lower case too
+    } 
+    else  {
+        if (c.getLink()) {
+            grid[c.getRow()][c.getCol()] = c.getLink()->getId();
+        } else if (c.getIsFirewall()) {
+            grid[c.getRow()][c.getCol()] = (c.getFirewallOwner()->getplayerID() == 1 ? 'm' : 'w');
+        } else {
+            grid[c.getRow()][c.getCol()] = '.';
+        }
     }
-
-    else if (c.getLink() == nullptr) {
-        grid[c.getRow()][c.getCol()] = '.';
-    }
-
-    else grid[c.getRow()][c.getCol()] = c.getLink()->getId();
 }
 
 void TextDisplay::setActivePlayer(Player *player) {

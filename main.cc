@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     // can pass parameters into init, for command flags
     game.init(player1links, player2links, player1abilities, player2abilities);
     bool enhancementsOn = 0;
-
+    
     string command;
     while (cin >> command) {
         if (command == "board") {
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
                     cout << "Invalid Move";
                 }
             }
-
+            
             else {
                 cout << "Incorrect input";
             }
@@ -117,6 +117,12 @@ int main(int argc, char *argv[]) {
 
         else if (command == "abilities") {
             game.getActivePlayer()->printAbilities();
+        }
+        else if (command == "ability") {
+            int id;
+            cin >> id;
+            game.activePlayerUseAbility(id);
+            game.display();
         }
     }
     

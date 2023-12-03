@@ -4,7 +4,7 @@ LinkBoost::LinkBoost(Player *activePlayer, vector<vector<Cell>> *grid, int id) :
 
 void LinkBoost::apply(int x, int y) {
     if (checkValid(x, y)) {
-        Link *link = (*grid)[x][y].getLink();
+        Link *link = (*grid)[y][x].getLink();
         link->incrementMoveFactor(1);
         isUsed = true;
     } else {
