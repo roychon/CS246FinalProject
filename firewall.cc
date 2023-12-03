@@ -1,6 +1,6 @@
 #include "firewall.h"
 
-Firewall::Firewall(Player *firewallOwner, vector<vector<Cell>> *grid): Ability(Type::Firewall), grid{grid}, firewallOwner(firewallOwner) {}
+Firewall::Firewall(Player *firewallOwner, vector<vector<Cell>> *grid): Ability(), grid{grid}, firewallOwner(firewallOwner) {}
 
 void Firewall::apply(int x, int y) {
     if (checkValid(x, y)) {

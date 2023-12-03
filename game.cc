@@ -69,7 +69,9 @@ void Game::display(bool graphicsOn) {
         }
     }
     
+    if (graphicsOn) {
     board->getGD()->playerDisplays(activePlayer, inactivePlayer);
+    }
 
     if (enhancementsOn == true) {
         inactivePlayer->printInactivePlayer();
@@ -150,16 +152,6 @@ void Game::switchActivePlayer() {
     board->updateDisplayPOV(activePlayer);
 }
 
-
-// =========
-// CODE FOR ABILITIES
-
-void Game::activePlayerUseAbility(int id) {
-    // lookup
-    activePlayer->useAbility(id);
-}
-// =========
-
 void Game::toggleenhancementsOn() {
     if (enhancementsOn == true) {
         enhancementsOn = false;
@@ -173,4 +165,12 @@ void Game::toggleenhancementsOn() {
 
 Player* Game::getWinningPlayer() {
     return winningPlayer;
+}
+
+Player* Game::getInactivePlayer() {
+    for (auto &player : players) {
+        if (player.get() != activePlayer) {
+            return player.get();
+        }
+    }
 }

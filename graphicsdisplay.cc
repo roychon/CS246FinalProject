@@ -15,20 +15,22 @@ GraphicsDisplay::GraphicsDisplay(Xwindow &xw) : xw{xw}, enhancementsOn{false} {
 void GraphicsDisplay::notify(Cell &c) {
     // nullptr means no link is present
     // will need to check for firewall later (within nullptr if statement)
-    if (c.getIsServerPort()) {
-        grid[c.getRow()][c.getCol()] = 'S';
-        xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
-        xw.drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, "S");
-    } else if(c.getIsFirewall()) {
-        grid[c.getRow()][c.getCol()] = 'M'; // need to account for lower case too
-        xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
-        xw.drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, "M");
-    }
 
-    else if (c.getLink() == nullptr) {
+    if (c.getLink() == nullptr) {
         grid[c.getRow()][c.getCol()] = '.';
         xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
         xw.drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, ".");
+    }
+
+    else if (c.getLink()->getType() == 'S') {
+        grid[c.getRow()][c.getCol()] = 'S';
+        xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
+        xw.drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, "S");
+        
+    } else if(c.getLink()->getType() == 'F') {
+        grid[c.getRow()][c.getCol()] = 'M'; // need to account for lower case too
+        xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
+        xw.drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, "M");
     }
 
     else {
