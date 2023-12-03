@@ -24,9 +24,9 @@ public:
     void init(string player1links, string player2links, string player1abilities, string player2abilities); // initialize the Game
     Player* getActivePlayer();
     void switchActivePlayer();
-    void activePlayerUseAbility(int id); // call activePlayer's useAbility function
     void toggleenhancementsOn();
     Player* getWinningPlayer();
+    Player* getInactivePlayer();
 
     // add any more fields as necessary
 };

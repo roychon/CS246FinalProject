@@ -1,6 +1,6 @@
 #include "scan.h"
 
-Scan::Scan(vector<vector<Cell>> *grid): Ability(Type::Scan), grid{grid} {}
+Scan::Scan(vector<vector<Cell>> *grid): Ability(), grid{grid} {}
 
 void Scan::apply(int x, int y) {
     Link *link = (*grid)[y][x].getLink();
@@ -13,7 +13,7 @@ void Scan::apply(int x, int y) {
 }
 
 bool Scan::checkValid(int x, int y) {
-    Link *link = (*grid)[x][y].getLink();
+    Link *link = (*grid)[y][x].getLink();
     if (link->getIsRevealed()) return false;
     return true;
 }

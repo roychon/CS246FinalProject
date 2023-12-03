@@ -168,11 +168,11 @@ Link *Player::findLinkAt(int xCord, int yCord) {
 
 // ==========
 // ABILITY CODE
-void Player::useAbility(int id) {
-    if (abilities[id]->getIsUsed()) {
+void Player::useAbility(int id, int x, int y) {
+    if (abilities[id - 1]->getIsUsed()) {
         cout << "ABILITY IS USED" << endl;
     } else {
-        playerID == 1 ? abilities[id]->apply(0, 0) : abilities[id]->apply(0, 7); // TODO: find the actual x, y coords, replace the 3, 3s
+        abilities[id - 1]->apply(x, y);// TODO: find the actual x, y coords, replace the 3, 3s
         numAbilitiesLeft--;
     }
 }
@@ -231,6 +231,10 @@ int Player::getnumAbilitiesLeft() {
 
 void Player::incrementDownloads(char type) {
     type == 'D' ? data++ : viruses++;
+}
+
+Ability* Player::getAbility(int ID) {
+    return abilities[ID - 1].get();
 }
 
 // ==== hasServerAt(xCord, yCord) ====

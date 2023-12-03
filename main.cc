@@ -129,8 +129,66 @@ int main(int argc, char *argv[]) {
         else if (command == "ability") {
             int id;
             cin >> id;
-            game.activePlayerUseAbility(id);
-            game.display();
+            char whichlink;
+            int x;
+            int y;
+            if (game.getActivePlayer()->getAbility(id)->getType() == 'L') {
+                cin >> whichlink;
+                for (auto link : game.getActivePlayer()->getLinks()) {
+                    if (link->getId() == whichlink) {
+                        x = link->getX();
+                        y = link->getY();
+                    }
+                }
+                game.getActivePlayer()->useAbility(id, x, y);
+            }
+            else if (game.getActivePlayer()->getAbility(id)->getType() == 'D') {
+                cin >> whichlink;
+                for (auto link : game.getActivePlayer()->getLinks()) {
+                    if (link->getId() == whichlink) {
+                        x = link->getX();
+                        y = link->getY();
+                    }
+                }
+                game.getActivePlayer()->useAbility(id, x, y);
+            }
+            else if (game.getActivePlayer()->getAbility(id)->getType() == 'F') {
+                cin >> x >> y;
+                game.getActivePlayer()->useAbility(id, x, y);
+            }
+            else if (game.getActivePlayer()->getAbility(id)->getType() == 'P') {
+                cin >> whichlink;
+                for (auto link : game.getActivePlayer()->getLinks()) {
+                    if (link->getId() == whichlink) {
+                        x = link->getX();
+                        y = link->getY();
+                    }
+                }
+                for (auto link : game.getInactivePlayer()->getLinks()) {
+                    if (link->getId() == whichlink) {
+                        x = link->getX();
+                        y = link->getY();
+                    }
+                }
+                game.getActivePlayer()->useAbility(id, x, y);
+            }
+            else if (game.getActivePlayer()->getAbility(id)->getType() == 'S') {
+                cin >> whichlink;
+                for (auto link : game.getActivePlayer()->getLinks()) {
+                    if (link->getId() == whichlink) {
+                        x = link->getX();
+                        y = link->getY();
+                    }
+                }
+                for (auto link : game.getInactivePlayer()->getLinks()) {
+                    if (link->getId() == whichlink) {
+                        x = link->getX();
+                        y = link->getY();
+                    }
+                }
+                game.getActivePlayer()->useAbility(id, x, y);
+            }
+            game.display(graphicsOn);
         }
     }
     
