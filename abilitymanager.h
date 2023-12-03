@@ -29,6 +29,7 @@ class AbilityManager {
         AbilityManager(Player *abilityOwner, vector<vector<Cell>> *grid, string abilityString);
         void readArgs(int index);
         void displayAbilities();
+        vector<Ability*> getAbilities();
 };
 
 #endif

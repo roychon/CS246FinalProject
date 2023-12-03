@@ -4,9 +4,7 @@
 #include "link.h"
 #include "cell.h"
 
-class Cell;
 class Player;
-class Link;
 
 enum class Type {
     Download,
@@ -20,6 +18,8 @@ class Ability {
     Type type;
 protected:
     bool isUsed;
+    Link *targetLink;
+    int targetX, targetY;
 public:
     explicit Ability(Type type);
     virtual void apply() = 0;
@@ -28,6 +28,8 @@ public:
     bool getIsUsed();
     Type getAbilityType();
     // bool playerMatch(Player *p1, Player *p2);
+    void setTarget(Link *link);
+    void setTargetCoords(int x, int y);
 };
 
 #endif

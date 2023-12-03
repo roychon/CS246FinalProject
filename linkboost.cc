@@ -16,7 +16,3 @@ bool LinkBoost::checkValid() {
 char LinkBoost::getType() {
     return 'L';
 }
-
-void LinkBoost::setTarget(Link *target) {
-    targetLink = target;
-}

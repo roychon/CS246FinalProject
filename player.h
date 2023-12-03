@@ -42,9 +42,12 @@ public:
     int getVirusCount();
     Link *findLinkAt(int xCord, int yCord);
     // void updateScore();
-    void useAbility(int id);
+    void useCoordAbility(int id, int x, int y);
+    void useLinkAbility(int id, Link *link);
     void setAbilities(string abilinit, vector<vector<Cell>> *grid);
     void printAbilities();
+    Link *getLinkByID(char id);
+    vector<Ability*> getDeck();
     // bool hasServerAt(int xCord, int yCord); merged with has hasLInkAt
     // add any more fields as necessary
 };

@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-class Cell;
 
 class TextDisplay : public Observer {
     vector<vector<char>> grid;

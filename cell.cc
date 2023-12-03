@@ -49,3 +49,4 @@ void Cell::setFirewallOwner(Player *player) {
 Player *Cell::getFirewallOwner() {
     return firewallOwner;
 }
+

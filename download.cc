@@ -1,4 +1,5 @@
 #include "download.h"
+#include "player.h"
 
 Download::Download(Type type, Player *player, vector<vector<Cell>> *grid): Ability(type), activePlayer{player}, grid{grid} {}
 
@@ -12,7 +13,7 @@ void Download::apply() {
         Cell &cell = (*grid)[targetLink->getY()][targetLink->getX()];
         targetLink->setX(-1);
         targetLink->setY(-1);
-        // activePlayer->incrementDownloads(targetLink->getType());
+        activePlayer->incrementDownloads(targetLink->getType());
         cell.setLinkNull();
         cell.notifyObservers();
         isUsed = true;
@@ -34,6 +35,3 @@ char Download::getType() {
     return 'D';
 }
 
-void Download::setTarget(Link *target) {
-    targetLink = target;
-}

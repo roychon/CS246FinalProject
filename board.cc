@@ -94,6 +94,8 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
             Cell &cellToBeDeleted = grid[link.getY()][link.getX()];
             cellToBeDeleted.setLinkNull();
             cellToBeDeleted.notifyObservers();
+            link.setX(-1);
+            link.setY(-1);
         }
         else
         {

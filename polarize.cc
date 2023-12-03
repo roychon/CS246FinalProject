@@ -20,6 +20,3 @@ char Polarize::getType() {
     return 'P';
 }
 
-void Polarize::setTarget(Link *target) {
-    targetLink = target;
-}

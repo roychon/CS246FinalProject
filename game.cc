@@ -143,7 +143,45 @@ void Game::switchActivePlayer() {
 
 void Game::activePlayerUseAbility(int id) {
     // lookup
-    activePlayer->useAbility(id);
+    vector<Ability*> abilities = activePlayer->getDeck();
+    Type type = abilities[id - 1]->getAbilityType();
+    Player *inactivePlayer = nullptr;
+    for (auto &player : players) {
+        if (player.get() != activePlayer) {
+             inactivePlayer = player.get();
+        }
+    }
+    int x, y;
+    char linkInput;
+    bool isLinkCommand = true;
+    Link *target = nullptr;
+    if (type == Type::Firewall) {
+        cin >> x >> y;
+        isLinkCommand = false;
+    } else if (type == Type::Download) {
+        cin >> linkInput;
+        target = inactivePlayer->getLinkByID(linkInput);
+    } else if (type == Type::Polarize) {
+        cin >> linkInput;
+        target = activePlayer->getLinkByID(linkInput);
+        if (target == nullptr) {
+            target = inactivePlayer->getLinkByID(linkInput);
+        }
+    } else if (type == Type::LinkBoost) {
+        cin >> linkInput;
+        target = activePlayer->getLinkByID(linkInput);
+    } else if (type == Type::Scan) {
+        cin >> linkInput;
+        target = inactivePlayer->getLinkByID(linkInput);
+    }
+
+    if (isLinkCommand) {
+        cout << "Link me";
+        activePlayer->useLinkAbility(id, target);
+    } else {
+        cout << "Coord me";
+        activePlayer->useCoordAbility(id, x, y);
+    }
 }
 // =========
 

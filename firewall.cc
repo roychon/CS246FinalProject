@@ -22,8 +22,3 @@ bool Firewall::checkValid() {
 char Firewall::getType() {
     return 'F';
 }
-
-void Firewall::setTargetCoord(int x, int y) {
-    targetX = x;
-    targetY = y;
-}

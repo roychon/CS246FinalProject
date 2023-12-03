@@ -160,8 +160,26 @@ Link *Player::findLinkAt(int xCord, int yCord) {
 
 // ======= MODIFIED ABILITY MANAGER FUNCTIONS ========
 
-void Player::useAbility(int id) {
-    abilityDeck->readArgs(id - 1);
+Link* Player::getLinkByID(char id) {
+    for (auto &link : links) {
+        if (link->getId() == id) {
+            cout << "found id: " << id << endl;
+            return link.get();
+        }
+    }
+    return nullptr;
+}
+
+void Player::useLinkAbility(int id, Link *link) {
+    vector<Ability*> abilities = getDeck();
+    abilities[id - 1]->setTarget(link);
+    abilities[id - 1]->apply();
+}
+
+void Player::useCoordAbility(int id, int x, int y) {
+    vector<Ability*> abilities = getDeck();
+    abilities[id - 1]->setTargetCoords(x, y);
+    abilities[id - 1]->apply();
 }
 
 void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
@@ -171,6 +189,10 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
 // broken, seg faulting.
 void Player::printAbilities() {
     abilityDeck->displayAbilities();
+}
+
+vector<Ability*> Player::getDeck() {
+    return abilityDeck->getAbilities();
 }
 
 // ==========

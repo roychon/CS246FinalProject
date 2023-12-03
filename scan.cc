@@ -19,7 +19,3 @@ bool Scan::checkValid() {
 char Scan::getType() {
     return 'S';
 }
-
-void Scan::setTarget(Link *target) {
-    targetLink = target;
-}

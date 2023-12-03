@@ -13,3 +13,10 @@ bool Ability::playerMatch(Player *p1, Player *p2) {
 }
 */
 
+void Ability::setTarget(Link *target) {
+    targetLink = target;
+}
+void Ability::setTargetCoords(int x, int y) {
+    targetX = x;
+    targetY = y;
+}
