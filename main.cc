@@ -52,9 +52,9 @@ int main(int argc, char *argv[]) {
     }
 
     Game game;
-    Xwindow *xw = nullptr;
+    unique_ptr<Xwindow> xw;
     if (graphicsOn) {
-    xw = new Xwindow;
+    xw = make_unique<Xwindow>();
     game = Game{*xw};
     }
     // can pass parameters into init, for command flags
@@ -68,7 +68,6 @@ int main(int argc, char *argv[]) {
         }
 
         else if (command == "quit") {
-            delete xw;
             break;
         }
 
@@ -107,7 +106,6 @@ int main(int argc, char *argv[]) {
             game.display(graphicsOn);
             if (game.checkWin() == true) {
                 cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
-                delete xw;
                 break;
             }
         }
