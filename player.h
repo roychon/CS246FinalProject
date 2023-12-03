@@ -2,7 +2,7 @@
 #define __PLAYER_H__
 #include <vector>
 #include <memory>
-#include "ability.h"
+#include "abilitymanager.h"
 #include "link.h"
 
 class Link;
@@ -12,10 +12,10 @@ class Cell;
 using namespace std;
 class Player {
     vector<unique_ptr<Link>> links; // player's links
-    // unique_ptr<AbilityManager> manager;
     // === added: server ports ===
     vector<unique_ptr<Link>> serverPorts;
-    vector<unique_ptr<Ability>> abilities; // player's abilities
+    unique_ptr<AbilityManager> abilityDeck;
+    // vector<unique_ptr<Ability>> abilities; // player's abilities
     int data; // # data player downloads
     int viruses; // # viruses player downloads
     int numAbilitiesLeft; // # abilities player can use

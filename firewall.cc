@@ -2,9 +2,9 @@
 
 Firewall::Firewall(Player *firewallOwner, vector<vector<Cell>> *grid): Ability(Type::Firewall), grid{grid}, firewallOwner(firewallOwner) {}
 
-void Firewall::apply(int x, int y) {
-    if (checkValid(x, y)) {
-        Cell &cell = (*grid)[y][x];
+void Firewall::apply() {
+    if (checkValid(targetX, targetY)) {
+        Cell &cell = (*grid)[targetY][targetX];
         cell.setFirewallOwner(firewallOwner);
         cell.notifyObservers();
         isUsed = true;
@@ -13,12 +13,17 @@ void Firewall::apply(int x, int y) {
     }
 }
 
-bool Firewall::checkValid(int x, int y) {
-    Cell &cell = (*grid)[y][x];
+bool Firewall::checkValid() {
+    Cell &cell = (*grid)[targetY][targetX];
     if (cell.getFirewallOwner() != nullptr || cell.getLink() != nullptr) return false;
     return true;
 }
 
 char Firewall::getType() {
     return 'F';
+}
+
+void Firewall::setTargetCoord(int x, int y) {
+    targetX = x;
+    targetY = y;
 }

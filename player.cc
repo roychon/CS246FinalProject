@@ -11,7 +11,7 @@ using namespace std;
 
 // note, when init is fully setup likely have to pass abilities as a parameter
 // temporarily passing "8" as # of links, if server port is coded as link, +2 so 10 links total.
-Player::Player(const int playerID) : links(8), serverPorts(2), abilities(5), data{0}, viruses{0}, numAbilitiesLeft{5}, playerID{playerID}{
+Player::Player(const int playerID) : links(8), serverPorts(2), data{0}, viruses{0}, numAbilitiesLeft{5}, playerID{playerID}{
     for (size_t i = 0; i < links.size(); ++i) {
         links[i] = make_unique<Link>();
     }
@@ -166,8 +166,24 @@ Link *Player::findLinkAt(int xCord, int yCord) {
     return nullptr; // should never reach this point
 }
 
+// ======= MODIFIED ABILITY MANAGER FUNCTIONS ========
+
+void Player::useAbility(int id) {
+    abilityDeck->readArgs(id - 1);
+}
+
+void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
+    abilityDeck = make_unique<AbilityManager>(this, grid, abilinit);
+}
+
+void Player::printAbilities() {
+}
+
 // ==========
 // ABILITY CODE
+
+/*
+
 void Player::useAbility(int id) {
     if (abilities[id]->getIsUsed()) {
         cout << "ABILITY IS USED" << endl;
@@ -225,6 +241,8 @@ void Player::printAbilities() {
         }
     }
 }
+
+*/
 
 void Player::incrementDownloads(char type) {
     type == 'D' ? data++ : viruses++;

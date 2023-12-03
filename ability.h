@@ -23,8 +23,8 @@ protected:
     bool isUsed;
 public:
     explicit Ability(Type type);
-    virtual void apply(int x, int y) = 0;
-    virtual bool checkValid(int x, int y) = 0;
+    virtual void apply() = 0;
+    virtual bool checkValid() = 0;
     virtual char getType() = 0;
     bool getIsUsed();
     Type getAbilityType();

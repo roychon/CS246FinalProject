@@ -3,18 +3,21 @@
 #include <map>
 #include <iostream>
 #include <vector>
-#include "ability.h"
 
+#include "link.h"
+#include "player.h"
+#include "cell.h"
+
+#include "ability.h"
 #include "firewall.h"
 #include "linkboost.h"
 #include "download.h"
 #include "polarize.h"
 #include "scan.h"
 
-#include "link.h"
-#include "player.h"
-#include "cell.h"
 using namespace std;
+
+class Ability;
 
 class AbilityManager {
     vector<unique_ptr<Ability>> abilities;
@@ -24,8 +27,8 @@ class AbilityManager {
     string typeToString(Type type);
     void constructAbility(Type type);
     public:
-        explicit AbilityManager(string abilityString);
-        void readArgs(int id);
+        AbilityManager(Player *abilityOwner, vector<vector<Cell>> *grid, string abilityString);
+        void readArgs(int index);
 };
 
 #endif

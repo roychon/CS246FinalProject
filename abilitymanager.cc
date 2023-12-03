@@ -1,14 +1,15 @@
 #include "abilitymanager.h"
 using namespace std;
 
-AbilityManager::AbilityManager(string abilityString) : abilities(5) {
+AbilityManager::AbilityManager(Player *abilityOwner, vector<vector<Cell>> *grid, string abilityString): 
+    abilities(5), abilityOwner{abilityOwner}, grid{grid} {
     for (char c : abilityString) {
         Type abilityToMake = charToType(c);
         constructAbility(abilityToMake);
     }
 }
 
-void AbilityManager::readArgs(int id) {
+void AbilityManager::readArgs(int index) {
     /*
     Type type = abilities[id]->getAbilityType();
     char linkInput;
@@ -42,15 +43,15 @@ void AbilityManager::readArgs(int id) {
 void AbilityManager::constructAbility(Type type) {
     unique_ptr<Ability> newAbility;
     if (type == Type::Download) {
-        newAbility = make_unique<Download>(abilityOwner, grid);
+        newAbility = make_unique<Download>(Type::Download, abilityOwner, grid);
     } else if (type == Type::Firewall) {
-        newAbility = make_unique<Firewall>(abilityOwner, grid);
+        newAbility = make_unique<Firewall>(Type::Firewall, abilityOwner, grid);
     } else if (type == Type::Polarize) {
-        newAbility = make_unique<Polarize>(grid);
+        newAbility = make_unique<Polarize>(Type::Polarize, grid);
     } else if (type == Type::LinkBoost) {
-        newAbility = make_unique<LinkBoost>(abilityOwner, grid);
+        newAbility = make_unique<LinkBoost>(Type::LinkBoost, abilityOwner, grid);
     } else if (type == Type::Scan) {
-        newAbility = make_unique<Scan>(grid);
+        newAbility = make_unique<Scan>(Type::Scan, grid);
     }
     if (newAbility != nullptr) abilities.emplace_back(move(newAbility));
     cerr << "Failed" << endl;

@@ -1,23 +1,25 @@
 #include "scan.h"
 
-Scan::Scan(vector<vector<Cell>> *grid): Ability(Type::Scan), grid{grid} {}
+Scan::Scan(Type type, vector<vector<Cell>> *grid): Ability(type), grid{grid} {}
 
-void Scan::apply(int x, int y) {
-    Link *link = (*grid)[y][x].getLink();
-    if (checkValid(x, y)) {
-        link->revealLink();
+void Scan::apply() {
+    if (checkValid()) {
+        targetLink->revealLink();
         isUsed = true;
     } else {
         cout << "ability failed" << endl;
     }
 }
 
-bool Scan::checkValid(int x, int y) {
-    Link *link = (*grid)[x][y].getLink();
-    if (link->getIsRevealed()) return false;
+bool Scan::checkValid() {
+    if (targetLink->getIsRevealed()) return false;
     return true;
 }
 
 char Scan::getType() {
     return 'S';
+}
+
+void Scan::setTarget(Link *target) {
+    targetLink = target;
 }

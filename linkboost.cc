@@ -1,21 +1,22 @@
 #include "linkboost.h"
 
-LinkBoost::LinkBoost(Player *activePlayer, vector<vector<Cell>> *grid) : Ability(Type::LinkBoost), activePlayer{activePlayer}, grid{grid} {}
+LinkBoost::LinkBoost(Type type, Player *activePlayer, vector<vector<Cell>> *grid) : Ability(type), activePlayer{activePlayer}, grid{grid} {}
 
-void LinkBoost::apply(int x, int y) {
-    if (checkValid(x, y)) {
-        Link *link = (*grid)[y][x].getLink();
-        link->incrementMoveFactor(1);
-        isUsed = true;
-    } else {
-        cout << "INVALID ABILITY MOVE" << endl;
-    }
+void LinkBoost::apply() {
+    targetLink->incrementMoveFactor(1);
+    isUsed = true;
 }
 
-bool LinkBoost::checkValid(int x, int y) {
-    return playerMatch(activePlayer, &((*grid)[y][x].getLink()->getPlayer()));
+bool LinkBoost::checkValid() {
+    // we can probably do this check before
+   // return playerMatch(activePlayer, &((*grid)[][x].getLink()->getPlayer()));
+   return false;
 }
 
 char LinkBoost::getType() {
     return 'L';
+}
+
+void LinkBoost::setTarget(Link *target) {
+    targetLink = target;
 }

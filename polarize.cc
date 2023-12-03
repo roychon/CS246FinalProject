@@ -1,17 +1,25 @@
 #include "polarize.h"
 
-Polarize::Polarize(vector<vector<Cell>> *grid): Ability(Type::Polarize), grid{grid} {}
+Polarize::Polarize(Type type, vector<vector<Cell>> *grid): Ability(type), grid{grid} {}
 
-void Polarize::apply(int x, int y) {
-    Link *link = (*grid)[y][x].getLink();
-    if (link->getType() == 'D') {
-        link->setType('V');
-    } else link->setType('D');
+void Polarize::apply() {
+    if (targetLink->getType() == 'D') {
+        targetLink->setType('V');
+    } else if (targetLink->getType() == 'V') {
+        targetLink->setType('D');
+    } else {
+        // need to do error checking for trying to target empty or serverport..
+        cout << "failed"
+    }
     isUsed = true;
 }
 
-bool Polarize::checkValid(int x, int y) { return false; }
+bool Polarize::checkValid() { return false; }
 
 char Polarize::getType() {
     return 'P';
+}
+
+void Polarize::setTarget(Link *target) {
+    targetLink = target;
 }
