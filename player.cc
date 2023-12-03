@@ -6,6 +6,7 @@
 #include "download.h"
 #include "scan.h"
 #include "polarize.h"
+#include "poweraugment.h"
 #include <map>
 using namespace std;
 
@@ -195,6 +196,9 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
         else if (abil == 'P') {
             abilities[i] = make_unique<Polarize>(grid);
         }
+        else if (abil == 'A') {
+            abilities[i] = make_unique<PowerAugment>(this, grid);
+        }
     }
 }
 
@@ -215,6 +219,9 @@ void Player::printAbilities() {
         }
         else if (abilities[i].get()->getType() == 'S') {
             cout << "Scan ";
+        }
+        else if (abilities[i].get()->getType() == 'A') {
+            cout << "Power Augment ";
         }
 
         if (abilities[i].get()->getIsUsed() == 1) {

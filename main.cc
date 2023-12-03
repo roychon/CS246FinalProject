@@ -142,7 +142,7 @@ int main(int argc, char *argv[]) {
             }
             else if (game.getActivePlayer()->getAbility(id)->getType() == 'D') {
                 cin >> whichlink;
-                for (auto link : game.getActivePlayer()->getLinks()) {
+                for (auto link : game.getInactivePlayer()->getLinks()) {
                     if (link->getId() == whichlink) {
                         x = link->getX();
                         y = link->getY();
@@ -179,6 +179,16 @@ int main(int argc, char *argv[]) {
                     }
                 }
                 for (auto link : game.getInactivePlayer()->getLinks()) {
+                    if (link->getId() == whichlink) {
+                        x = link->getX();
+                        y = link->getY();
+                    }
+                }
+                game.getActivePlayer()->useAbility(id, x, y);
+            }
+            else if (game.getActivePlayer()->getAbility(id)->getType() == 'A') {
+                cin >> whichlink;
+                for (auto link : game.getActivePlayer()->getLinks()) {
                     if (link->getId() == whichlink) {
                         x = link->getX();
                         y = link->getY();
