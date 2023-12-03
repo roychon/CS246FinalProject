@@ -7,7 +7,7 @@ class Firewall : public Ability {
     Player *firewallOwner;
 public:
     Firewall(Player *firewallOwner, vector<vector<Cell>> *grid);
-    void apply(int x, int y) override; // passes in enemy link
+    void apply(int x, int y) override;
     bool checkValid(int x, int y) override;
     char getType() override;
 };

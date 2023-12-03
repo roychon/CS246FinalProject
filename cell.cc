@@ -32,8 +32,8 @@ bool Cell::getIsServerPort() {
 // Also implemented setting isServerPort and isFirewall to false
 void Cell::setLinkNull() {
     link = nullptr;
-    isServerPort = false;
-    isFirewall = false;
+    // isServerPort = false;
+    // isFirewall = false;
 }
 
 Link* Cell::getLink() {
@@ -55,4 +55,13 @@ void Cell::setCoords(int r, int c) {
 
 void Cell::setFirewall() {
     isFirewall = true;
+}
+
+// === Firewall Logic ====
+void Cell::setFirewallOwner(Player *player) {
+    firewallOwner = player;
+}
+
+Player *Cell::getFirewallOwner() {
+    return firewallOwner;
 }
