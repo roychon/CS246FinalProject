@@ -251,14 +251,8 @@ void Board::setupLinks(Player &player, string playerlinks) {
 }
 
 void Board::toggleEnhancementsOn() {
-    if (enhancementsOn == true) {
-        enhancementsOn = false;
-        td.get()->toggleEnhancementsOn();
-    }
-    else {
-        enhancementsOn = true;
-        td.get()->toggleEnhancementsOn();
-    }
+    enhancementsOn = !enhancementsOn;
+    td.get()->toggleEnhancementsOn();
 }
 
 vector<vector<Cell>>* Board::getGrid() {

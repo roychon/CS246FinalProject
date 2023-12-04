@@ -70,7 +70,7 @@ void Game::display(bool graphicsOn) {
     }
     
     if (graphicsOn) {
-    board->getGD()->playerDisplays(activePlayer, inactivePlayer);
+        board->getGD()->playerDisplays(activePlayer, inactivePlayer);
     }
 
     if (enhancementsOn == true) {
@@ -78,20 +78,21 @@ void Game::display(bool graphicsOn) {
         board->printTextDisplay();
         activePlayer->printActivePlayer();
     }
+    
     else {
-    if (activePlayer->getplayerID() == 1) {
-        activePlayer->printActivePlayer();
-    }
-    else {
-        inactivePlayer->printInactivePlayer();
-    }
-    board->printTextDisplay();
-    if (activePlayer->getplayerID() == 2) {
-        activePlayer->printActivePlayer();
-    }
-    else {
-        inactivePlayer->printInactivePlayer();
-    }
+        if (activePlayer->getplayerID() == 1) {
+            activePlayer->printActivePlayer();
+        }
+        else {
+            inactivePlayer->printInactivePlayer();
+        }
+        board->printTextDisplay();
+        if (activePlayer->getplayerID() == 2) {
+            activePlayer->printActivePlayer();
+        }
+        else {
+            inactivePlayer->printInactivePlayer();
+        }
     }
 }
 
