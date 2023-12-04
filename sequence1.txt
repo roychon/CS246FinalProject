@@ -1,0 +1,7 @@
+board
+abilities
+ability 1 A
+ability 1 a
+move a up
+move A up
+move a up

@@ -257,6 +257,12 @@ int main(int argc, char *argv[]) {
                         cerr << e.what();
                         continue;
                     }
+                    game.switchActivePlayer();
+                    game.display(graphicsOn);
+                    if (game.checkWin() == true) {
+                        cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
+                        break;
+                    }
                 }
 
                 else if (individualcmd == "enhancements") {
