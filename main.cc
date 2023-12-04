@@ -76,14 +76,14 @@ int main(int argc, char *argv[]) {
             char whichlink;
             string direction;
             cin >> whichlink >> direction;
-            Link *linktomove;
-
+            Link *linktomove = nullptr;
+            
             for (auto link : game.getActivePlayer()->getLinks()) {
                 if (link->getId() == whichlink) {
                     linktomove = link;
                 }
             }
-            
+
             if (direction == "up") {
                 game.move(linktomove, 0, 1);
             }
@@ -101,7 +101,8 @@ int main(int argc, char *argv[]) {
             }
             
             else {
-                cout << "Incorrect input";
+                cout << "Invalid direction." << endl;
+                continue;
             }
             game.switchActivePlayer();
             game.display(graphicsOn);
