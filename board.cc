@@ -47,7 +47,7 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
             cellToBeDeleted.setLinkNull();
             cellToBeDeleted.notifyObservers();
             ActivePlayerLink.setX(-1);
-            ActivePlayerLink.setX(-1);
+            ActivePlayerLink.setY(-1);
             ActivePlayerLink.setIsDead();
             return;
         }
