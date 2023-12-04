@@ -13,7 +13,7 @@ void Polarize::apply(int x, int y) {
             targetCell.setLinkNull();
             targetCell.notifyObservers();
             link->setX(-1);
-            link->setX(-1);
+            link->setY(-1);
             link->setIsDead();
         }
     } else link->setType('D');
