@@ -204,7 +204,7 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
             abilities[i] = make_unique<Scan>(grid);
         }
         else if (abil == 'P') {
-            abilities[i] = make_unique<Polarize>(grid);
+            abilities[i] = make_unique<Polarize>(this, grid);
         }
         else if (abil == 'A') {
             abilities[i] = make_unique<PowerAugment>(this, grid);
