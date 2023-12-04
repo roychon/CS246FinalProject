@@ -98,6 +98,9 @@ void Game::display(bool graphicsOn) {
 // false (invalid move), true (valid move). Loop through 
 bool Game::move(Link *link, int x, int y) {
     int moveFactor = link->getMoveFactor();
+    if (moveFactor == 0) {
+        return true;
+    }
     int xCord, yCord;
     int newX = x * moveFactor;
     int newY = y * moveFactor;
