@@ -14,8 +14,8 @@ using namespace std;
 
 // note, when init is fully setup likely have to pass abilities as a parameter
 // temporarily passing "8" as # of links, if server port is coded as link, +2 so 10 links total.
-Player::Player(const int playerID) : links(8), serverPorts(2), abilities(5), data{0}, viruses{0}, 
-    hasAbilityTurn{true}, numAbilitiesLeft{5}, playerID{playerID}{
+Player::Player(const int playerID) : links(8), serverPorts(2), abilities(5), data{0}, viruses{0},
+    numAbilitiesLeft{5}, playerID{playerID}, hasAbilityTurn{true}{
     for (size_t i = 0; i < links.size(); ++i) {
         links[i] = make_unique<Link>();
     }
@@ -174,9 +174,10 @@ Link *Player::findLinkAt(int xCord, int yCord) {
 // ABILITY CODE
 void Player::useAbility(int id, int x, int y) {
     if (abilities[id - 1]->getIsUsed()) {
-        cout << "ABILITY IS USED" << endl;
+        throw(logic_error("Ability has been used already!\n"));
     } else {
         abilities[id - 1]->apply(x, y);
+        hasAbilityTurn = false;
         numAbilitiesLeft--;
     }
 }
@@ -276,6 +277,6 @@ bool Player::getHasAbilityTurn() {
     return hasAbilityTurn;
 }
 
-bool Player::setHasAbilityTurn(bool value) {
-    hasAbilityTurn = false;
+void Player::reenableAbilityTurn() {
+    hasAbilityTurn = true;
 }

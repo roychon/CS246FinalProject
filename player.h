@@ -46,7 +46,7 @@ public:
     // void updateScore();
     void useAbility(int id, int x, int y);
     void setAbilities(string abilinit, vector<vector<Cell>> *grid);
-    void useAbilityTurn();
+    void reenableAbilityTurn();
     void printAbilities();
     int getNumAbilitiesLeft();
     Ability *getAbility(int ID);

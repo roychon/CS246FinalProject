@@ -152,6 +152,7 @@ void Game::switchActivePlayer() {
         }
     }
     board->updateDisplayPOV(activePlayer);
+    activePlayer->reenableAbilityTurn();
 }
 
 void Game::toggleEnhancementsOn() {
