@@ -197,7 +197,7 @@ int main(int argc, char *argv[]) {
                     game.getActivePlayer()->useAbility(id, x, y);
                 }
                 // target is not a coord or link
-                else if (abilityType == 'H') {
+                else if (abilityType == 'H' || abilityType == 'C') {
                     game.getActivePlayer()->useAbility(id, -1, -1);
                 }
             } catch(logic_error &e) {
@@ -343,7 +343,7 @@ int main(int argc, char *argv[]) {
                             game.getActivePlayer()->useAbility(id, x, y);
                         }
                         // target is not a coord or link
-                        else if (abilityType == 'H') {
+                        else if (abilityType == 'H' || abilityType == 'C') {
                             game.getActivePlayer()->useAbility(id, -1, -1);
                         }
                     } catch(logic_error &e) {

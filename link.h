@@ -42,6 +42,7 @@ public:
     void setId(char id);
     void incrementMoveFactor(int factor);
     void augmentpower();
+    void setRevealedFalse();
 
     // add any more fields as necessary
 };

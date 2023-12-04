@@ -84,3 +84,7 @@ void Link::incrementMoveFactor(int factor) {
 void Link::augmentpower() {
     strength = 4;
 }
+
+void Link::setRevealedFalse() {
+    isRevealed = false;
+}

@@ -9,6 +9,7 @@
 #include "poweraugment.h"
 #include "heal.h"
 #include "takedown.h"
+#include "conceal.h"
 #include <map>
 using namespace std;
 
@@ -208,6 +209,9 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
         }
         else if (abil == 'T') {
             abilities[i] = make_unique<Takedown>(this, grid);
+        } 
+        else if (abil == 'C') {
+            abilities[i] = make_unique<Conceal>(this);
         }
     }
 }
@@ -238,6 +242,9 @@ void Player::printAbilities() {
         }
         else if (abilities[i].get()->getType() == 'T') {
             cout << "Takedown ";
+        }
+        else if (abilities[i].get()->getType() == 'C') {
+            cout << "Conceal ";
         }
 
         if (abilities[i].get()->getIsUsed() == 1) {
