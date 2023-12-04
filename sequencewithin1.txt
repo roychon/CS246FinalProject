@@ -1,0 +1,3 @@
+move b up
+move B up
+move c up

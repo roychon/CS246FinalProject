@@ -173,3 +173,162 @@ Player* Game::getInactivePlayer() {
     }
     return nullptr; // should never be reached
 }
+
+void Game::runSequence(string filename, bool graphicsOn) {
+    ifstream sequencefile{filename};
+    string cmdexecute;
+    while (getline(sequencefile, cmdexecute)) {
+        istringstream cmdparse{cmdexecute};
+        string individualcmd;
+        cmdparse >> individualcmd;
+        if (individualcmd == "board") {
+            display(graphicsOn);
+        }
+
+        else if (individualcmd == "quit") {
+            return;
+        }
+
+        else if (individualcmd == "move") {
+            char whichLink;
+            string direction;
+            cmdparse >> whichLink >> direction;
+            Link *linkToMove = getActivePlayer()->getLinkByID(whichLink);
+            if (linkToMove == nullptr) {
+                cout << "This is not one of your links!" << endl;
+                continue;
+            } else if (linkToMove->getIsDead()) {
+                cout << "This link no longer exists." << endl;
+                continue;
+            }
+            try {
+                int x = 0;
+                int y = 0;
+                if (direction == "up") y = 1;
+                else if (direction == "right") x = 1;
+                else if (direction == "left") x = -1;
+                else if (direction == "down") y = -1;
+                else {
+                    cout << "Invalid direction." << endl;
+                    continue;
+                }
+    
+                move(linkToMove, x, y);
+                
+            } catch(logic_error &e) {
+                cerr << e.what();
+                continue;
+            }
+            switchActivePlayer();
+            display(graphicsOn);
+            if (checkWin() == true) {
+                cout << "Player " << getWinningPlayer()->getplayerID() << " Wins!" << endl;
+                break;
+            }
+        }
+
+        else if (individualcmd == "enhancements") {
+            enhancementsOn = !enhancementsOn;
+            toggleEnhancementsOn();
+        }
+
+        else if (individualcmd == "abilities") {
+            getActivePlayer()->printAbilities();
+        }
+        else if (individualcmd == "ability") {
+            int id, x, y;
+            cmdparse >> id;
+            char whichLink;
+            char abilityType = getActivePlayer()->getAbility(id)->getType();
+
+            if (!getActivePlayer()->getHasAbilityTurn()) {
+                cout << "You've already used an ability this turn!" << endl;
+                continue;
+            }
+
+            if (getActivePlayer()->getNumAbilitiesLeft() == 0) {
+                cout << "You're out of abilities!" << endl;
+                continue;
+            }
+            try {
+                // target is only active player's link
+                if (abilityType == 'L' || abilityType == 'A') {
+                    cmdparse >> whichLink;
+                    Link *targetLink = getActivePlayer()->getLinkByID(whichLink);
+                    if (targetLink == nullptr) {
+                        cout << "This is not one of your links!" << endl;
+                        continue;
+                    } else if (targetLink->getIsDead()) {
+                        cout << "This link no longer exists." << endl;
+                        continue;
+                    }
+                    x = targetLink->getX();
+                    y = targetLink->getY();
+                    getActivePlayer()->useAbility(id, x, y);
+                }
+                // target is only inactive player's link
+                else if (abilityType == 'D' || abilityType == 'T') {
+                    cmdparse >> whichLink;
+                    Link *targetLink = getInactivePlayer()->getLinkByID(whichLink);
+                    if (targetLink == nullptr) {
+                        cout << "This is not one of your opponent's links!" << endl;
+                        continue;
+                    } else if (targetLink->getIsDead()) {
+                        cout << "This link no longer exists." << endl;
+                        continue;
+                    }
+                    x = targetLink->getX();
+                    y = targetLink->getY();
+                    getActivePlayer()->useAbility(id, x, y);
+                }
+                // target is either active or inactive player's link
+                else if (abilityType == 'P' || abilityType == 'S') {
+                    cmdparse >> whichLink;
+                    Link *targetLink = getActivePlayer()->getLinkByID(whichLink);
+                    // not your own links, so check if it's opponent's
+                    if (targetLink == nullptr) {
+                        targetLink = getInactivePlayer()->getLinkByID(whichLink);
+                    }
+                    if (targetLink == nullptr) {
+                        cout << "This is not neither one of your own or your opponent's links!" << endl;
+                        continue;
+                    } else if (targetLink->getIsDead()) {
+                        cout << "This link no longer exists." << endl;
+                        continue;
+                    }
+                    if (abilityType == 'S' && targetLink->getIsRevealed()) {
+                        cout << "This link is already revealed... cannot be scanned." << endl;
+                        continue;
+                    }
+
+                    x = targetLink->getX();
+                    y = targetLink->getY();
+                    getActivePlayer()->useAbility(id, x, y);
+                }
+                // target is coord
+                else if (abilityType == 'F') {
+                    cmdparse >> x >> y;
+                    getActivePlayer()->useAbility(id, x, y);
+                }
+                // target is not a coord or link
+                else if (abilityType == 'H' || abilityType == 'C') {
+                    getActivePlayer()->useAbility(id, -1, -1);
+                }
+            } catch(logic_error &e) {
+                cerr << e.what();
+                continue;
+            }
+            display(graphicsOn);
+            if (checkWin() == true) {
+                cout << "Player " << getWinningPlayer()->getplayerID() << " Wins!" << endl;
+                break;
+            }
+        }
+        else if (individualcmd == "sequence") {
+            string filename;
+            cmdparse >> filename;
+            runSequence(filename, graphicsOn);
+        }
+    }
+}
+
