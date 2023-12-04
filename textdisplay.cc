@@ -1,4 +1,3 @@
-#include <iostream>
 #include "textdisplay.h"
 #include "cell.h"
 using namespace std;
@@ -28,7 +27,7 @@ void TextDisplay::setActivePlayer(Player *player) {
 TextDisplay::~TextDisplay() {}
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
-  cout << "========" << endl;
+  out << "========" << endl;
   Player *activePlayer = td.activePlayer;
 
   if (td.enhancementsOn == true) {
@@ -57,15 +56,10 @@ ostream &operator<<(ostream &out, const TextDisplay &td) {
     }
   }
 
-  cout << "========" << endl;
+  out << "========" << endl;
   return out;
 }
 
 void TextDisplay::toggleEnhancementsOn() {
-    if (enhancementsOn == true) {
-        enhancementsOn = false;
-    }
-    else {
-        enhancementsOn = true;
-    }
+    enhancementsOn = !enhancementsOn;
 }

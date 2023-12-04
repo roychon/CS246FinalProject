@@ -2,6 +2,8 @@
 #define __GAME_H__
 #include <vector>
 #include <memory>
+#include <sstream>
+#include <fstream>
 #include "board.h"
 #include "player.h"
 #include "link.h"
@@ -27,6 +29,7 @@ public:
     void toggleEnhancementsOn();
     Player* getWinningPlayer();
     Player* getInactivePlayer();
+    void runSequence(string filename, bool graphicsOn);
 
     // add any more fields as necessary
 };
