@@ -95,11 +95,11 @@ void Game::display(bool graphicsOn) {
     }
 }
 
-// false (invalid move), true (valid move). Loop through 
-bool Game::move(Link *link, int x, int y) {
+void Game::move(Link *link, int x, int y) {
     int moveFactor = link->getMoveFactor();
     if (moveFactor == 0) {
-        return true;
+        cout << "Should've remembered this can't be moved...";
+        return;
     }
     int xCord, yCord;
     int newX = x * moveFactor;
@@ -116,7 +116,7 @@ bool Game::move(Link *link, int x, int y) {
         yCord = link->getY() - newY;
     }
     
-    if (board->isInvalidMove(*link, xCord, yCord, *activePlayer)) return false;
+    if (board->isInvalidMove(*link, xCord, yCord, *activePlayer)) throw(logic_error("Invalid move.\n"));
 
 
     // at this point, activePlayer's move is valid.
@@ -130,7 +130,6 @@ bool Game::move(Link *link, int x, int y) {
         // activePlayer moves link to empty cell or server port
         board->move(activePlayer, nonActivePlayer, *link, xCord, yCord);
     }
-    return true;
 }
 
 Player* Game::getActivePlayer() {
@@ -155,15 +154,9 @@ void Game::switchActivePlayer() {
     board->updateDisplayPOV(activePlayer);
 }
 
-void Game::toggleenhancementsOn() {
-    if (enhancementsOn == true) {
-        enhancementsOn = false;
-        board.get()->toggleenhancementsOn();
-    }
-    else {
-        enhancementsOn = true;
-        board.get()->toggleenhancementsOn();
-    }
+void Game::toggleEnhancementsOn() {
+    enhancementsOn = !enhancementsOn;
+    board.get()->toggleEnhancementsOn();
 }
 
 Player* Game::getWinningPlayer() {
@@ -176,4 +169,5 @@ Player* Game::getInactivePlayer() {
             return player.get();
         }
     }
+    return nullptr; // should never be reached
 }

@@ -29,7 +29,7 @@ public:
     void setup();
     void setupLinks(Player &player, string playerlinks);
     bool vecContains(vector<int> vec, int item);
-    void toggleenhancementsOn();
+    void toggleEnhancementsOn();
     vector<vector<Cell>>* getGrid();
     GraphicsDisplay* getGD();
     bool opponentHasFireWallAt(int xCord, int yCord, Player *opponent);

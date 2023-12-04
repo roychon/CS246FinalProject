@@ -13,6 +13,7 @@ void Download::apply(int x, int y) {
         Link *link = cell.getLink();
         link->setX(-1);
         link->setY(-1);
+        link->setIsDead();
         activePlayer->incrementDownloads(link->getType());
         cell.setLinkNull();
         cell.notifyObservers();

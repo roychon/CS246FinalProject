@@ -21,6 +21,7 @@ class Player {
     int numAbilitiesLeft; // # abilities player can use
     const int playerID;
     char linkIDLookUp(const int playerID, const int index);
+    bool hasAbilityTurn;
 
 public:
     Player(const int playerID);
@@ -40,14 +41,17 @@ public:
     void removeLinkAt(int x, int y);
     int getDataCount();
     int getVirusCount();
+    bool getHasAbilityTurn();
     Link *findLinkAt(int xCord, int yCord);
     // void updateScore();
     void useAbility(int id, int x, int y);
     void setAbilities(string abilinit, vector<vector<Cell>> *grid);
+    void useAbilityTurn();
     void printAbilities();
-    int getnumAbilitiesLeft();
+    int getNumAbilitiesLeft();
     Ability *getAbility(int ID);
     void decreaseVirusCount();
+    Link *getLinkByID(char id);
     // bool hasServerAt(int xCord, int yCord); merged with has hasLInkAt
     // add any more fields as necessary
 };

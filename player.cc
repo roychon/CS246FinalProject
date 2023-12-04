@@ -14,7 +14,8 @@ using namespace std;
 
 // note, when init is fully setup likely have to pass abilities as a parameter
 // temporarily passing "8" as # of links, if server port is coded as link, +2 so 10 links total.
-Player::Player(const int playerID) : links(8), serverPorts(2), abilities(5), data{0}, viruses{0}, numAbilitiesLeft{5}, playerID{playerID}{
+Player::Player(const int playerID) : links(8), serverPorts(2), abilities(5), data{0}, viruses{0}, 
+    hasAbilityTurn{true}, numAbilitiesLeft{5}, playerID{playerID}{
     for (size_t i = 0; i < links.size(); ++i) {
         links[i] = make_unique<Link>();
     }
@@ -246,7 +247,7 @@ void Player::printAbilities() {
         }
     }
 }
-int Player::getnumAbilitiesLeft() {
+int Player::getNumAbilitiesLeft() {
     return numAbilitiesLeft;
 }
 
@@ -262,14 +263,19 @@ void Player::decreaseVirusCount() {
     --viruses;
 }
 
-// ==== hasServerAt(xCord, yCord) ====
-/*
-bool Player::hasServerAt(int xCord, int yCord) {
-    for (auto &serverport : serverPorts) {
-        if (serverport->getX() == xCord && serverport->getY() == yCord) return true;
+Link* Player::getLinkByID(char id) {
+    for (auto &link : links) {
+        if (link->getId() == id) {
+            return link.get();
+        }
     }
-    return false;
+    return nullptr;
 }
-*/
 
-// ==========
+bool Player::getHasAbilityTurn() {
+    return hasAbilityTurn;
+}
+
+bool Player::setHasAbilityTurn(bool value) {
+    hasAbilityTurn = false;
+}

@@ -14,17 +14,10 @@ Board::Board() : size{8}, td{make_unique<TextDisplay>()}, gd{nullptr}, enhanceme
 bool Board::isInvalidMove(Link &link, int xCord, int yCord, Player &player) {
     if (player.getplayerID() == 1 && (xCord > 7 || xCord < 0 || yCord < 0)) return true;
     else if (player.getplayerID() == 2 && (xCord > 7 || xCord < 0 || yCord > 7)) return true;
-    // player is trying to move onto their own link
+    // player is trying to move onto their own link (or server)
     if (player.hasLinkAt(xCord, yCord)) {
         return true;
     }
-    // player trying to move onto their own server port (merged this logic with hasLinkAt)
-    /*
-    else if (player.hasServerAt(xCord, yCord)) {
-        return true;
-    }
-    */
-    // valid move
     else {
         return false;
     }
@@ -53,6 +46,9 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
             Cell &cellToBeDeleted = grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()];
             cellToBeDeleted.setLinkNull();
             cellToBeDeleted.notifyObservers();
+            ActivePlayerLink.setX(-1);
+            ActivePlayerLink.setX(-1);
+            ActivePlayerLink.setIsDead();
             return;
         }
     }
@@ -65,6 +61,7 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         ActivePlayerLink.setX(-1);
         ActivePlayerLink.setY(-1);
         ActivePlayerLink.revealLink();
+        ActivePlayerLink.setIsDead();
     } 
     
     else if (ActivePlayerLink.getStrength() >= NonActivePlayerLink.getStrength()) {
@@ -77,6 +74,7 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
         NonActivePlayerLink.setX(-1);
         NonActivePlayerLink.setY(-1);
+        NonActivePlayerLink.setIsDead();
         NonActivePlayerLink.revealLink();
         ActivePlayerLink.revealLink();
     } else {
@@ -85,6 +83,7 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
         ActivePlayerLink.setX(-1);
         ActivePlayerLink.setY(-1);
+        ActivePlayerLink.setIsDead();
         ActivePlayerLink.revealLink();
         NonActivePlayerLink.revealLink();
     }
@@ -112,11 +111,11 @@ void Board::move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int 
     }
     
     else if (yCord > 7 || yCord < 0) {
-        cout << "Hello" << endl;
         grid[link.getY()][link.getX()].setLinkNull();
         grid[link.getY()][link.getX()].notifyObservers();
         link.setX(-1);
         link.setY(-1);
+        link.setIsDead();
         ActivePlayer->incrementDownloads(link.getType());
     }
 
@@ -251,14 +250,14 @@ void Board::setupLinks(Player &player, string playerlinks) {
     }
 }
 
-void Board::toggleenhancementsOn() {
+void Board::toggleEnhancementsOn() {
     if (enhancementsOn == true) {
         enhancementsOn = false;
-        td.get()->toggleenhancementsOn();
+        td.get()->toggleEnhancementsOn();
     }
     else {
         enhancementsOn = true;
-        td.get()->toggleenhancementsOn();
+        td.get()->toggleEnhancementsOn();
     }
 }
 

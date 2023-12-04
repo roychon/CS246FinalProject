@@ -17,6 +17,7 @@ class Link {
     int y; // col
     Player *player; // ptr to player who owns this link
     int moveFactor; // controls distance of movement for link on game board
+    bool isDead;
 
 public:
     Link();
@@ -30,6 +31,8 @@ public:
     int getX();
     int getY();
     bool getIsRevealed();
+    bool getIsDead();
+    void setIsDead();
     void setX(int x);
     void setY(int y);
     void setStrength(int strength);
