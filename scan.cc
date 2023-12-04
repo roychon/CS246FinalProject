@@ -8,7 +8,7 @@ void Scan::apply(int x, int y) {
         link->revealLink();
         isUsed = true;
     } else {
-        cout << "ability failed" << endl;
+        throw(logic_error("Cannot use Scan on that.\n"));
     }
 }
 

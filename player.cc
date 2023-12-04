@@ -177,7 +177,12 @@ void Player::useAbility(int id, int x, int y) {
     if (abilities[id - 1]->getIsUsed()) {
         throw(logic_error("Ability has been used already!\n"));
     } else {
-        abilities[id - 1]->apply(x, y);
+        try {
+            abilities[id - 1]->apply(x, y);
+        } catch(logic_error &e) {
+            cerr << e.what();
+            return;
+        }
         hasAbilityTurn = false;
         numAbilitiesLeft--;
     }

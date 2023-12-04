@@ -8,7 +8,7 @@ void LinkBoost::apply(int x, int y) {
         link->incrementMoveFactor(1);
         isUsed = true;
     } else {
-        cout << "INVALID ABILITY MOVE" << endl;
+        throw(logic_error("Cannot use Linkboost on that.\n"));
     }
 }
 

@@ -19,7 +19,7 @@ void Download::apply(int x, int y) {
         cell.notifyObservers();
         isUsed = true;
     } else {
-        cout << "INVALID ABILITY MOVE" << endl;
+        throw(logic_error("Cannot use Download on that.\n"));
     }
 }
 

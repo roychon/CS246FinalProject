@@ -7,13 +7,13 @@ void Heal::apply(int x, int y) {
         activePlayer->decreaseVirusCount();
         isUsed = true;
     } else {
-        cout << "ability failed" << endl;
+        throw(logic_error("No viruses to use Heal on.\n"));
     }
 }
 
 bool Heal::checkValid(int x, int y) {
     if (activePlayer->getVirusCount() == 0) {
-    return false;
+        return false;
     }
     return true;
 }
