@@ -16,7 +16,14 @@ void GraphicsDisplay::notify(Cell &c) {
     // nullptr means no link is present
     // will need to check for firewall later (within nullptr if statement)
 
-    if (c.getFirewallOwner() != nullptr) {
+    if (c.getLink() != nullptr && (c.getLink()->getType() != 'S')) {
+        grid[c.getRow()][c.getCol()] = c.getLink()->getId();
+        string convert{c.getLink()->getId()};        
+        xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
+        xw.drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, convert);
+    }
+
+    else if (c.getFirewallOwner() != nullptr) {
         if (c.getFirewallOwner()->getplayerID() == 1) {
             grid[c.getRow()][c.getCol()] = 'm'; // need to account for lower case too
             xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
@@ -40,18 +47,6 @@ void GraphicsDisplay::notify(Cell &c) {
         grid[c.getRow()][c.getCol()] = 'S';
         xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
         xw.drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, "S");
-        
-    } else if(c.getLink()->getType() == 'F') {
-        grid[c.getRow()][c.getCol()] = 'M'; // need to account for lower case too
-        xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
-        xw.drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, "M");
-    }
-
-    else {
-        grid[c.getRow()][c.getCol()] = c.getLink()->getId();
-        string convert{c.getLink()->getId()};        
-        xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
-        xw.drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, convert);
     }
 }
 

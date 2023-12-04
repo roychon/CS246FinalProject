@@ -12,8 +12,6 @@ class Cell;
 using namespace std;
 class Player {
     vector<unique_ptr<Link>> links; // player's links
-    // unique_ptr<AbilityManager> manager;
-    // === added: server ports ===
     vector<unique_ptr<Link>> serverPorts;
     vector<unique_ptr<Ability>> abilities; // player's abilities
     int data; // # data player downloads
@@ -25,11 +23,7 @@ class Player {
 
 public:
     Player(const int playerID);
-    // ~Player();
     void initLinks(); // Sets player pointers and characer IDs of each link.
-    // TODO: create these into one function
-    // void incrementDataCount(); // increment data by 1
-    // void incrementVirusCount(); // increment virus by 1
     void incrementDownloads(char type);
     void printPlayerDisplay(bool isActive);
     void printActivePlayer();
@@ -43,7 +37,6 @@ public:
     int getVirusCount();
     bool getHasAbilityTurn();
     Link *findLinkAt(int xCord, int yCord);
-    // void updateScore();
     void useAbility(int id, int x, int y);
     void setAbilities(string abilinit, vector<vector<Cell>> *grid);
     void reenableAbilityTurn();
@@ -52,8 +45,6 @@ public:
     Ability *getAbility(int ID);
     void decreaseVirusCount();
     Link *getLinkByID(char id);
-    // bool hasServerAt(int xCord, int yCord); merged with has hasLInkAt
-    // add any more fields as necessary
 };
 
 #endif

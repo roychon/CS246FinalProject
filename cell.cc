@@ -21,11 +21,8 @@ void Cell::attach(Observer *o) {
     observers.emplace_back(o);
 }
 
-// Also implemented setting isServerPort and isFirewall to false
 void Cell::setLinkNull() {
     link = nullptr;
-    // isServerPort = false;
-    // isFirewall = false;
 }
 
 Link* Cell::getLink() {

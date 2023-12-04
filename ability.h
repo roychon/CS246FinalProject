@@ -13,7 +13,7 @@ class Ability {
 protected:
     bool isUsed;
 public:
-    explicit Ability();
+    Ability();
     virtual void apply(int x, int y) = 0;
     virtual bool checkValid(int x, int y) = 0;
     virtual char getType() = 0;

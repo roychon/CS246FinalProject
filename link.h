@@ -26,7 +26,6 @@ public:
     char getId();
     char getType();
     int getStrength();
-    // void download(int n); // n: 'id' of the link
     Player &getPlayer(); // TODO: fix &
     int getX();
     int getY();
@@ -43,8 +42,6 @@ public:
     void incrementMoveFactor(int factor);
     void augmentpower();
     void setRevealedFalse();
-
-    // add any more fields as necessary
 };
 
 #endif

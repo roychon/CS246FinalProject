@@ -52,43 +52,6 @@ void Player::initLinks() {
     }
 }
 
-// void Player::incrementDataCount() {
-//     data++;
-// }
-
-// void Player::incrementVirusCount() {
-//     viruses++;
-// }
-
-// void Player::printPlayerDisplay(bool isActive) {    
-//     cout << "Downloaded: " << data << "D, " << viruses << "V" << endl;
-//     cout << "Abilities: " << numAbilitiesLeft << endl;
-//     if (isActive) {
-//         char start = 'a';
-//         for (auto &link : links) {
-//             cout << start << ": " << link->getType() << link->getStrength();
-//             if (start == 'd' || start == 'h') cout << endl;
-//             else cout << " ";
-//             ++start;
-//         }
-//     }
-//     else {
-//         char start = 'A';
-//         for (auto &link : links) {
-//             cout << start << ": ";
-//             if (link->getIsRevealed()) {
-//                 cout << link->getType() << link->getStrength();
-//             } else {
-//                 cout << "?";
-//             }
-
-//             if (start == 'D' || start == 'H') cout << endl;
-//             else cout << " ";
-//             ++start;
-//         }
-//     }
-// }
-
 void Player::printActivePlayer() {
     cout << "Player " << playerID << ":" << endl;
     cout << "Downloaded: " << data << "D, " << viruses << "V" << endl;
