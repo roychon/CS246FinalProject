@@ -9,12 +9,14 @@
 #include "poweraugment.h"
 #include "heal.h"
 #include "takedown.h"
+#include "conceal.h"
 #include <map>
 using namespace std;
 
 // note, when init is fully setup likely have to pass abilities as a parameter
 // temporarily passing "8" as # of links, if server port is coded as link, +2 so 10 links total.
-Player::Player(const int playerID) : links(8), serverPorts(2), abilities(5), data{0}, viruses{0}, numAbilitiesLeft{5}, playerID{playerID}{
+Player::Player(const int playerID) : links(8), serverPorts(2), abilities(5), data{0}, viruses{0},
+    numAbilitiesLeft{5}, playerID{playerID}, hasAbilityTurn{true}{
     for (size_t i = 0; i < links.size(); ++i) {
         links[i] = make_unique<Link>();
     }
@@ -173,9 +175,15 @@ Link *Player::findLinkAt(int xCord, int yCord) {
 // ABILITY CODE
 void Player::useAbility(int id, int x, int y) {
     if (abilities[id - 1]->getIsUsed()) {
-        cout << "ABILITY IS USED" << endl;
+        throw(logic_error("Ability has been used already!\n"));
     } else {
-        abilities[id - 1]->apply(x, y);
+        try {
+            abilities[id - 1]->apply(x, y);
+        } catch(logic_error &e) {
+            cerr << e.what();
+            return;
+        }
+        hasAbilityTurn = false;
         numAbilitiesLeft--;
     }
 }
@@ -196,7 +204,7 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
             abilities[i] = make_unique<Scan>(grid);
         }
         else if (abil == 'P') {
-            abilities[i] = make_unique<Polarize>(grid);
+            abilities[i] = make_unique<Polarize>(this, grid);
         }
         else if (abil == 'A') {
             abilities[i] = make_unique<PowerAugment>(this, grid);
@@ -206,6 +214,9 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
         }
         else if (abil == 'T') {
             abilities[i] = make_unique<Takedown>(this, grid);
+        } 
+        else if (abil == 'C') {
+            abilities[i] = make_unique<Conceal>(this);
         }
     }
 }
@@ -237,6 +248,9 @@ void Player::printAbilities() {
         else if (abilities[i].get()->getType() == 'T') {
             cout << "Takedown ";
         }
+        else if (abilities[i].get()->getType() == 'C') {
+            cout << "Conceal ";
+        }
 
         if (abilities[i].get()->getIsUsed() == 1) {
             cout << "- Used" << endl;
@@ -246,7 +260,7 @@ void Player::printAbilities() {
         }
     }
 }
-int Player::getnumAbilitiesLeft() {
+int Player::getNumAbilitiesLeft() {
     return numAbilitiesLeft;
 }
 
@@ -262,14 +276,19 @@ void Player::decreaseVirusCount() {
     --viruses;
 }
 
-// ==== hasServerAt(xCord, yCord) ====
-/*
-bool Player::hasServerAt(int xCord, int yCord) {
-    for (auto &serverport : serverPorts) {
-        if (serverport->getX() == xCord && serverport->getY() == yCord) return true;
+Link* Player::getLinkByID(char id) {
+    for (auto &link : links) {
+        if (link->getId() == id) {
+            return link.get();
+        }
     }
-    return false;
+    return nullptr;
 }
-*/
 
-// ==========
+bool Player::getHasAbilityTurn() {
+    return hasAbilityTurn;
+}
+
+void Player::reenableAbilityTurn() {
+    hasAbilityTurn = true;
+}

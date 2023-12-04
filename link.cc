@@ -1,6 +1,6 @@
 #include "link.h"
 
-Link::Link(): strength{0}, isRevealed{false}, x{-1}, y{-1}, player{nullptr}, moveFactor{1} {}
+Link::Link(): strength{0}, isRevealed{false}, x{-1}, y{-1}, player{nullptr}, moveFactor{1}, isDead{false} {}
 
 char Link::getId() {
     return id;
@@ -32,6 +32,14 @@ int Link::getMoveFactor() {
 
 bool Link::getIsRevealed() {
     return isRevealed;
+}
+
+bool Link::getIsDead() {
+    return isDead;
+}
+
+void Link::setIsDead() {
+    isDead = true;
 }
 
 void Link::setId(char id) {
@@ -75,4 +83,8 @@ void Link::incrementMoveFactor(int factor) {
 
 void Link::augmentpower() {
     strength = 4;
+}
+
+void Link::setRevealedFalse() {
+    isRevealed = false;
 }

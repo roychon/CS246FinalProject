@@ -48,10 +48,10 @@ void GraphicsDisplay::notify(Cell &c) {
     }
 
     else {
-    grid[c.getRow()][c.getCol()] = c.getLink()->getId();
-    string convert{c.getLink()->getId()};        
-    xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
-    xw.drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, convert);
+        grid[c.getRow()][c.getCol()] = c.getLink()->getId();
+        string convert{c.getLink()->getId()};        
+        xw.fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
+        xw.drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, convert);
     }
 }
 
@@ -79,7 +79,7 @@ void GraphicsDisplay::playerDisplays(Player *activePlayer, Player *nonActivePlay
     xw.drawString(270, 20, to_string(Player1->getVirusCount()));
     xw.drawString(277, 20, "V");
     xw.drawString(380, 20, "Abilities:");
-    xw.drawString(445, 20, to_string(Player1->getnumAbilitiesLeft()));
+    xw.drawString(445, 20, to_string(Player1->getNumAbilitiesLeft()));
     vector<string> player1links;
     for (auto link : Player1->getLinks()) {
         string strcnv;
@@ -117,7 +117,7 @@ void GraphicsDisplay::playerDisplays(Player *activePlayer, Player *nonActivePlay
     xw.drawString(270, 435, to_string(Player2->getVirusCount()));
     xw.drawString(277, 435, "V");
     xw.drawString(380, 435, "Abilities:");
-    xw.drawString(445, 435, to_string(Player2->getnumAbilitiesLeft()));
+    xw.drawString(445, 435, to_string(Player2->getNumAbilitiesLeft()));
     vector<string> player2links;
     for (auto link : Player2->getLinks()) {
         string strcnv;
@@ -146,13 +146,8 @@ void GraphicsDisplay::playerDisplays(Player *activePlayer, Player *nonActivePlay
     }
 }
 
-void GraphicsDisplay::toggleenhancementsOn() {
-    if (enhancementsOn == true) {
-        enhancementsOn = false;
-    }
-    else {
-        enhancementsOn = true;
-    }
+void GraphicsDisplay::toggleEnhancementsOn() {
+    enhancementsOn = !enhancementsOn;
 }
 
 GraphicsDisplay::~GraphicsDisplay() {}

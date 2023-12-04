@@ -19,7 +19,7 @@ public:
     void notify(Cell &c) override;
     void setActivePlayer(Player *player);
     ~TextDisplay();
-    void toggleenhancementsOn();
+    void toggleEnhancementsOn();
 
     friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td); 
 };

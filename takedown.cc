@@ -15,11 +15,10 @@ void Takedown::apply(int x, int y) {
         isUsed = true;
     } 
     else {
-        cout << "INVALID ABILITY MOVE" << endl;
+        throw(logic_error("Cannot use Takedown on that.\n"));
     }
 }
 
-// TODO: make sure they're downloading a valid link
 bool Takedown::checkValid(int x, int y) {
     Link *link = (*grid)[y][x].getLink();
     if (&link->getPlayer() == activePlayer) {

@@ -3,6 +3,7 @@
 #include <sstream>
 #include <memory>
 #include <fstream>
+#include <stdexcept>
 #include "game.h"
 using namespace std;
 
@@ -73,36 +74,37 @@ int main(int argc, char *argv[]) {
         }
 
         else if (command == "move") {
-            char whichlink;
+            char whichLink;
             string direction;
-            cin >> whichlink >> direction;
-            Link *linktomove;
+            cin >> whichLink >> direction;
+            Link *linkToMove = game.getActivePlayer()->getLinkByID(whichLink);
 
-            for (auto link : game.getActivePlayer()->getLinks()) {
-                if (link->getId() == whichlink) {
-                    linktomove = link;
+            if (linkToMove == nullptr) {
+                cout << "This is not one of your links!" << endl;
+                continue;
+            } else if (linkToMove->getIsDead()) {
+                cout << "This link no longer exists." << endl;
+                continue;
+            }
+            try {
+                int x = 0;
+                int y = 0;
+                if (direction == "up") y = 1;
+                else if (direction == "right") x = 1;
+                else if (direction == "left") x = -1;
+                else if (direction == "down") y = -1;
+                else {
+                    cout << "Invalid direction." << endl;
+                    continue;
                 }
-            }
-            
-            if (direction == "up") {
-                game.move(linktomove, 0, 1);
-            }
-
-            else if (direction == "right") {
-                game.move(linktomove, 1, 0);
+    
+                game.move(linkToMove, x, y);
+                
+            } catch(logic_error &e) {
+                cerr << e.what();
+                continue;
             }
 
-            else if (direction == "left") {
-                game.move(linktomove, -1, 0);
-            }
-
-            else if (direction == "down") {
-                game.move(linktomove, 0, -1);
-            }
-            
-            else {
-                cout << "Incorrect input";
-            }
             game.switchActivePlayer();
             game.display(graphicsOn);
             if (game.checkWin() == true) {
@@ -112,105 +114,101 @@ int main(int argc, char *argv[]) {
         }
 
         else if (command == "enhancements") {
-            if (enhancementsOn == true) {
-                enhancementsOn = false;
-                game.toggleenhancementsOn();
-            }
-            else {
-                enhancementsOn = true;
-                game.toggleenhancementsOn();
-            }
+            enhancementsOn = !enhancementsOn;
+            game.toggleEnhancementsOn();
         }
 
         else if (command == "abilities") {
             game.getActivePlayer()->printAbilities();
         }
         else if (command == "ability") {
-            int id;
+            int id, x, y;
             cin >> id;
-            char whichlink;
-            int x;
-            int y;
-            if (game.getActivePlayer()->getAbility(id)->getType() == 'L') {
-                cin >> whichlink;
-                for (auto link : game.getActivePlayer()->getLinks()) {
-                    if (link->getId() == whichlink) {
-                        x = link->getX();
-                        y = link->getY();
-                    }
-                }
-                game.getActivePlayer()->useAbility(id, x, y);
+            char whichLink;
+            char abilityType = game.getActivePlayer()->getAbility(id)->getType();
+
+            if (!game.getActivePlayer()->getHasAbilityTurn()) {
+                cout << "You've already used an ability this turn!" << endl;
+                continue;
             }
-            else if (game.getActivePlayer()->getAbility(id)->getType() == 'D') {
-                cin >> whichlink;
-                for (auto link : game.getInactivePlayer()->getLinks()) {
-                    if (link->getId() == whichlink) {
-                        x = link->getX();
-                        y = link->getY();
-                    }
-                }
-                game.getActivePlayer()->useAbility(id, x, y);
+
+            if (game.getActivePlayer()->getNumAbilitiesLeft() == 0) {
+                cout << "You're out of abilities!" << endl;
+                continue;
             }
-            else if (game.getActivePlayer()->getAbility(id)->getType() == 'F') {
-                cin >> x >> y;
-                game.getActivePlayer()->useAbility(id, x, y);
-            }
-            else if (game.getActivePlayer()->getAbility(id)->getType() == 'P') {
-                cin >> whichlink;
-                for (auto link : game.getActivePlayer()->getLinks()) {
-                    if (link->getId() == whichlink) {
-                        x = link->getX();
-                        y = link->getY();
+            try {
+                // target is only active player's link
+                if (abilityType == 'L' || abilityType == 'A') {
+                    cin >> whichLink;
+                    Link *targetLink = game.getActivePlayer()->getLinkByID(whichLink);
+                    if (targetLink == nullptr) {
+                        cout << "This is not one of your links!" << endl;
+                        continue;
+                    } else if (targetLink->getIsDead()) {
+                        cout << "This link no longer exists." << endl;
+                        continue;
                     }
+                    x = targetLink->getX();
+                    y = targetLink->getY();
+                    game.getActivePlayer()->useAbility(id, x, y);
                 }
-                for (auto link : game.getInactivePlayer()->getLinks()) {
-                    if (link->getId() == whichlink) {
-                        x = link->getX();
-                        y = link->getY();
+                // target is only inactive player's link
+                else if (abilityType == 'D' || abilityType == 'T') {
+                    cin >> whichLink;
+                    Link *targetLink = game.getInactivePlayer()->getLinkByID(whichLink);
+                    if (targetLink == nullptr) {
+                        cout << "This is not one of your opponent's links!" << endl;
+                        continue;
+                    } else if (targetLink->getIsDead()) {
+                        cout << "This link no longer exists." << endl;
+                        continue;
                     }
+                    x = targetLink->getX();
+                    y = targetLink->getY();
+                    game.getActivePlayer()->useAbility(id, x, y);
                 }
-                game.getActivePlayer()->useAbility(id, x, y);
-            }
-            else if (game.getActivePlayer()->getAbility(id)->getType() == 'S') {
-                cin >> whichlink;
-                for (auto link : game.getActivePlayer()->getLinks()) {
-                    if (link->getId() == whichlink) {
-                        x = link->getX();
-                        y = link->getY();
+                // target is either active or inactive player's link
+                else if (abilityType == 'P' || abilityType == 'S') {
+                    cin >> whichLink;
+                    Link *targetLink = game.getActivePlayer()->getLinkByID(whichLink);
+                    // not your own links, so check if it's opponent's
+                    if (targetLink == nullptr) {
+                        targetLink = game.getInactivePlayer()->getLinkByID(whichLink);
                     }
-                }
-                for (auto link : game.getInactivePlayer()->getLinks()) {
-                    if (link->getId() == whichlink) {
-                        x = link->getX();
-                        y = link->getY();
+                    if (targetLink == nullptr) {
+                        cout << "This is not neither one of your own or your opponent's links!" << endl;
+                        continue;
+                    } else if (targetLink->getIsDead()) {
+                        cout << "This link no longer exists." << endl;
+                        continue;
                     }
-                }
-                game.getActivePlayer()->useAbility(id, x, y);
-            }
-            else if (game.getActivePlayer()->getAbility(id)->getType() == 'A') {
-                cin >> whichlink;
-                for (auto link : game.getActivePlayer()->getLinks()) {
-                    if (link->getId() == whichlink) {
-                        x = link->getX();
-                        y = link->getY();
+                    if (abilityType == 'S' && targetLink->getIsRevealed()) {
+                        cout << "This link is already revealed... cannot be scanned." << endl;
+                        continue;
                     }
+
+                    x = targetLink->getX();
+                    y = targetLink->getY();
+                    game.getActivePlayer()->useAbility(id, x, y);
                 }
-                game.getActivePlayer()->useAbility(id, x, y);
-            }
-            else if (game.getActivePlayer()->getAbility(id)->getType() == 'H') {
-                game.getActivePlayer()->useAbility(id, -1, -1);
-            }
-            else if (game.getActivePlayer()->getAbility(id)->getType() == 'T') {
-                cin >> whichlink;
-                for (auto link : game.getInactivePlayer()->getLinks()) {
-                    if (link->getId() == whichlink) {
-                        x = link->getX();
-                        y = link->getY();
-                    }
+                // target is coord
+                else if (abilityType == 'F') {
+                    cin >> x >> y;
+                    game.getActivePlayer()->useAbility(id, x, y);
                 }
-                game.getActivePlayer()->useAbility(id, x, y);
+                // target is not a coord or link
+                else if (abilityType == 'H' || abilityType == 'C') {
+                    game.getActivePlayer()->useAbility(id, -1, -1);
+                }
+            } catch(logic_error &e) {
+                cerr << e.what();
+                continue;
             }
             game.display(graphicsOn);
+            if (game.checkWin() == true) {
+                cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
+                break;
+            }
         }
         else if (command == "sequence") {
             string filename;
@@ -230,145 +228,140 @@ int main(int argc, char *argv[]) {
                 }
 
                 else if (individualcmd == "move") {
-                    char whichlink;
+                    char whichLink;
                     string direction;
-                    cmdparse >> whichlink >> direction;
-                    Link *linktomove;
-
-                for (auto link : game.getActivePlayer()->getLinks()) {
-                    if (link->getId() == whichlink) {
-                        linktomove = link;
+                    cmdparse >> whichLink >> direction;
+                    Link *linkToMove = game.getActivePlayer()->getLinkByID(whichLink);
+                    if (linkToMove == nullptr) {
+                        cout << "This is not one of your links!" << endl;
+                        continue;
+                    } else if (linkToMove->getIsDead()) {
+                        cout << "This link no longer exists." << endl;
+                        continue;
                     }
-                }
+                    try {
+                        int x = 0;
+                        int y = 0;
+                        if (direction == "up") y = 1;
+                        else if (direction == "right") x = 1;
+                        else if (direction == "left") x = -1;
+                        else if (direction == "down") y = -1;
+                        else {
+                            cout << "Invalid direction." << endl;
+                            continue;
+                        }
             
-                if (direction == "up") {
-                    game.move(linktomove, 0, 1);
+                        game.move(linkToMove, x, y);
+                        
+                    } catch(logic_error &e) {
+                        cerr << e.what();
+                        continue;
+                    }
+                    game.switchActivePlayer();
+                    game.display(graphicsOn);
+                    if (game.checkWin() == true) {
+                        cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
+                        break;
+                    }
                 }
 
-                else if (direction == "right") {
-                    game.move(linktomove, 1, 0);
+                else if (individualcmd == "enhancements") {
+                    enhancementsOn = !enhancementsOn;
+                    game.toggleEnhancementsOn();
                 }
 
-                else if (direction == "left") {
-                    game.move(linktomove, -1, 0);
+                else if (individualcmd == "abilities") {
+                    game.getActivePlayer()->printAbilities();
                 }
+                else if (individualcmd == "ability") {
+                    int id, x, y;
+                    cmdparse >> id;
+                    char whichLink;
+                    char abilityType = game.getActivePlayer()->getAbility(id)->getType();
 
-                else if (direction == "down") {
-                    game.move(linktomove, 0, -1);
-                }
-            
-                else {
-                    cout << "Incorrect input";
-                }
-                game.switchActivePlayer();
-                game.display(graphicsOn);
-                if (game.checkWin() == true) {
-                    cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
-                    return 0;
-                }
-            }
+                    if (!game.getActivePlayer()->getHasAbilityTurn()) {
+                        cout << "You've already used an ability this turn!" << endl;
+                        continue;
+                    }
 
-            else if (individualcmd == "enhancements") {
-                if (enhancementsOn == true) {
-                    enhancementsOn = false;
-                    game.toggleenhancementsOn();
-                }
-                else {
-                    enhancementsOn = true;
-                    game.toggleenhancementsOn();
-                }
-            }
+                    if (game.getActivePlayer()->getNumAbilitiesLeft() == 0) {
+                        cout << "You're out of abilities!" << endl;
+                        continue;
+                    }
+                    try {
+                        // target is only active player's link
+                        if (abilityType == 'L' || abilityType == 'A') {
+                            cmdparse >> whichLink;
+                            Link *targetLink = game.getActivePlayer()->getLinkByID(whichLink);
+                            if (targetLink == nullptr) {
+                                cout << "This is not one of your links!" << endl;
+                                continue;
+                            } else if (targetLink->getIsDead()) {
+                                cout << "This link no longer exists." << endl;
+                                continue;
+                            }
+                            x = targetLink->getX();
+                            y = targetLink->getY();
+                            game.getActivePlayer()->useAbility(id, x, y);
+                        }
+                        // target is only inactive player's link
+                        else if (abilityType == 'D' || abilityType == 'T') {
+                            cmdparse >> whichLink;
+                            Link *targetLink = game.getInactivePlayer()->getLinkByID(whichLink);
+                            if (targetLink == nullptr) {
+                                cout << "This is not one of your opponent's links!" << endl;
+                                continue;
+                            } else if (targetLink->getIsDead()) {
+                                cout << "This link no longer exists." << endl;
+                                continue;
+                            }
+                            x = targetLink->getX();
+                            y = targetLink->getY();
+                            game.getActivePlayer()->useAbility(id, x, y);
+                        }
+                        // target is either active or inactive player's link
+                        else if (abilityType == 'P' || abilityType == 'S') {
+                            cmdparse >> whichLink;
+                            Link *targetLink = game.getActivePlayer()->getLinkByID(whichLink);
+                            // not your own links, so check if it's opponent's
+                            if (targetLink == nullptr) {
+                                targetLink = game.getInactivePlayer()->getLinkByID(whichLink);
+                            }
+                            if (targetLink == nullptr) {
+                                cout << "This is not neither one of your own or your opponent's links!" << endl;
+                                continue;
+                            } else if (targetLink->getIsDead()) {
+                                cout << "This link no longer exists." << endl;
+                                continue;
+                            }
+                            if (abilityType == 'S' && targetLink->getIsRevealed()) {
+                                cout << "This link is already revealed... cannot be scanned." << endl;
+                                continue;
+                            }
 
-            else if (individualcmd == "abilities") {
-                game.getActivePlayer()->printAbilities();
-            }
-            else if (individualcmd == "ability") {
-                int id;
-                cmdparse >> id;
-                char whichlink;
-                int x;
-                int y;
-                if (game.getActivePlayer()->getAbility(id)->getType() == 'L') {
-                    cmdparse >> whichlink;
-                    for (auto link : game.getActivePlayer()->getLinks()) {
-                        if (link->getId() == whichlink) {
-                            x = link->getX();
-                            y = link->getY();
-                        }   
-                    }
-                game.getActivePlayer()->useAbility(id, x, y);
-                }
-                else if (game.getActivePlayer()->getAbility(id)->getType() == 'D') {
-                    cmdparse >> whichlink;
-                    for (auto link : game.getInactivePlayer()->getLinks()) {
-                        if (link->getId() == whichlink) {
-                            x = link->getX();
-                            y = link->getY();
+                            x = targetLink->getX();
+                            y = targetLink->getY();
+                            game.getActivePlayer()->useAbility(id, x, y);
                         }
-                    }
-                    game.getActivePlayer()->useAbility(id, x, y);
-                }
-                else if (game.getActivePlayer()->getAbility(id)->getType() == 'F') {
-                    cmdparse >> x >> y;
-                    game.getActivePlayer()->useAbility(id, x, y);
-                }
-                else if (game.getActivePlayer()->getAbility(id)->getType() == 'P') {
-                    cmdparse >> whichlink;
-                    for (auto link : game.getActivePlayer()->getLinks()) {
-                        if (link->getId() == whichlink) {
-                            x = link->getX();
-                            y = link->getY();
+                        // target is coord
+                        else if (abilityType == 'F') {
+                            cmdparse >> x >> y;
+                            game.getActivePlayer()->useAbility(id, x, y);
                         }
-                    }
-                    for (auto link : game.getInactivePlayer()->getLinks()) {
-                        if (link->getId() == whichlink) {
-                            x = link->getX();
-                            y = link->getY();
+                        // target is not a coord or link
+                        else if (abilityType == 'H' || abilityType == 'C') {
+                            game.getActivePlayer()->useAbility(id, -1, -1);
                         }
+                    } catch(logic_error &e) {
+                        cerr << e.what();
+                        continue;
                     }
-                    game.getActivePlayer()->useAbility(id, x, y);
+                    game.display(graphicsOn);
+                    if (game.checkWin() == true) {
+                        cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
+                        break;
+                    }
                 }
-                else if (game.getActivePlayer()->getAbility(id)->getType() == 'S') {
-                    cmdparse >> whichlink;
-                    for (auto link : game.getActivePlayer()->getLinks()) {
-                        if (link->getId() == whichlink) {
-                            x = link->getX();
-                            y = link->getY();
-                        }
-                    }
-                    for (auto link : game.getInactivePlayer()->getLinks()) {
-                        if (link->getId() == whichlink) {
-                            x = link->getX();
-                            y = link->getY();
-                        }
-                    }
-                    game.getActivePlayer()->useAbility(id, x, y);
-                }   
-                else if (game.getActivePlayer()->getAbility(id)->getType() == 'A') {
-                    cmdparse >> whichlink;
-                    for (auto link : game.getActivePlayer()->getLinks()) {
-                        if (link->getId() == whichlink) {
-                            x = link->getX();
-                            y = link->getY();
-                        }
-                    }
-                    game.getActivePlayer()->useAbility(id, x, y);
-                }
-                else if (game.getActivePlayer()->getAbility(id)->getType() == 'H') {
-                    game.getActivePlayer()->useAbility(id, -1, -1);
-                }
-                else if (game.getActivePlayer()->getAbility(id)->getType() == 'T') {
-                    cmdparse >> whichlink;
-                    for (auto link : game.getInactivePlayer()->getLinks()) {
-                        if (link->getId() == whichlink) {
-                            x = link->getX();
-                            y = link->getY();
-                        }
-                    }
-                    game.getActivePlayer()->useAbility(id, x, y);
-                }
-                game.display(graphicsOn);
-            }
             }
         }
     }

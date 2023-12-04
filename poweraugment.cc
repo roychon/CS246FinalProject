@@ -9,7 +9,7 @@ void PowerAugment::apply(int x, int y) {
         cell.notifyObservers();
         isUsed = true;
     } else {
-        cout << "ability failed" << endl;
+        throw(logic_error("Cannot use Poweraugment on that.\n"));
     }
 }
 

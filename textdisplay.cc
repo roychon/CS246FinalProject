@@ -61,7 +61,7 @@ ostream &operator<<(ostream &out, const TextDisplay &td) {
   return out;
 }
 
-void TextDisplay::toggleenhancementsOn() {
+void TextDisplay::toggleEnhancementsOn() {
     if (enhancementsOn == true) {
         enhancementsOn = false;
     }

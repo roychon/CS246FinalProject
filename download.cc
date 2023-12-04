@@ -13,12 +13,13 @@ void Download::apply(int x, int y) {
         Link *link = cell.getLink();
         link->setX(-1);
         link->setY(-1);
+        link->setIsDead();
         activePlayer->incrementDownloads(link->getType());
         cell.setLinkNull();
         cell.notifyObservers();
         isUsed = true;
     } else {
-        cout << "INVALID ABILITY MOVE" << endl;
+        throw(logic_error("Cannot use Download on that.\n"));
     }
 }
 

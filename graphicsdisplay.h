@@ -14,7 +14,7 @@ public:
 
   GraphicsDisplay(Xwindow &xw);
   void notify(Cell &c) override;
-  void toggleenhancementsOn();
+  void toggleEnhancementsOn();
   void playerDisplays(Player *activePlayer, Player *nonActivePlayer);
 
   ~GraphicsDisplay();
