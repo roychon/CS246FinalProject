@@ -1,0 +1,10 @@
+board
+move a up
+move D up
+abilities
+ability 1 a
+move a up
+abilities
+ability 3 c
+move E up
+quit

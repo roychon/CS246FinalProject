@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <memory>
 #include <fstream>
 #include "game.h"
@@ -199,7 +200,176 @@ int main(int argc, char *argv[]) {
             else if (game.getActivePlayer()->getAbility(id)->getType() == 'H') {
                 game.getActivePlayer()->useAbility(id, -1, -1);
             }
+            else if (game.getActivePlayer()->getAbility(id)->getType() == 'T') {
+                cin >> whichlink;
+                for (auto link : game.getInactivePlayer()->getLinks()) {
+                    if (link->getId() == whichlink) {
+                        x = link->getX();
+                        y = link->getY();
+                    }
+                }
+                game.getActivePlayer()->useAbility(id, x, y);
+            }
             game.display(graphicsOn);
+        }
+        else if (command == "sequence") {
+            string filename;
+            cin >> filename;
+            ifstream sequencefile{filename};
+            string cmdexecute;
+            while (getline(sequencefile, cmdexecute)) {
+                istringstream cmdparse{cmdexecute};
+                string individualcmd;
+                cmdparse >> individualcmd;
+                if (individualcmd == "board") {
+                    game.display(graphicsOn);
+                }
+
+                else if (individualcmd == "quit") {
+                    return 0;
+                }
+
+                else if (individualcmd == "move") {
+                    char whichlink;
+                    string direction;
+                    cmdparse >> whichlink >> direction;
+                    Link *linktomove;
+
+                for (auto link : game.getActivePlayer()->getLinks()) {
+                    if (link->getId() == whichlink) {
+                        linktomove = link;
+                    }
+                }
+            
+                if (direction == "up") {
+                    game.move(linktomove, 0, 1);
+                }
+
+                else if (direction == "right") {
+                    game.move(linktomove, 1, 0);
+                }
+
+                else if (direction == "left") {
+                    game.move(linktomove, -1, 0);
+                }
+
+                else if (direction == "down") {
+                    game.move(linktomove, 0, -1);
+                }
+            
+                else {
+                    cout << "Incorrect input";
+                }
+                game.switchActivePlayer();
+                game.display(graphicsOn);
+                if (game.checkWin() == true) {
+                    cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
+                    return 0;
+                }
+            }
+
+            else if (individualcmd == "enhancements") {
+                if (enhancementsOn == true) {
+                    enhancementsOn = false;
+                    game.toggleenhancementsOn();
+                }
+                else {
+                    enhancementsOn = true;
+                    game.toggleenhancementsOn();
+                }
+            }
+
+            else if (individualcmd == "abilities") {
+                game.getActivePlayer()->printAbilities();
+            }
+            else if (individualcmd == "ability") {
+                int id;
+                cmdparse >> id;
+                char whichlink;
+                int x;
+                int y;
+                if (game.getActivePlayer()->getAbility(id)->getType() == 'L') {
+                    cmdparse >> whichlink;
+                    for (auto link : game.getActivePlayer()->getLinks()) {
+                        if (link->getId() == whichlink) {
+                            x = link->getX();
+                            y = link->getY();
+                        }   
+                    }
+                game.getActivePlayer()->useAbility(id, x, y);
+                }
+                else if (game.getActivePlayer()->getAbility(id)->getType() == 'D') {
+                    cmdparse >> whichlink;
+                    for (auto link : game.getInactivePlayer()->getLinks()) {
+                        if (link->getId() == whichlink) {
+                            x = link->getX();
+                            y = link->getY();
+                        }
+                    }
+                    game.getActivePlayer()->useAbility(id, x, y);
+                }
+                else if (game.getActivePlayer()->getAbility(id)->getType() == 'F') {
+                    cmdparse >> x >> y;
+                    game.getActivePlayer()->useAbility(id, x, y);
+                }
+                else if (game.getActivePlayer()->getAbility(id)->getType() == 'P') {
+                    cmdparse >> whichlink;
+                    for (auto link : game.getActivePlayer()->getLinks()) {
+                        if (link->getId() == whichlink) {
+                            x = link->getX();
+                            y = link->getY();
+                        }
+                    }
+                    for (auto link : game.getInactivePlayer()->getLinks()) {
+                        if (link->getId() == whichlink) {
+                            x = link->getX();
+                            y = link->getY();
+                        }
+                    }
+                    game.getActivePlayer()->useAbility(id, x, y);
+                }
+                else if (game.getActivePlayer()->getAbility(id)->getType() == 'S') {
+                    cmdparse >> whichlink;
+                    for (auto link : game.getActivePlayer()->getLinks()) {
+                        if (link->getId() == whichlink) {
+                            x = link->getX();
+                            y = link->getY();
+                        }
+                    }
+                    for (auto link : game.getInactivePlayer()->getLinks()) {
+                        if (link->getId() == whichlink) {
+                            x = link->getX();
+                            y = link->getY();
+                        }
+                    }
+                    game.getActivePlayer()->useAbility(id, x, y);
+                }   
+                else if (game.getActivePlayer()->getAbility(id)->getType() == 'A') {
+                    cmdparse >> whichlink;
+                    for (auto link : game.getActivePlayer()->getLinks()) {
+                        if (link->getId() == whichlink) {
+                            x = link->getX();
+                            y = link->getY();
+                        }
+                    }
+                    game.getActivePlayer()->useAbility(id, x, y);
+                }
+                else if (game.getActivePlayer()->getAbility(id)->getType() == 'H') {
+                    game.getActivePlayer()->useAbility(id, -1, -1);
+                }
+                else if (game.getActivePlayer()->getAbility(id)->getType() == 'T') {
+                    cmdparse >> whichlink;
+                    for (auto link : game.getInactivePlayer()->getLinks()) {
+                        if (link->getId() == whichlink) {
+                            x = link->getX();
+                            y = link->getY();
+                        }
+                    }
+                    game.getActivePlayer()->useAbility(id, x, y);
+                }
+                game.display(graphicsOn);
+            }
+            }
         }
     }
     
