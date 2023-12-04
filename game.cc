@@ -73,6 +73,7 @@ void Game::display(bool graphicsOn) {
         board->getGD()->playerDisplays(activePlayer, inactivePlayer);
     }
 
+    cout << endl;
     if (enhancementsOn == true) {
         inactivePlayer->printInactivePlayer();
         board->printTextDisplay();
@@ -94,6 +95,7 @@ void Game::display(bool graphicsOn) {
             inactivePlayer->printInactivePlayer();
         }
     }
+    cout << endl;
 }
 
 void Game::move(Link *link, int x, int y) {
@@ -319,6 +321,7 @@ void Game::runSequence(string filename, bool graphicsOn) {
                 continue;
             }
             display(graphicsOn);
+            cout << "Ability " << id << " used!" << endl;
             if (checkWin() == true) {
                 cout << "Player " << getWinningPlayer()->getplayerID() << " Wins!" << endl;
                 break;

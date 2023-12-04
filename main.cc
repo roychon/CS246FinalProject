@@ -205,6 +205,7 @@ int main(int argc, char *argv[]) {
                 continue;
             }
             game.display(graphicsOn);
+            cout << "Ability " << id << " used!" << endl;
             if (game.checkWin() == true) {
                 cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
                 break;
