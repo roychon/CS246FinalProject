@@ -5,6 +5,7 @@
 #include <fstream>
 #include <stdexcept>
 #include "game.h"
+#include "clparse.h"
 using namespace std;
 
 int main(int argc, char *argv[]) {
@@ -16,52 +17,27 @@ int main(int argc, char *argv[]) {
     // Command line arguments
     for (int i = 1; i < argc; ++i) {
         string cmd = argv[i];
-        if (cmd == "-link1") {
-            ++i;
-            ifstream linkfile{argv[i]};
-            string total;
-            string word;
-            while (linkfile >> word) {
-                total = total + word;
-            }
-            player1links = total;
-        }
-
-        else if (cmd == "-link2") {
-            ++i;
-            ifstream linkfile{argv[i]};
-            string total;
-            string word;
-            while (linkfile >> word) {
-                total = total + word;
-            }
-            player2links = total;
-        }
-
-        else if (cmd == "-ability1") {
-            ++i;
-            player1abilities = argv[i];
-        }
-
-        else if (cmd == "-ability2") {
-            ++i;
-            player2abilities = argv[i];
-        }
-
-        else if (cmd == "-graphics") {
-            graphicsOn = true;
+        CLParse cl;
+        try {
+            if (cmd == "-link1") cl.parseLinks(player1links, argv[i + 1]);
+            else if (cmd == "-link2") cl.parseLinks(player2links, argv[i + 1]);
+            else if (cmd == "-ability1") cl.parseAbilities(player1abilities, argv[i + 1], 1);
+            else if (cmd == "-ability2") cl.parseAbilities(player2abilities, argv[i + 1], 2);
+            else if (cmd == "-graphics") graphicsOn = true;
+        } catch(logic_error &e) {
+            cerr << e.what();
         }
     }
 
     Game game;
     unique_ptr<Xwindow> xw;
     if (graphicsOn) {
-    xw = make_unique<Xwindow>();
-    game = Game{*xw};
+        xw = make_unique<Xwindow>();
+        game = Game{*xw};
     }
-    // can pass parameters into init, for command flags
+    // Pass these game parameters into init, via command flags
     game.init(player1links, player2links, player1abilities, player2abilities);
-    bool enhancementsOn = 0;
+    bool enhancementsOn = false;
     
     string command;
     while (cin >> command) {
