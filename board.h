@@ -16,23 +16,23 @@ class Board {
     unique_ptr<GraphicsDisplay> gd;
     void setCellObservers();
     bool enhancementsOn;
+    bool vecContains(vector<int> vec, int item);
 
 public:
     Board(Xwindow &xw);
     Board();
-    bool isInvalidMove(Link &link, int x, int y, Player &player);
-    bool isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord);
-    void battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink);
-    void move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y);
+    bool isInvalidMove(Link &link, int x, int y, Player &player); // Checks if a move is valid
+    bool isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord); // Checks if the target cell is occupied by an opponent "link"
+    void battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePlayerLink, Link &NonActivePlayerLink); // Performs battle logic
+    void move(Player* ActivePlayer, Player* NonActivePlayer, Link &link, int x, int y); // Moves a link to the target x, y
     void updateDisplayPOV(Player *activePlayer);
     void printTextDisplay();
-    void setup();
-    void setupLinks(Player &player, string playerlinks);
-    bool vecContains(vector<int> vec, int item);
+    void setup(); // Prepares the board cells
+    void setupLinks(Player &player, string playerlinks); // Places links in the cells and sets up their locations
     void toggleEnhancementsOn();
     vector<vector<Cell>>* getGrid();
     GraphicsDisplay* getGD();
-    bool opponentHasFireWallAt(int xCord, int yCord, Player *opponent);
+    bool opponentHasFireWallAt(int xCord, int yCord, Player *opponent); // Checks if an opponent has a firewall at a given coordinate
     // add any more fields as necessary
 };
 
