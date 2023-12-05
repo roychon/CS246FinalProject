@@ -37,7 +37,6 @@ void Game::init(string player1links, string player2links, string player1abilitie
         players[i].get()->setAbilities(player2abilities, board.get()->getGrid());
         }
     }
-    // right now, initializing empty, need to initialize from file or randomize
 }
 
 // also sets the other player to winning player
@@ -173,7 +172,7 @@ Player* Game::getInactivePlayer() {
             return player.get();
         }
     }
-    return nullptr; // should never be reached
+    return nullptr; // should never be reached if used properly
 }
 
 void Game::runSequence(string filename, bool graphicsOn) {

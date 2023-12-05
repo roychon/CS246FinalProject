@@ -14,8 +14,6 @@ GraphicsDisplay::GraphicsDisplay(Xwindow *xw) : xw{xw}, enhancementsOn{false} {
 
 void GraphicsDisplay::notify(Cell &c) {
     // nullptr means no link is present
-    // will need to check for firewall later (within nullptr if statement)
-
     if (c.getLink() != nullptr && (c.getLink()->getType() != 'S')) {
         grid[c.getRow()][c.getCol()] = c.getLink()->getId();
         string convert{c.getLink()->getId()};        

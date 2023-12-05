@@ -11,7 +11,7 @@ using namespace std;
 
 class Board {
     int size;
-    vector<vector<Cell>> grid;
+    vector<vector<Cell>> grid; // grid
     unique_ptr<TextDisplay> td;
     unique_ptr<GraphicsDisplay> gd;
     void setCellObservers();

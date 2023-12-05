@@ -11,7 +11,7 @@ class Cell;
 
 class Ability {
 protected:
-    bool isUsed;
+    bool isUsed; // Tracks if this ability card has been used
 public:
     Ability();
     virtual void apply(int x, int y) = 0; // Applies the ability w/ the given coordinates

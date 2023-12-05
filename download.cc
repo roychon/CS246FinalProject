@@ -19,7 +19,7 @@ void Download::apply(int x, int y) {
     }
 }
 
-// TODO: make sure they're downloading a valid link
+// Make sure they're downloading a valid link
 bool Download::checkValid(int x, int y) {
     Link *link = (*grid)[y][x].getLink();
     if (&link->getPlayer() == activePlayer) {
