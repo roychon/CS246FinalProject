@@ -138,6 +138,19 @@ void Board::printTextDisplay() {
     cout << *td;
 }
 
+void Board::toggleEnhancementsOn() {
+    enhancementsOn = !enhancementsOn;
+    td.get()->toggleEnhancementsOn();
+}
+
+vector<vector<Cell>>* Board::getGrid() {
+    return &grid;
+}
+
+GraphicsDisplay* Board::getGD() {
+    return gd.get();
+}
+
 // ===================== Board Setup =======================
 
 // sets the observers and coords for every cell.
@@ -248,17 +261,4 @@ void Board::setupLinks(Player &player, string playerlinks) {
         used.emplace_back(randnum2);
         }
     }
-}
-
-void Board::toggleEnhancementsOn() {
-    enhancementsOn = !enhancementsOn;
-    td.get()->toggleEnhancementsOn();
-}
-
-vector<vector<Cell>>* Board::getGrid() {
-    return &grid;
-}
-
-GraphicsDisplay* Board::getGD() {
-    return gd.get();
 }

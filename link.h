@@ -11,10 +11,10 @@ class Player;
 class Link {
     char id; // board display id, from a to z or A to Z depending on player
     int strength; // strength of link
-    char type; // D: data, V : virus
+    char type; // D: data, V : virus, S : server port
     bool isRevealed;
-    int x; // row
-    int y; // col
+    int x;
+    int y;
     Player *player; // ptr to player who owns this link
     int moveFactor; // controls distance of movement for link on game board
     bool isDead;
@@ -26,7 +26,7 @@ public:
     char getId();
     char getType();
     int getStrength();
-    Player &getPlayer(); // TODO: fix &
+    Player &getPlayer();
     int getX();
     int getY();
     bool getIsRevealed();
@@ -36,11 +36,11 @@ public:
     void setY(int y);
     void setStrength(int strength);
     void setType(char type);
-    void setPlayer(Player *player);
+    void setPlayer(Player *player); // Sets the owner of the link
     void revealLink();
-    void setId(char id);
-    void incrementMoveFactor(int factor);
-    void augmentpower();
+    void setId(char id); // Sets the display id of a link
+    void incrementMoveFactor(int factor); // Increases move factor
+    void augmentpower(); // Increase strength
     void setRevealedFalse();
 };
 

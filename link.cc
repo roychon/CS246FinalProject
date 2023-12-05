@@ -46,12 +46,10 @@ void Link::setId(char id) {
     this->id = id;
 }
 
-// TODO: check if x is increment factor
 void Link::setX(int x) {
     this->x = x;
 }
 
-// TODO: check if y is increment factor
 void Link::setY(int y) {
     this->y = y;
 }

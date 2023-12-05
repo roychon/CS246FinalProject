@@ -11,7 +11,6 @@ class GraphicsDisplay : public Observer {
     bool enhancementsOn;
 
 public:
-
   GraphicsDisplay(Xwindow *xw);
   void notify(Cell &c) override;
   void toggleEnhancementsOn();
