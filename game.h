@@ -17,7 +17,7 @@ class Game {
     bool enhancementsOn;
 
 public:
-    Game(Xwindow &xw);
+    Game(Xwindow *xw);
     Game();
     bool checkWin();
     void display(bool graphicsOn);

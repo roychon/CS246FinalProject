@@ -5,18 +5,16 @@
 using namespace std;
 
 class GraphicsDisplay : public Observer {
-    Xwindow xw;
+    Xwindow *xw;
     vector<vector<char>> grid;
     protected:
     bool enhancementsOn;
 
 public:
 
-  GraphicsDisplay(Xwindow &xw);
+  GraphicsDisplay(Xwindow *xw);
   void notify(Cell &c) override;
   void toggleEnhancementsOn();
   void playerDisplays(Player *activePlayer, Player *nonActivePlayer);
-
-  ~GraphicsDisplay();
 };
 #endif

@@ -32,8 +32,8 @@ int main(int argc, char *argv[]) {
     Game game;
     unique_ptr<Xwindow> xw;
     if (graphicsOn) {
-        xw = make_unique<Xwindow>();
-        game = Game{*xw};
+    xw = make_unique<Xwindow>();
+    game = Game{xw.get()};
     }
     // Pass these game parameters into init, via command flags
     game.init(player1links, player2links, player1abilities, player2abilities);
@@ -185,7 +185,7 @@ int main(int argc, char *argv[]) {
             cout << "Ability " << id << " used!" << endl;
             if (game.checkWin() == true) {
                 cout << "Player " << game.getWinningPlayer()->getplayerID() << " Wins!" << endl;
-                break;
+                return 0;
             }
         }
         else if (command == "sequence") {
