@@ -13,8 +13,6 @@ class Cell {
     vector<Observer *> observers;
     int row;
     int col;
-    // bool isFirewall; // check if cell is a Firewall or not
-    // bool isServerPort; // check if cell is a server port or not
     Link *link; // ptr to specific link
     Player *firewallOwner;
 
@@ -30,8 +28,6 @@ public:
     void setLink(Link *newlink);
     void setFirewallOwner(Player *);
     Player *getFirewallOwner();
-
-    // add any more fields as necessary
 };
 
 #endif

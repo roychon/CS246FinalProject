@@ -8,7 +8,7 @@ class LinkBoost : public Ability {
     vector<vector<Cell>> *grid;
     public:
         LinkBoost(Player *activePlayer, vector<vector<Cell>> *grid);
-        void apply(int x, int y) override; // TODO: edit move function so it takes into account moveFactor when calculating whether or not is a valid move
+        void apply(int x, int y) override;
         bool checkValid(int x, int y) override;
         char getType() override;
 };
