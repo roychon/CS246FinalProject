@@ -18,7 +18,7 @@ class Board {
     bool enhancementsOn;
 
 public:
-    Board(Xwindow &xw);
+    Board(Xwindow *xw);
     Board();
     bool isInvalidMove(Link &link, int x, int y, Player &player);
     bool isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord);
@@ -33,7 +33,6 @@ public:
     vector<vector<Cell>>* getGrid();
     GraphicsDisplay* getGD();
     bool opponentHasFireWallAt(int xCord, int yCord, Player *opponent);
-    // add any more fields as necessary
 };
 
 #endif
