@@ -11,12 +11,15 @@ void Polarize::apply(int x, int y) {
         if (targetCell.getFirewallOwner() != nullptr && targetCell.getFirewallOwner() != &(link->getPlayer())) {
             link->getPlayer().incrementDownloads('V');
             targetCell.setLinkNull();
-            targetCell.notifyObservers();
             link->setX(-1);
             link->setY(-1);
             link->setIsDead();
         }
-    } else link->setType('D');
+        targetCell.notifyObservers();
+    } else {
+    link->setType('D');
+    targetCell.notifyObservers();
+    }
     isUsed = true;
 }
 
