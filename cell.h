@@ -23,10 +23,10 @@ public:
     void notifyObservers();
     void attach(Observer *o);
     Link* getLink();
-    void setLinkNull();
-    void setCoords(int r, int c);
-    void setLink(Link *newlink);
-    void setFirewallOwner(Player *);
+    void setLinkNull(); // Sets a cell's contents to null
+    void setCoords(int r, int c); // Set's a cell's coordinates
+    void setLink(Link *newlink); // Set's a cell's contents to a Link
+    void setFirewallOwner(Player *); // Set's a firewall owner
     Player *getFirewallOwner();
 };
 
