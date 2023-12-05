@@ -4,7 +4,7 @@
 #include <algorithm>
 using namespace std;
 
-Board::Board(Xwindow &xw) : size{8}, td{make_unique<TextDisplay>()}, gd{make_unique<GraphicsDisplay>(xw)}, enhancementsOn{false} {}
+Board::Board(Xwindow *xw) : size{8}, td{make_unique<TextDisplay>()}, gd{make_unique<GraphicsDisplay>(xw)}, enhancementsOn{false} {}
 
 Board::Board() : size{8}, td{make_unique<TextDisplay>()}, gd{nullptr}, enhancementsOn{false} {}
 

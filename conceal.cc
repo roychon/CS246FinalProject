@@ -7,6 +7,7 @@ void Conceal::apply(int x, int y) {
     for (auto &link :links) {
         if(!link->getIsDead()) link->setRevealedFalse();
     }
+    isUsed = true;
 }
 
 bool Conceal::checkValid(int x, int y) { return false; }

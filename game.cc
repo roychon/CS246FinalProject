@@ -1,7 +1,7 @@
 #include "game.h"
 using namespace std;
 
-Game::Game(Xwindow &xw): board{make_unique<Board>(xw)}, players(2), 
+Game::Game(Xwindow *xw): board{make_unique<Board>(xw)}, players(2), 
     activePlayer{nullptr}, winningPlayer{nullptr}, enhancementsOn{false} {
         for (int i = 0; i < 2; ++i) {
             players[i] = make_unique<Player>(i + 1);

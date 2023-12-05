@@ -19,7 +19,7 @@ class Board {
     bool vecContains(vector<int> vec, int item);
 
 public:
-    Board(Xwindow &xw);
+    Board(Xwindow *xw);
     Board();
     bool isInvalidMove(Link &link, int x, int y, Player &player); // Checks if a move is valid
     bool isOccupiedByOpponent(Player *NonActivePlayer, int xCord, int yCord); // Checks if the target cell is occupied by an opponent "link"
@@ -33,7 +33,6 @@ public:
     vector<vector<Cell>>* getGrid();
     GraphicsDisplay* getGD();
     bool opponentHasFireWallAt(int xCord, int yCord, Player *opponent); // Checks if an opponent has a firewall at a given coordinate
-    // add any more fields as necessary
 };
 
 #endif
