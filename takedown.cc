@@ -5,12 +5,7 @@ Takedown::Takedown(Player* activePlayer, vector<vector<Cell>> *grid): Ability(),
 void Takedown::apply(int x, int y) {
     if (checkValid(x,y) == true) {
         Link *link = (*grid)[y][x].getLink();
-        if (link->getMoveFactor() == 2) {
-            link->incrementMoveFactor(-2);
-        } 
-        if (link->getMoveFactor() == 1) {
-            link->incrementMoveFactor(-1);
-        }
+        link->incrementMoveFactor(-1 * link->getMoveFactor());
         (*grid)[y][x].notifyObservers();
         isUsed = true;
     } 

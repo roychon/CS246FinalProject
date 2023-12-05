@@ -37,8 +37,9 @@ int main(int argc, char *argv[]) {
     }
     // Pass these game parameters into init, via command flags
     game.init(player1links, player2links, player1abilities, player2abilities);
+    game.display(graphicsOn);
     bool enhancementsOn = false;
-    
+
     string command;
     while (cin >> command) {
         if (command == "board") {
