@@ -179,7 +179,7 @@ void Player::setAbilities(string abilinit, vector<vector<Cell>> *grid) {
             abilities[i] = make_unique<Takedown>(this, grid);
         } 
         else if (abil == 'C') {
-            abilities[i] = make_unique<Conceal>(this);
+            abilities[i] = make_unique<Conceal>(this, grid);
         }
     }
 }

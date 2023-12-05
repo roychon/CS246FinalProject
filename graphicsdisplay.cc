@@ -18,8 +18,14 @@ void GraphicsDisplay::notify(Cell &c) {
 
     if (c.getLink() != nullptr && (c.getLink()->getType() != 'S')) {
         grid[c.getRow()][c.getCol()] = c.getLink()->getId();
-        string convert{c.getLink()->getId()};        
+        string convert{c.getLink()->getId()};
         xw->fillRectangle(((c.getCol() * 500) / 8) + 10, ((c.getRow() * 350) / 8) + 85, 25, 25, 0);
+        if (c.getLink()->getType() == 'D' && c.getLink()->getIsRevealed() == 1) {
+        xw->fillRectangle(((c.getCol() * 500) / 8) + 20, ((c.getRow() * 350) / 8) + 85, 15, 20, 3);
+        }
+        else if (c.getLink()->getType() == 'V' && c.getLink()->getIsRevealed() == 1) {
+        xw->fillRectangle(((c.getCol() * 500) / 8) + 20, ((c.getRow() * 350) / 8) + 85, 15, 20, 2);
+        }
         xw->drawString(((c.getCol() * 500) / 8) + 25, ((c.getRow() * 350) / 8) + 100, convert);
     }
 

@@ -71,12 +71,12 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
         ActivePlayerLink.setX(NonActivePlayerLink.getX());
         ActivePlayerLink.setY(NonActivePlayerLink.getY());
+        ActivePlayerLink.revealLink();
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].notifyObservers();
         NonActivePlayerLink.setX(-1);
         NonActivePlayerLink.setY(-1);
         NonActivePlayerLink.setIsDead();
         NonActivePlayerLink.revealLink();
-        ActivePlayerLink.revealLink();
     } else {
         NonActivePlayer.incrementDownloads(ActivePlayerLink.getType());
         grid[ActivePlayerLink.getY()][ActivePlayerLink.getX()].setLinkNull();
@@ -86,6 +86,7 @@ void Board::battle(Player &ActivePlayer, Player &NonActivePlayer, Link &ActivePl
         ActivePlayerLink.setIsDead();
         ActivePlayerLink.revealLink();
         NonActivePlayerLink.revealLink();
+        grid[NonActivePlayerLink.getY()][NonActivePlayerLink.getX()].notifyObservers();
     }
 }
 
